@@ -11,26 +11,23 @@ const WrapBtn = styled.div<BtnDivType>`
 const Button = styled.button<BtnButtonType>`
   width: ${(props) => props.width || 'fit-content'};
   height: ${(props) => props.height || 'fit-content'};
-  padding: 10px;
+  padding: ${({ theme }) => theme.size.xxs};
   background-color: ${(props) =>
-    props.status ? props.theme.color.pink100 : 'white'};
+    props.$status ? props.theme.color.pink100 : 'white'};
   border: 1px solid
     ${(props) =>
-      props.status ? props.theme.color.pink100 : props.theme.color.black1};
-  border-radius: ${({ theme }) => theme.borderRadius.s};
-  font-size: 12px;
-  font-family: ${(props) => (props.status ? 'NSBold' : 'NSRegular')};
-  color: ${(props) => (props.status ? 'white' : props.theme.color.black0)};
+      props.$status ? props.theme.color.pink100 : props.theme.color.black1};
+  border-radius: ${({ theme }) => theme.size.xxxxxs};
+  color: ${(props) => (props.$status ? 'white' : props.theme.color.black0)};
+  ${(props) => (props.$status ? props.theme.font.b12 : props.theme.font.r12)}
   cursor: pointer;
 `;
 
 export default function Btn(props: BtnType) {
-  const { margin, children, width, height, status, onClick } = props;
-
   return (
-    <WrapBtn margin={margin}>
-      <Button width={width} height={height} status={status} onClick={onClick}>
-        {children}
+    <WrapBtn margin={props.margin}>
+      <Button {...props} onClick={props.onClick}>
+        {props.children}
       </Button>
     </WrapBtn>
   );

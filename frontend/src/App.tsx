@@ -1,17 +1,29 @@
 import { useState } from 'react';
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
 import Btn from './components/Button/Btn';
+import Footer from './layout/Footer/Footer';
+import LoginHeader from './layout/Header/LoginHeader';
+import MainHeader from './layout/Header/MainHeader';
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [active, setActive] = useState<number>(0);
+  const buttons = ['상품등록', '상품관리', '구매 / 판매 내역'];
 
   return (
     <>
-      <Btn status={true} width='200px'>
-        후기 남기기
-      </Btn>
+      <LoginHeader />
+      <MainHeader />
+
+      {buttons.map((value, index) => (
+        <Btn
+          key={index}
+          $status={index === active}
+          width='200px'
+          onClick={() => setActive(index)}
+        >
+          {value}
+        </Btn>
+      ))}
+      <Footer />
     </>
   );
 }
