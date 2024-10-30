@@ -12,16 +12,26 @@ const WrapSearchbar = styled(Arrange)`
 const SearchInput = styled.input`
   width: 100%;
   height: 24px;
+  padding: 2px 0 0 10px;
   background-color: transparent;
   border: none;
-  ${({ theme }) => theme.font.body16}
+  color: ${({ theme }) => theme.color.black2};
+  ${({ theme }) => theme.font.body16};
 
   &:focus {
     outline: none;
   }
+
+  ::placeholder,
+  ::-webkit-input-placeholder {
+    color: ${({ theme }) => theme.color.black2};
+  }
+  ::-ms-input-placeholder {
+    color: ${({ theme }) => theme.color.black2};
+  }
 `;
 
-export default function Searchbar() {
+export default function Searchbar({ props }: any) {
   const theme = useTheme();
 
   return (
@@ -33,7 +43,10 @@ export default function Searchbar() {
       alignitems='center'
     >
       <ImgBtn $backgroundimage={DiskGray} margin='0 10px 0 0' />
-      <SearchInput placeholder='상품명 / 상점명 검색' />
+      <SearchInput
+        placeholder='상품명 / 상점명 검색'
+        // onChange={props.onChange}
+      />
     </WrapSearchbar>
   );
 }

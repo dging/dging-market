@@ -1,4 +1,5 @@
 export interface BtnType {
+  as?: string;
   margin?: string;
   children?: React.ReactNode;
   width?: string;
@@ -10,10 +11,12 @@ export interface BtnType {
 }
 
 export interface BtnDivType {
+  as?: string;
   margin?: string;
 }
 
 export interface BtnButtonType {
+  as?: string;
   width?: string;
   height?: string;
   $status?: boolean;

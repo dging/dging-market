@@ -36,7 +36,6 @@ export default function Alert() {
     <div>
       <Arrange position='relative'>
         <AlertBtn
-          height='36px'
           margin='0 0 0 10px'
           onClick={() => setState(!isShow, setIsShow)}
           $open={isShow}

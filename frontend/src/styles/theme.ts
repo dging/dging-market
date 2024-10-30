@@ -66,6 +66,10 @@ const font = {
     fontFamily: 'NSRegular',
     fontSize: '12px',
   },
+  r16: {
+    fontFamily: 'NSRegular',
+    fontSize: '16px',
+  },
   b12: {
     fontFamily: 'NSBold',
     fontSize: '12px',

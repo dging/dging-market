@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import ImgBtn from '../../components/Button/ImgBtn';
 import Searchbar from '../../components/Input/Searchbar';
 import Arrange from '../../components/Base/Arrange';
 import Logo from '../../assets/images/Logo.png';
-
-const WrapMainHeader = styled(Arrange)`
-  border-bottom: 1px solid ${({ theme }) => theme.color.black5};
-`;
+import MainHeaderMenu from '../../components/Menu/MainHeaderMenu';
 
 export default function MainHeader() {
+  const navigate = useNavigate();
   const theme = useTheme();
 
   return (
-    <WrapMainHeader
+    <Arrange
       width='100%'
-      padding={theme.size.xxxl}
+      padding={`${theme.size.xxxl} 0`}
       display='flex'
       justifycontent='center'
       alignitems='center'
+      $bottom={true}
     >
       <Arrange
         width={theme.page_size.width_s}
@@ -28,7 +28,8 @@ export default function MainHeader() {
       >
         <ImgBtn width='110px' height='27px' $backgroundimage={Logo} />
         <Searchbar />
+        <MainHeaderMenu />
       </Arrange>
-    </WrapMainHeader>
+    </Arrange>
   );
 }

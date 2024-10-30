@@ -3,18 +3,13 @@ import styled, { useTheme } from 'styled-components';
 import Arrange from '../../components/Base/Arrange';
 import Btn from '../../components/Button/Btn';
 import Alert from '../../components/Alert/Alert';
-import { setState } from '../../utils/setState';
 
-const WrapLoginHeader = styled(Arrange)`
-  border-bottom: 1px solid ${({ theme }) => theme.color.black5};
-`;
-
-export default function LoginBar() {
+export default function LoginHeader() {
   const theme = useTheme();
   const [isLogin, setIsLogin] = useState<boolean | null>(null);
 
   return (
-    <WrapLoginHeader width='100%' display='flex' justifycontent='center'>
+    <Arrange $bottom={true} width='100%' display='flex' justifycontent='center'>
       <Arrange
         width={`${theme.page_size.width_s}`}
         padding={`${theme.size.xxs} 0`}
@@ -23,13 +18,15 @@ export default function LoginBar() {
       >
         {isLogin ? (
           <>
-            <Btn onClick={() => setState(null, setIsLogin)}>로그아웃</Btn>
-            <Alert />
+            <Arrange display='flex' gap='4px'>
+              <Btn onClick={() => setIsLogin(null)}>로그아웃</Btn>
+              <Alert />
+            </Arrange>
           </>
         ) : (
-          <Btn onClick={() => setState(true, setIsLogin)}>로그인</Btn>
+          <Btn onClick={() => setIsLogin(true)}>로그인</Btn>
         )}
       </Arrange>
-    </WrapLoginHeader>
+    </Arrange>
   );
 }

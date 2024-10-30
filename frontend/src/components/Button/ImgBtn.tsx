@@ -2,12 +2,12 @@ import React from 'react';
 import { styled } from 'styled-components';
 import { BtnType, BtnDivType, BtnButtonType } from '../../types/types';
 
-const WrapImageButton = styled.div<BtnDivType>`
-  display: inline-block;
-  width: fit-content;
-  height: fit-content;
-  margin: ${(props) => props.margin};
-`;
+// const WrapImageButton = styled.div<BtnDivType>`
+//   display: inline-block;
+//   width: fit-content;
+//   height: fit-content;
+//   margin: ${(props) => props.margin};
+// `;
 
 const ImageButton = styled.button<BtnButtonType>`
   width: ${(props) => props.width || '24px'};
@@ -20,14 +20,13 @@ const ImageButton = styled.button<BtnButtonType>`
   border: ${(props) =>
     props.$status ? `1px solid props.theme.color.black1` : 'none'};
   background-color: transparent;
-
-  cursor: pointer;
+  ${(props) => (props.as === 'div' ? '' : 'cursor: pointer')}
 `;
 
 export default function ImgBtn(props: BtnType) {
   return (
-    <WrapImageButton margin={props.margin}>
-      <ImageButton {...props}>{props.children}</ImageButton>
-    </WrapImageButton>
+    // <WrapImageButton margin={props.margin}>
+    <ImageButton {...props}>{props.children}</ImageButton>
+    // </WrapImageButton>
   );
 }
