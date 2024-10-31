@@ -19,6 +19,8 @@ import java.util.Date;
 public class ProductsResponse {
 
     private Long id;
+    private Long storeId;
+    private String storeName;
     private String title;
     private RunningStatus runningStatus;
     private String imageUrl;

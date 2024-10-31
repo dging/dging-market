@@ -18,6 +18,8 @@ import java.util.Date;
 public class FavoriteProductsResponse {
 
     private Long id;
+    private Long storeId;
+    private String storeName;
     private String title;
     private RunningStatus runningStatus;
     private String imageUrl;

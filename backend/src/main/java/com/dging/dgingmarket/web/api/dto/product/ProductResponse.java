@@ -19,6 +19,8 @@ import java.util.Date;
 public class ProductResponse {
 
     private Long id;
+    private Long storeId;
+    private String storeName;
     private String title;
     private String content;
     private int favoriteCount;
