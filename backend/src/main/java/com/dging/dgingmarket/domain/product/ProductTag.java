@@ -27,7 +27,7 @@ public class ProductTag {
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id", insertable = false, updatable = false)
     private Tag tag;
 

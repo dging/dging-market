@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.domain.common.Tag;
+import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.listener.IpEntityListener;
 import com.dging.dgingmarket.util.converter.ProductQualityAttributeConverter;
 import com.dging.dgingmarket.util.converter.RunningStatusAttributeConverter;
@@ -60,9 +61,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> images = new ArrayList<>();
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "store_id")
-//    private Store store;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 
 //    @OneToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "review_id")
