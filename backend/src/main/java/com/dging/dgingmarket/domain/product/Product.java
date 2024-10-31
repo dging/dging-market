@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.domain.common.Tag;
+import com.dging.dgingmarket.domain.store.Review;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.listener.IpEntityListener;
 import com.dging.dgingmarket.util.converter.ProductQualityAttributeConverter;
@@ -69,9 +70,9 @@ public class Product {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "review_id")
-//    private Review review;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "store_id")

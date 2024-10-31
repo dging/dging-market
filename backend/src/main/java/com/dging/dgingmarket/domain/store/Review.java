@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.domain.store;
 
+import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,29 +17,38 @@ import java.util.Date;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "TBL_STORE")
+@Table(name = "TBL_REVIEW")
 @EntityListeners({AuditingEntityListener.class})
-public class Store {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false, updatable = false)
+    private Store store;
 
-    @Column(length = 500)
-    private String introduction;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false, updatable = false)
+    private Product product;
+
+    @Column(length = 500)
+    private String content;
+
+    @Column(nullable = false)
+    private int rate;
+
     @CreatedDate
-    @Column(length = 6, nullable = false)
+    @Column(length = 6)
     private Date createdAt;
 
     @LastModifiedDate
-    @Column(length = 6, nullable = false)
-    private Date lastModifiedAt;
+    @Column(length = 6)
+    private Date updatedAt;
+
 }
