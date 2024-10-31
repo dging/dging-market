@@ -51,4 +51,14 @@ public class Review {
     @Column(length = 6, nullable = false)
     private Date updatedAt;
 
+    public static Review create(User user, Product product, String content, int rate) {
+        Review review = new Review();
+        review.setUser(user);
+        review.setStore(user.getStore());
+        review.setProduct(product);
+        review.setContent(content);
+        review.setRate(rate);
+        return review;
+    }
+
 }
