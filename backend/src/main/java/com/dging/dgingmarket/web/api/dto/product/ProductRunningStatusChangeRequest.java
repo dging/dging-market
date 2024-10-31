@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
+import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.util.validation.Enum;
@@ -21,6 +22,6 @@ public class ProductRunningStatusChangeRequest {
     private Long id;
 
     @NotEmpty
-    @Enum(enumClass = RunningStatus.class, ignoreCase = true, message = "[판매중, 예약중, 거래완료] 중에 하나이어야 합니다.")
+    @Enum(enumClass = RunningStatus.class, ignoreCase = true, message = ValidationMessages.RUNNING_STATUS)
     private RunningStatus runningStatus;
 }
