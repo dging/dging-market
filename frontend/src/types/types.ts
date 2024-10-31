@@ -10,11 +10,6 @@ export interface BtnType {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export interface BtnDivType {
-  as?: string;
-  margin?: string;
-}
-
 export interface BtnButtonType {
   as?: string;
   width?: string;

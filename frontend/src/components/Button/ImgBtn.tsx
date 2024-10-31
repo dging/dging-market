@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import { BtnType, BtnDivType, BtnButtonType } from '../../types/types';
+import { BtnType } from '../../types/types';
 
 // const WrapImageButton = styled.div<BtnDivType>`
 //   display: inline-block;
@@ -9,7 +9,7 @@ import { BtnType, BtnDivType, BtnButtonType } from '../../types/types';
 //   margin: ${(props) => props.margin};
 // `;
 
-const ImageButton = styled.button<BtnButtonType>`
+const ImageButton = styled.button<BtnType>`
   width: ${(props) => props.width || '24px'};
   height: ${(props) => props.height || '24px'};
   padding: 0;
@@ -18,7 +18,7 @@ const ImageButton = styled.button<BtnButtonType>`
   background-position: ${(props) => props.$backgroundposition || '100%'};
   background-size: contain;
   border: ${(props) =>
-    props.$status ? `1px solid props.theme.color.black1` : 'none'};
+    props.$status ? `1px solid ${props.theme.color.black1}` : 'none'};
   background-color: transparent;
   ${(props) => (props.as === 'div' ? '' : 'cursor: pointer')}
 `;
@@ -26,7 +26,9 @@ const ImageButton = styled.button<BtnButtonType>`
 export default function ImgBtn(props: BtnType) {
   return (
     // <WrapImageButton margin={props.margin}>
-    <ImageButton {...props}>{props.children}</ImageButton>
+    <ImageButton {...props} onClick={props.onClick}>
+      {props.children}
+    </ImageButton>
     // </WrapImageButton>
   );
 }

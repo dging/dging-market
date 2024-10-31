@@ -1,11 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Arrange from '../../components/Base/Arrange';
 import SpanBold from '../../components/Base/SpanBold';
 import ImgBtn from '../../components/Button/ImgBtn';
 import Github from '../../assets/images/Github.png';
 
 const WrapFooter = styled(Arrange)`
+  min-width: 1160px;
+  padding: ${({ theme }) => theme.size.xxxxxl};
   color: ${({ theme }) => theme.color.black2};
   ${({ theme }) => theme.font.body16};
   border-top: 1px solid ${({ theme }) => theme.color.black5};
@@ -13,12 +15,7 @@ const WrapFooter = styled(Arrange)`
 
 export default function Footer() {
   return (
-    <WrapFooter
-      width='100vw'
-      padding={({ theme }: any) => theme.size.xxxxxl}
-      display='flex'
-      justifycontent='center'
-    >
+    <WrapFooter width='100vw' display='flex' justifycontent='center'>
       <Arrange width='766px' display='flex' justifycontent='space-between'>
         <Arrange>
           <SpanBold>디깅마켓 | 개발자</SpanBold> 김민희, 김혜진, 이원석

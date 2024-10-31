@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { styled } from 'styled-components';
 import { ArrangeType } from '../../types/types';
@@ -23,7 +24,6 @@ const WrapArrange = styled.div<ArrangeType>`
   background-position: ${(props) => props.$backgroundposition || 'center'};
   background-size: contain;
   background-repeat: no-repeat;
-  background-color: white;
 `;
 
 export default function Arrange(props: ArrangeType) {

@@ -4,6 +4,10 @@ import MainPage from '../pages/MainPage';
 import MystorePage from '../pages/MystorePage';
 import SellPage from '../pages/SellPage';
 import TalkPage from '../pages/TalkPage';
+import MygoodsPage from '../pages/MygoodsPage';
+import KeepgoodsPage from '../pages/KeepgoodsPage';
+import SettingPage from '../pages/SettingPage';
+import ServicePage from '../pages/ServicePage';
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +28,22 @@ export const router = createBrowserRouter([
       {
         path: '/talk',
         element: <TalkPage />,
+      },
+      {
+        path: '/mygoods',
+        element: <MygoodsPage />,
+      },
+      {
+        path: '/keepgoods',
+        element: <KeepgoodsPage />,
+      },
+      {
+        path: '/setting',
+        element: <SettingPage />,
+      },
+      {
+        path: '/service',
+        element: <ServicePage />,
       },
     ],
   },

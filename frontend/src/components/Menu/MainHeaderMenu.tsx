@@ -16,7 +16,6 @@ const Bar = styled.div`
 `;
 
 const NavigateToBtn = styled.button`
-  position: relative;
   width: fit-content;
   height: fit-content;
   border: none;
@@ -37,18 +36,21 @@ export default function MainHeaderMenu() {
     <Arrange display='flex' alignitems='center' gap='10px'>
       <NavigateToBtn onClick={() => navigate('/sell')}>
         <ImgBtn as='div' $backgroundimage={DiskBlack}></ImgBtn>
-        판매하기
+        <Arrange height='16px'>판매하기</Arrange>
       </NavigateToBtn>
       <Bar />
       <NavigateToBtn onClick={() => navigate('/talk')}>
         <ImgBtn as='div' $backgroundimage={MessageBlack}></ImgBtn>
-        거래톡
+        <Arrange height='16px'>거래톡</Arrange>
       </NavigateToBtn>
       <Bar />
-      <NavigateToBtn onClick={() => setIsShow(!isShow)}>
+      <NavigateToBtn
+        onClick={() => setIsShow(!isShow)}
+        style={{ position: 'relative' }}
+      >
         <ImgBtn as='div' $backgroundimage={Store}></ImgBtn>
-        내상점
-        <ImgBtn $backgroundimage={DownArrowBlack}></ImgBtn>
+        <Arrange height='16px'>내상점</Arrange>
+        <ImgBtn as='div' $backgroundimage={DownArrowBlack}></ImgBtn>
         {isShow && <StoreBoard />}
       </NavigateToBtn>
     </Arrange>

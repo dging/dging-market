@@ -42,7 +42,7 @@ export default function Searchbar({ props }: any) {
       display='flex'
       alignitems='center'
     >
-      <ImgBtn $backgroundimage={DiskGray} margin='0 10px 0 0' />
+      <ImgBtn $backgroundimage={DiskGray} />
       <SearchInput
         placeholder='상품명 / 상점명 검색'
         // onChange={props.onChange}

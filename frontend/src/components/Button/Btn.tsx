@@ -1,19 +1,14 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import Arrange from '../Base/Arrange';
-import { BtnType, BtnDivType, BtnButtonType } from '../../types/types';
+import { BtnType, BtnButtonType } from '../../types/types';
 
-// const WrapBtn = styled.div<BtnDivType>`
-//   width: fit-content;
-//   height: fit-content;
-//   margin: ${(props) => props.margin || '0'};
-// `;
-
-const Button = styled.button<BtnButtonType>`
+const Button = styled.button<BtnType>`
   box-sizing: border-box;
   width: ${(props) => props.width || 'fit-content'};
   height: ${(props) => props.height || 'fit-content'};
-  padding: ${({ theme }) => theme.size.xxs || '0px'};
+  padding: ${({ theme }) =>
+    `11px ${theme.size.xxs} 9px ${theme.size.xxs}` || '0px'};
   background-color: ${(props) =>
     props.$status ? props.theme.color.pink100 : 'white'};
   border: 1px solid

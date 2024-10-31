@@ -35,11 +35,7 @@ export default function Alert() {
   return (
     <div>
       <Arrange position='relative'>
-        <AlertBtn
-          margin='0 0 0 10px'
-          onClick={() => setState(!isShow, setIsShow)}
-          $open={isShow}
-        >
+        <AlertBtn onClick={() => setState(!isShow, setIsShow)} $open={isShow}>
           <Arrange display='flex' alignitems='center'>
             알람
             <Arrange

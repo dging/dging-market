@@ -62,9 +62,18 @@ const font = {
     fontSize: '18px',
     lineHeight: '150%',
   },
+  category16: {
+    fontFamily: 'NSRegular',
+    fontSize: '16px',
+    letterSpace: '-1.6px',
+  },
   r12: {
     fontFamily: 'NSRegular',
     fontSize: '12px',
+  },
+  r14: {
+    fontFamily: 'NSRegular',
+    fontSize: '14px',
   },
   r16: {
     fontFamily: 'NSRegular',
@@ -73,6 +82,10 @@ const font = {
   b12: {
     fontFamily: 'NSBold',
     fontSize: '12px',
+  },
+  b14: {
+    fontFamily: 'NSBold',
+    fontSize: '14px',
   },
 };
 
