@@ -1,6 +1,8 @@
 package com.dging.dgingmarket.domain.user;
 
 import com.dging.dgingmarket.domain.common.enums.Role;
+import com.dging.dgingmarket.domain.product.ProductImage;
+import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.listener.CreationIp;
 import com.dging.dgingmarket.listener.IpEntityListener;
@@ -63,6 +65,12 @@ public class User implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
+
+    @OneToMany(mappedBy = "from", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Follower> followers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "to", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Follower> followings = new ArrayList<>();
 
     @Column(nullable = false, columnDefinition = "tinyint(1) default 0")
     private boolean isAuthenticated;
