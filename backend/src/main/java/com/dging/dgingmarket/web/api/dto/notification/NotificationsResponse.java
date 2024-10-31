@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *  채팅 내역 조회 응답 DTO
+ *  알림 내역 조회 응답 DTO
  */
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
