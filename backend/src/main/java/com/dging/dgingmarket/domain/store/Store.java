@@ -31,7 +31,8 @@ public class Store {
     @Column(length = 500)
     private String introduction;
 
-    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @CreatedDate

@@ -63,8 +63,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Store store;
 
     @OneToMany(mappedBy = "from", cascade = CascadeType.REMOVE, orphanRemoval = true)
