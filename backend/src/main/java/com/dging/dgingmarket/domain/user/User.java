@@ -120,7 +120,7 @@ public class User implements UserDetails {
         user.setUserId(id);
         user.setPassword(password);
         user.setUsername(username);
-        user.setStore(Store.createEmpty());
+        user.setStore(Store.createEmpty(user));
         return user;
     }
 

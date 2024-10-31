@@ -43,15 +43,16 @@ public class Store {
     @Column(length = 6, nullable = false)
     private Date updatedAt;
 
-    public static Store create(String name, String introduction) {
+    public static Store create(User user, String name, String introduction) {
         Store store = new Store();
+        store.setUser(user);
         store.setName(name);
         store.setIntroduction(introduction);
         return store;
     }
 
-    public static Store createEmpty() {
-        return create(UUID.randomUUID().toString(), null);
+    public static Store createEmpty(User user) {
+        return create(user, UUID.randomUUID().toString(), null);
     }
 
     public void updateName(String name) {
