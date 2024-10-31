@@ -1,0 +1,27 @@
+package com.dging.dgingmarket.util.converter;
+
+import com.dging.dgingmarket.util.enums.ProductQuality;
+import com.dging.dgingmarket.util.enums.RunningStatus;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+
+@Converter
+public class RunningStatusAttributeConverter implements AttributeConverter<RunningStatus, String> {
+
+    @Override
+    public String convertToDatabaseColumn(RunningStatus attribute) {
+        if(ObjectUtils.isEmpty(attribute))
+            return null;
+        return attribute.getValue();
+    }
+
+    @Override
+    public RunningStatus convertToEntityAttribute(String dbData) {
+        if(!StringUtils.hasText(dbData))
+            return null;
+        return RunningStatus.find(dbData);
+    }
+}
