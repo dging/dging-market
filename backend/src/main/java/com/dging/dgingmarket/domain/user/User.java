@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.domain.user;
 
 import com.dging.dgingmarket.domain.common.enums.Role;
+import com.dging.dgingmarket.domain.product.Favorite;
 import com.dging.dgingmarket.domain.product.ProductImage;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.Store;
@@ -71,6 +72,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "to", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Follower> followings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favorites = new ArrayList<>();
 
     @Column(nullable = false, columnDefinition = "tinyint(1) default 0")
     private boolean isAuthenticated;
