@@ -12,24 +12,27 @@ import javax.persistence.*;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "TBL_FAVORITE")
-@IdClass(FavoriteId.class)
+@Table(
+        name = "TBL_FAVORITE",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name="favorite_uk",
+                        columnNames = {"user_fk", "product_fk"}
+                )
+        }
+)
 public class Favorite {
 
     @Id
-    @Column(name = "user_id")
-    private Long userId;
-
-    @Id
-    @Column(name = "product_id")
-    private Long productId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "user_fk", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "product_fk", nullable = false)
     private Product product;
 
     public Favorite(User user, Product product) {
