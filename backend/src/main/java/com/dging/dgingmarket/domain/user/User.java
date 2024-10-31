@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.domain.user;
 
 import com.dging.dgingmarket.domain.common.enums.Role;
+import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.listener.CreationIp;
 import com.dging.dgingmarket.listener.IpEntityListener;
 import com.dging.dgingmarket.listener.UpdateIp;
@@ -30,6 +31,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 
 @DynamicInsert
 @DynamicUpdate
@@ -71,6 +73,9 @@ public class User implements UserDetails {
     @ElementCollection(fetch = EAGER)
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Store store;
 
     @Column(nullable = false, columnDefinition = "tinyint(1) default 0")
     private boolean isAuthenticated;
@@ -117,6 +122,7 @@ public class User implements UserDetails {
         user.setUserId(id);
         user.setPassword(password);
         user.setUsername(username);
+        user.setStore(Store.createEmpty());
         return user;
     }
 

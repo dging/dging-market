@@ -44,11 +44,11 @@ public class Review {
     private int rate;
 
     @CreatedDate
-    @Column(length = 6)
+    @Column(length = 6, nullable = false)
     private Date createdAt;
 
     @LastModifiedDate
-    @Column(length = 6)
+    @Column(length = 6, nullable = false)
     private Date updatedAt;
 
 }

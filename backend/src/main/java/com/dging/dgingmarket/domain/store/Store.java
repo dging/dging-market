@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -24,7 +25,7 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, unique = true, nullable = false)
     private String name;
 
     @Column(length = 500)
@@ -41,4 +42,23 @@ public class Store {
     @LastModifiedDate
     @Column(length = 6, nullable = false)
     private Date lastModifiedAt;
+
+    public static Store create(String name, String introduction) {
+        Store store = new Store();
+        store.setName(name);
+        store.setIntroduction(introduction);
+        return store;
+    }
+
+    public static Store createEmpty() {
+        return create(UUID.randomUUID().toString(), null);
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 }
