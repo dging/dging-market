@@ -8,6 +8,8 @@ import MygoodsPage from '../pages/MygoodsPage';
 import KeepgoodsPage from '../pages/KeepgoodsPage';
 import SettingPage from '../pages/SettingPage';
 import ServicePage from '../pages/ServicePage';
+import GoodsManagePage from '../pages/GoodsManagePage';
+import HistoryPage from '../pages/HistoryPage';
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +46,14 @@ export const router = createBrowserRouter([
       {
         path: '/service',
         element: <ServicePage />,
+      },
+      {
+        path: '/goodsmanage',
+        element: <GoodsManagePage />,
+      },
+      {
+        path: '/history',
+        element: <HistoryPage />,
       },
     ],
   },

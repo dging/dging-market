@@ -8,6 +8,7 @@ const WrapArrange = styled.div<ArrangeType>`
   position: ${(props) => props.position || 'static'};
   display: ${(props) => props.display || 'block'};
   width: ${(props) => props.width || 'fit-content'};
+  min-width: ${(props) => props.minwidth};
   height: ${(props) => props.height || 'fit-content'};
   margin: ${(props) => props.margin || '0px'};
   padding: ${(props) => props.padding || '0px'};

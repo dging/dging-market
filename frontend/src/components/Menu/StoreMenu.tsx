@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { styled, useTheme } from 'styled-components';
+import { Link } from 'react-router-dom';
+import { styled } from 'styled-components';
 import Arrange from '../Base/Arrange';
 
 const WrapStoreBoard = styled(Arrange)`
@@ -22,7 +21,7 @@ const StyledLink = styled(Link)`
   ${({ theme }) => theme.font.r16};
 `;
 
-export default function StoreBoard() {
+export default function StoreMenu() {
   return (
     <WrapStoreBoard
       display='flex'

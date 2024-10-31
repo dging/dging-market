@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import RoundBtn from '../Button/RoundBtn';
-import Arrange from '../Base/Arrange';
+import { RoundBtn } from '../Button';
+import { Arrange } from '../Base/';
 
 export default function RoundCategory(props: { words: Array<string> }) {
   const [status, setStatus] = useState(0);

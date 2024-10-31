@@ -1,9 +1,86 @@
-import React from 'react';
+import { useState } from 'react';
+import styled from 'styled-components';
 import Btn from '../Button/Btn';
+import ImgBtn from '../Button/ImgBtn';
+import { BtnType, ArrangeType } from '../../types/types';
 import Arrange from '../Base/Arrange';
+import DownArrowBlack from '../../assets/images/DownArrowBlack.png';
 
-export default function DropBox() {
-  return <div></div>;
+type DropBoxType = BtnType & {
+  items: Array<string>;
+};
+
+type WrapItemType = ArrangeType & { $except?: boolean; $status?: boolean };
+
+const DropBoxButton = styled(Btn)<BtnType>`
+  box-sizing: border-box;
+
+  width: ${(props) => props.width || '140px'};
+  height: ${(props) => props.height || '36px'};
+  padding: ${({ theme }) => theme.size.xxs};
+  border: 1px solid ${({ theme }) => theme.color.black1};
+  border-radius: ${({ theme }) => theme.size.xxxxxs};
+  border-bottom-left-radius: ${(props) => (props.$status ? '0px' : '4px')};
+  border-bottom-right-radius: ${(props) => (props.$status ? '0px' : '4px')};
+
+  text-align: right;
+  ${({ theme }) => theme.font.r14};
+`;
+
+const DropBoxBoard = styled(Arrange)<ArrangeType>`
+  width: ${(props) => props.width || '140px'};
+  border: 1px solid ${({ theme }) => theme.color.black1};
+  border-top: 1px solid white;
+  border-bottom-left-radius: ${({ theme }) => theme.size.xxxxxs};
+  border-bottom-right-radius: ${({ theme }) => theme.size.xxxxxs};
+  background-color: white;
+  top: 35px;
+`;
+
+const WrapItem = styled(Arrange)<WrapItemType>`
+  padding: ${({ theme }) => theme.size.xxxs};
+  color: ${(props) =>
+    props.$status ? props.theme.color.black0 : props.theme.color.black2};
+
+  text-align: center;
+  ${({ theme }) => theme.font.r14};
+  cursor: pointer;
+`;
+
+export default function DropBox(props: DropBoxType) {
+  const [items, setItems] = useState<string>(props.items[0]);
+  const [isShow, setIsShow] = useState<boolean>(false);
+
+  return (
+    <Arrange position='relative'>
+      <DropBoxButton $status={isShow} onClick={() => setIsShow(!isShow)}>
+        <Arrange display='flex' width='118px' justifycontent='space-between'>
+          {items}
+          <ImgBtn
+            as='div'
+            width='16px'
+            height='16px'
+            $backgroundimage={DownArrowBlack}
+          />
+        </Arrange>
+      </DropBoxButton>
+      {isShow && (
+        <DropBoxBoard position='absolute' $status={isShow}>
+          {props.items.map((value, index) => (
+            <WrapItem
+              width='100%'
+              $status={items === value}
+              key={index}
+              onClick={() => {
+                setItems(value);
+                setIsShow(false);
+              }}
+            >
+              {value}
+            </WrapItem>
+          ))}
+        </DropBoxBoard>
+      )}
+    </Arrange>
+  );
 }
-
-DropBox;

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import Btn from '../Button/Btn';
-import { BtnType } from '../../types/types';
-import Arrange from '../Base/Arrange';
+import { Btn } from '../Button';
+import { Arrange } from '../Base';
 
 const WrapTradeCategory = styled(Arrange)`
   border: 1px solid ${({ theme }) => theme.color.black1};
@@ -28,7 +27,6 @@ const Bar = styled.div`
 
 export default function TradeCategory() {
   const [status, setStatus] = useState<string>('전체');
-  console.log(status);
 
   return (
     <WrapTradeCategory display='flex' alignitems='center'>
@@ -36,7 +34,6 @@ export default function TradeCategory() {
         $status={status === '전체'}
         onClick={() => {
           setStatus('전체');
-          console.log(status);
         }}
       >
         전체
@@ -46,7 +43,6 @@ export default function TradeCategory() {
         $status={status === '안전'}
         onClick={() => {
           setStatus('안전');
-          console.log(status);
         }}
       >
         안전
@@ -56,7 +52,6 @@ export default function TradeCategory() {
         $status={status === '일반'}
         onClick={() => {
           setStatus('일반');
-          console.log(status);
         }}
       >
         일반

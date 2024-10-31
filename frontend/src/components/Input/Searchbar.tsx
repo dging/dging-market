@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { styled, useTheme } from 'styled-components';
 import ImgBtn from '../Button/ImgBtn';
 import Arrange from '../Base/Arrange';

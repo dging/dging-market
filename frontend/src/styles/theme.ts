@@ -87,6 +87,14 @@ const font = {
     fontFamily: 'NSBold',
     fontSize: '14px',
   },
+  r32: {
+    fontFamily: 'NSRegular',
+    fontSize: '32px',
+  },
+  b32: {
+    fontFamily: 'NSBold',
+    fontSize: '32px',
+  },
 };
 
 export const theme: DefaultTheme = {

@@ -26,7 +26,12 @@ export default function MainHeader() {
         justifycontent='space-between'
         alignitems='center'
       >
-        <ImgBtn width='110px' height='27px' $backgroundimage={Logo} />
+        <ImgBtn
+          width='110px'
+          height='27px'
+          $backgroundimage={Logo}
+          onClick={() => navigate('/')}
+        />
         <Searchbar />
         <MainHeaderMenu />
       </Arrange>

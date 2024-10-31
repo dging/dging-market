@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { styled, useTheme } from 'styled-components';
-import ImgBtn from '../Button/ImgBtn';
-import Arrange from '../Base/Arrange';
-import StoreBoard from './StoreBoard';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+import { ImgBtn, IncludeImgBtn } from '../Button';
+import { Arrange } from '../Base';
+import StoreMenu from './StoreMenu';
+
 import DiskBlack from '../../assets/images/DiskBlack.png';
 import MessageBlack from '../../assets/images/MessageBlack.png';
 import Store from '../../assets/images/Store.png';
@@ -15,44 +16,37 @@ const Bar = styled.div`
   background-color: ${({ theme }) => theme.color.black5};
 `;
 
-const NavigateToBtn = styled.button`
-  width: fit-content;
-  height: fit-content;
-  border: none;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  gap: 4px;
-  background-color: transparent;
-  ${({ theme }) => theme.font.r16}
-  cursor: pointer;
-`;
-
 export default function MainHeaderMenu() {
   const navigate = useNavigate();
   const [isShow, setIsShow] = useState<boolean>(false);
 
   return (
     <Arrange display='flex' alignitems='center' gap='10px'>
-      <NavigateToBtn onClick={() => navigate('/sell')}>
-        <ImgBtn as='div' $backgroundimage={DiskBlack}></ImgBtn>
-        <Arrange height='16px'>판매하기</Arrange>
-      </NavigateToBtn>
+      <IncludeImgBtn
+        $leftbgimg={DiskBlack}
+        $textheight='16px'
+        text='판매하기'
+        onClick={() => navigate('/sell')}
+      />
       <Bar />
-      <NavigateToBtn onClick={() => navigate('/talk')}>
-        <ImgBtn as='div' $backgroundimage={MessageBlack}></ImgBtn>
-        <Arrange height='16px'>거래톡</Arrange>
-      </NavigateToBtn>
+      <IncludeImgBtn
+        $leftbgimg={MessageBlack}
+        $textheight='16px'
+        text='거래톡'
+        onClick={() => navigate('/talk')}
+      />
       <Bar />
-      <NavigateToBtn
-        onClick={() => setIsShow(!isShow)}
-        style={{ position: 'relative' }}
-      >
-        <ImgBtn as='div' $backgroundimage={Store}></ImgBtn>
-        <Arrange height='16px'>내상점</Arrange>
-        <ImgBtn as='div' $backgroundimage={DownArrowBlack}></ImgBtn>
-        {isShow && <StoreBoard />}
-      </NavigateToBtn>
+      <Arrange position='relative'>
+        <IncludeImgBtn
+          $leftbgimg={Store}
+          $rightbgimg={DownArrowBlack}
+          $textheight='16px'
+          text='내상점'
+          onClick={() => setIsShow(!isShow)}
+        />
+
+        {isShow && <StoreMenu />}
+      </Arrange>
     </Arrange>
   );
 }
