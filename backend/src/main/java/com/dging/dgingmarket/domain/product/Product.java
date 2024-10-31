@@ -166,12 +166,12 @@ public class Product {
     }
 
     private List<ProductTag> createProductTags(List<String> tags) {
-        return tags.stream().filter(tag -> !tag.isEmpty()).map(Tag::create).map(tag -> new ProductTag(this, tag)).collect(Collectors.toList());
+        return tags.stream().filter(tag -> !tag.isEmpty()).map(Tag::create).map(tag -> ProductTag.create(this, tag)).collect(Collectors.toList());
     }
 
     private void updateProductTags(List<String> tags) {
 
-        List<ProductTag> productTags = tags.stream().filter(tag -> !tag.isEmpty()).map(Tag::create).map(tag -> new ProductTag(this, tag)).collect(Collectors.toList());
+        List<ProductTag> productTags = tags.stream().filter(tag -> !tag.isEmpty()).map(Tag::create).map(tag -> ProductTag.create(this, tag)).collect(Collectors.toList());
 
         List<ProductTag> tempProductTags = new ArrayList<>();
 

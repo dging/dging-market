@@ -35,8 +35,10 @@ public class Favorite {
     @JoinColumn(name = "product_fk", nullable = false)
     private Product product;
 
-    public Favorite(User user, Product product) {
-        this.user = user;
-        this.product = product;
+    public static Favorite create(User user, Product product) {
+        Favorite favorite = new Favorite();
+        favorite.setUser(user);
+        favorite.setProduct(product);
+        return favorite;
     }
 }

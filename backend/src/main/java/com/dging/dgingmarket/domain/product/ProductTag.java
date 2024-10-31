@@ -33,11 +33,6 @@ public class ProductTag {
     @JoinColumn(name = "tag_id", nullable = false, insertable = false, updatable = false)
     private Tag tag;
 
-    public ProductTag(Product product, Tag tag) {
-        this.product = product;
-        this.tag = tag;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,5 +44,12 @@ public class ProductTag {
     @Override
     public int hashCode() {
         return Objects.hash(product, tag);
+    }
+
+    public static ProductTag create(Product product, Tag tag) {
+        ProductTag productTag = new ProductTag();
+        productTag.setProduct(product);
+        productTag.setTag(tag);
+        return productTag;
     }
 }

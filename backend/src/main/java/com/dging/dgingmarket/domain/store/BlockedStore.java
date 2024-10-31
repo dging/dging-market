@@ -36,12 +36,14 @@ public class BlockedStore {
     @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
     private User user;
 
-    public BlockedStore(Store store, User user) {
-        this.store = store;
-        this.user = user;
-    }
-
     @CreatedDate
     @Column(length = 6, nullable = false)
     private Date createdAt;
+
+    public static BlockedStore create(Store store, User user) {
+        BlockedStore blockedStore = new BlockedStore();
+        blockedStore.setStore(store);
+        blockedStore.setUser(user);
+        return blockedStore;
+    }
 }
