@@ -18,9 +18,11 @@ import java.util.Objects;
 public class ProductTag {
 
     @Id
+    @Column(name = "product_id")
     private Long productId;
 
     @Id
+    @Column(name = "tag_id")
     private Long tagId;
 
     @ManyToOne(fetch = FetchType.LAZY)

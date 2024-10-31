@@ -31,8 +31,7 @@ public class Store {
     @Column(length = 500)
     private String introduction;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     @CreatedDate
@@ -41,7 +40,7 @@ public class Store {
 
     @LastModifiedDate
     @Column(length = 6, nullable = false)
-    private Date lastModifiedAt;
+    private Date updatedAt;
 
     public static Store create(String name, String introduction) {
         Store store = new Store();
