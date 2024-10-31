@@ -16,5 +16,5 @@ import javax.validation.constraints.NotEmpty;
 public class ProductDeleteRequest {
 
     @NotEmpty
-    private String seq;
+    private Long id;
 }

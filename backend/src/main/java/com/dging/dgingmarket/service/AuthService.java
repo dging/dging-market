@@ -68,9 +68,9 @@ public class AuthService {
 
     @Transactional
     public TokenResponse socialLogin(User user) {
-        refreshTokenRepository.findByKey(user.getSeq().toString()).ifPresent(refreshTokenRepository::delete);
-        TokenResponse tokenResponse = jwtProvider.createToken(user.getSeq().toString(), user.getRoles().stream().map(Role::getValue).collect(Collectors.toList()));
-        refreshTokenRepository.save(RefreshToken.create(user.getSeq().toString(), tokenResponse.getRefreshToken()));
+        refreshTokenRepository.findByKey(user.getId().toString()).ifPresent(refreshTokenRepository::delete);
+        TokenResponse tokenResponse = jwtProvider.createToken(user.getId().toString(), user.getRoles().stream().map(Role::getValue).collect(Collectors.toList()));
+        refreshTokenRepository.save(RefreshToken.create(user.getId().toString(), tokenResponse.getRefreshToken()));
         return tokenResponse;
     }
 
@@ -88,10 +88,10 @@ public class AuthService {
 
         String accessToken = request.getAccessToken();
         Authentication authentication = jwtProvider.getAuthentication(accessToken);
-        User foundUser = EntityUtils.userThrowable(userRepository, ((User)authentication.getPrincipal()).getSeq());
+        User foundUser = EntityUtils.userThrowable(userRepository, ((User)authentication.getPrincipal()).getId());
 
         //리프레시 토큰 없음
-        RefreshToken refreshToken = refreshTokenRepository.findByKey(foundUser.getSeq().toString())
+        RefreshToken refreshToken = refreshTokenRepository.findByKey(foundUser.getId().toString())
                 .orElseThrow(CTokenException.CRefreshTokenException::new);
 
         //리프레시 토큰 불일치
@@ -99,7 +99,7 @@ public class AuthService {
             throw new CTokenException.CRefreshTokenException();
         }
 
-        TokenResponse newCreatedToken = jwtProvider.createToken(foundUser.getSeq().toString(), foundUser.getRoles().stream().map(Role::getValue).collect(Collectors.toList()));
+        TokenResponse newCreatedToken = jwtProvider.createToken(foundUser.getId().toString(), foundUser.getRoles().stream().map(Role::getValue).collect(Collectors.toList()));
         refreshToken.update(newCreatedToken.getRefreshToken());
 
         log.debug(newCreatedToken.getAccessToken());
@@ -110,7 +110,7 @@ public class AuthService {
     public UserDetailsResponse userDetails() {
         User user = EntityUtils.userThrowable();
         return new UserDetailsResponse(
-                user.getSeq().toString(),
+                user.getId(),
                 user.getUserId(),
                 user.getUsername(),
                 user.getProvider(),

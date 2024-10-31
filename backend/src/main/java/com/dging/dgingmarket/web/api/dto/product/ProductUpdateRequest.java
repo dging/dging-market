@@ -19,7 +19,7 @@ public class ProductUpdateRequest {
     MultipartFile image;
 
     @NotEmpty
-    private String seq;
+    private Long id;
 
     @NotEmpty
     private String title;

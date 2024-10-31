@@ -18,7 +18,7 @@ import javax.validation.constraints.NotEmpty;
 public class ProductRunningStatusChangeRequest {
 
     @NotEmpty
-    private String seq;
+    private Long id;
 
     @NotEmpty
     @Enum(enumClass = RunningStatus.class, ignoreCase = true, message = "[판매중, 예약중, 거래완료] 중에 하나이어야 합니다.")

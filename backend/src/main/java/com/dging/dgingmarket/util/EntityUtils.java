@@ -9,8 +9,8 @@ public class EntityUtils {
         return SecurityUtils.user()
                 .orElseThrow(CUserNotFoundException::new);
     }
-    public static User userThrowable(UserRepository userRepository, String seq) {
-        return userRepository.findBySeq(seq)
+    public static User userThrowable(UserRepository userRepository, Long id) {
+        return userRepository.findById(id)
                 .orElseThrow(CUserNotFoundException::new);
     }
 }

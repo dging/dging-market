@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserDetailsResponse {
 
-    private String seq;
+    private Long id;
     private String userId;
     private String username;
     private String provider;

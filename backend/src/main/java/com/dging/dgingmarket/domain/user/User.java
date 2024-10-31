@@ -40,18 +40,9 @@ import static javax.persistence.FetchType.EAGER;
 @EntityListeners({AuditingEntityListener.class, IpEntityListener.class})
 public class User implements UserDetails {
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_manager_user")
-    @GenericGenerator(name = "seq_manager_user", strategy = "com.dging.dgingmarket.util.manager.SeqManager", parameters = {
-            @org.hibernate.annotations.Parameter(name = SeqManager.VALUE_USER_SEQ_PARAMETER, value = "user_"),
-            @org.hibernate.annotations.Parameter(name = SeqManager.NUMBER_FORMAT_PARAMETER, value = "%010d"),
-            @org.hibernate.annotations.Parameter(name = SeqManager.VALUE_COLUMN_PARAM, value = "seq"),
-            @org.hibernate.annotations.Parameter(name = SeqManager.OPT_PARAM, value = "pooled"),
-            @org.hibernate.annotations.Parameter(name = SeqManager.INITIAL_PARAM, value = "1"),
-            @org.hibernate.annotations.Parameter(name = SeqManager.INCREMENT_PARAM, value = "1000")
-    })
-    @Column(nullable = false, updatable = false, length = 15)
     @Id
-    private String seq;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(length = 20, unique = true)
     private String userId;

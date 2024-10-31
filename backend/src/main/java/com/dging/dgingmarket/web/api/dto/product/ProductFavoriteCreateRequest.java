@@ -14,5 +14,5 @@ import javax.validation.constraints.NotEmpty;
 public class ProductFavoriteCreateRequest {
 
     @NotEmpty
-    private String seq;
+    private Long id;
 }

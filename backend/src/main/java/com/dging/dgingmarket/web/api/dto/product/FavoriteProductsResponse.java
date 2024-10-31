@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class FavoriteProductsResponse {
 
-    private String seq;
+    private Long id;
     private String title;
     private RunningStatus runningStatus;
     private String imageUrl;

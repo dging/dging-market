@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class StoreProductsResponse {
 
-    private String seq;
+    private Long id;
     private String title;
     private int favoriteCount;
     private RunningStatus runningStatus;

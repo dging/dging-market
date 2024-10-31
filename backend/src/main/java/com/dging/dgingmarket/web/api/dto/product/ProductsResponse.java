@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ProductsResponse {
 
-    private String seq;
+    private Long id;
     private String title;
     private RunningStatus runningStatus;
     private String imageUrl;
