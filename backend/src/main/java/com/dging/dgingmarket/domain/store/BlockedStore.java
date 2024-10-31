@@ -15,15 +15,17 @@ import java.util.Date;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "TBL_STORE")
+@Table(name = "TBL_BLOCKED_STORE")
 @IdClass(BlockedStoreId.class)
 @EntityListeners({AuditingEntityListener.class})
 public class BlockedStore {
 
     @Id
+    @Column(name = "store_id")
     private Long storeId;
 
     @Id
+    @Column(name = "user_id")
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
