@@ -31,4 +31,9 @@ public class Favorite {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
     private Product product;
+
+    public Favorite(User user, Product product) {
+        this.user = user;
+        this.product = product;
+    }
 }

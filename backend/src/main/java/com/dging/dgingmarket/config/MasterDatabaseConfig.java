@@ -27,6 +27,7 @@ import java.util.Map;
         transactionManagerRef = "dgingmarketDbTransactionManager",
         basePackages = {
                 "com.dging.dgingmarket.domain.base",
+                "com.dging.dgingmarket.domain.chat",
                 "com.dging.dgingmarket.domain.common",
                 "com.dging.dgingmarket.domain.product",
                 "com.dging.dgingmarket.domain.refreshtoken",
@@ -62,6 +63,7 @@ public class MasterDatabaseConfig {
         em.setDataSource(dgingmarketDbDataSource());
         em.setPackagesToScan(
                 "com.dging.dgingmarket.domain.base",
+                "com.dging.dgingmarket.domain.chat",
                 "com.dging.dgingmarket.domain.common",
                 "com.dging.dgingmarket.domain.product",
                 "com.dging.dgingmarket.domain.refreshtoken",
