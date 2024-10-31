@@ -27,9 +27,11 @@ import java.util.Map;
         transactionManagerRef = "dgingmarketDbTransactionManager",
         basePackages = {
                 "com.dging.dgingmarket.domain.base",
-                "com.dging.dgingmarket.domain.common.enums",
+                "com.dging.dgingmarket.domain.common",
+                "com.dging.dgingmarket.domain.product",
                 "com.dging.dgingmarket.domain.refreshtoken",
-                "com.dging.dgingmarket.domain.user"
+                "com.dging.dgingmarket.domain.store",
+                "com.dging.dgingmarket.domain.user",
         }
 )
 @RequiredArgsConstructor
@@ -60,8 +62,10 @@ public class MasterDatabaseConfig {
         em.setDataSource(dgingmarketDbDataSource());
         em.setPackagesToScan(
                 "com.dging.dgingmarket.domain.base",
-                "com.dging.dgingmarket.domain.common.enums",
+                "com.dging.dgingmarket.domain.common",
+                "com.dging.dgingmarket.domain.product",
                 "com.dging.dgingmarket.domain.refreshtoken",
+                "com.dging.dgingmarket.domain.store",
                 "com.dging.dgingmarket.domain.user"
         );
 
