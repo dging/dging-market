@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class ProductImage extends Image {
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     public static ProductImage create(String fileName, String path, String url, int size) {

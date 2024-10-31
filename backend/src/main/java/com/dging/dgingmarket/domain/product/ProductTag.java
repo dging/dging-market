@@ -24,11 +24,11 @@ public class ProductTag {
     private Long tagId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag_id", insertable = false, updatable = false)
+    @JoinColumn(name = "tag_id", nullable = false, insertable = false, updatable = false)
     private Tag tag;
 
     public ProductTag(Product product, Tag tag) {

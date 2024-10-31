@@ -25,18 +25,19 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 200)
+    @Column(length = 200, nullable = false)
     private String fileName;
 
-    @Column(length = 500)
+    @Column(length = 500, nullable = false)
     private String path;
 
-    @Column(length = 500)
+    @Column(length = 500, nullable = false)
     private String url;
 
+    @Column(nullable = false)
     private int size;
 
     @CreatedDate
-    @Column(length = 6)
+    @Column(length = 6, nullable = false)
     private Date createdAt;
 }
