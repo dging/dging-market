@@ -19,9 +19,6 @@ import javax.validation.constraints.NotEmpty;
 public class ProductRunningStatusChangeRequest {
 
     @NotEmpty
-    private Long id;
-
-    @NotEmpty
     @Enum(enumClass = RunningStatus.class, ignoreCase = true, message = ValidationMessages.RUNNING_STATUS)
     private RunningStatus runningStatus;
 }
