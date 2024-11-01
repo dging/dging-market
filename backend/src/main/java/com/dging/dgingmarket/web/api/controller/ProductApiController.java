@@ -2,16 +2,17 @@ package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.cloud.FileUploadService;
+import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
+import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -38,5 +39,13 @@ public class ProductApiController {
         productService.update(request);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @GetMapping
+    ResponseEntity<Page<ProductsResponse>> fetchProducts(Pageable pageable, @Valid CommonCondition cond) {
+
+        Page<ProductsResponse> response = productService.products(pageable, cond);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

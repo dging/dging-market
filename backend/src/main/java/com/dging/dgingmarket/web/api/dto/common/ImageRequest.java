@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
+import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.util.validation.Enum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,7 +22,7 @@ public class ImageRequest {
     private MultipartFile image;
 
     @NotEmpty
-    @Enum(enumClass = ImageType.class, ignoreCase = true, message = "[상품, 채팅] 중에 하나이어야 합니다.")
+    @Enum(enumClass = ImageType.class, ignoreCase = true, message = ValidationMessages.IMAGE_TYPE)
     private String type;
 
     @JsonIgnore

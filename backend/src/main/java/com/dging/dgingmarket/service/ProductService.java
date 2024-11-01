@@ -10,13 +10,18 @@ import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
+import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
+import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -65,6 +70,10 @@ public class ProductService {
                 foundProduct.isDirectTradeAvailable(),
                 foundProduct.isShippingFreeIncluded()
         );
+    }
+
+    public Page<ProductsResponse> products(Pageable pageable, CommonCondition cond) {
+        return productRepository.products(pageable, cond);
     }
 
     private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {
