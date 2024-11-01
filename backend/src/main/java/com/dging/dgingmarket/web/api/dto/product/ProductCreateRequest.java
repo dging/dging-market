@@ -4,6 +4,7 @@ import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Store;
+import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
 import lombok.AccessLevel;
@@ -34,7 +35,7 @@ public class ProductCreateRequest {
     private String subCategory;
 
     @NotEmpty
-    @Enum(enumClass = ProductQuality.class, ignoreCase = true, message = "[최상, 상, 중] 중에 하나이어야 합니다.")
+    @Enum(enumClass = ProductQuality.class, ignoreCase = true, message = ValidationMessages.PRODUCT_QUALITY)
     private String quality;
 
     private String content;

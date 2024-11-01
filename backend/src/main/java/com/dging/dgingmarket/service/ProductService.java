@@ -12,11 +12,9 @@ import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CProduc
 import com.dging.dgingmarket.exception.business.CInvalidValueException;
 import com.dging.dgingmarket.exception.business.CInvalidValueException.CUserOwnProductException;
 import com.dging.dgingmarket.util.EntityUtils;
+import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
-import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
-import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
-import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
+import com.dging.dgingmarket.web.api.dto.product.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -100,6 +98,20 @@ public class ProductService {
         }
 
         foundProduct.delete();
+    }
+
+    @Transactional
+    public void changeRunningStatus(Long id, RunningStatus runningStatus) {
+
+        User user = EntityUtils.userThrowable();
+
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(CProductNotFoundException::new);
+
+        if (!Objects.equals(foundProduct.getStoreId(), user.getStore().getId())) {
+            throw new CUserOwnProductException();
+        }
+
+        foundProduct.changeRunningStatus(runningStatus);
     }
 
     private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {

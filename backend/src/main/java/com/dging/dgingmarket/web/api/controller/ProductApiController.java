@@ -2,10 +2,7 @@ package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
-import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
-import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
-import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
+import com.dging.dgingmarket.web.api.dto.product.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -62,5 +59,13 @@ public class ProductApiController {
         productService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/{id}")
+    ResponseEntity<Void> changeRunningStatus(@PathVariable Long id, @Valid @RequestBody ProductRunningStatusChangeRequest request) {
+
+        productService.changeRunningStatus(id, request.getRunningStatus());
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
