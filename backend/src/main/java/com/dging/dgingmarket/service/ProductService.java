@@ -9,6 +9,8 @@ import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CProductNotFoundException;
+import com.dging.dgingmarket.exception.business.CInvalidValueException;
+import com.dging.dgingmarket.exception.business.CInvalidValueException.CUserOwnProductException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
@@ -83,7 +85,14 @@ public class ProductService {
     @Transactional
     public void delete(Long id) {
 
-        Product foundProduct = productRepository.findById(id).orElseThrow(CProductNotFoundException::new);
+        User user = EntityUtils.userThrowable();
+
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(CProductNotFoundException::new);
+
+        if (!Objects.equals(foundProduct.getStoreId(), user.getStore().getId())) {
+            throw new CUserOwnProductException();
+        }
+
         foundProduct.delete();
     }
 

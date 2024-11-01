@@ -18,4 +18,10 @@ public class CInvalidValueException extends CBusinessException {
             super(ErrorCode.LOGIN_FAIL);
         }
     }
+
+    public static class CUserOwnProductException extends CInvalidValueException {
+        public CUserOwnProductException() {
+            super(ErrorCode.USER_OWN_PRODUCT);
+        }
+    }
 }

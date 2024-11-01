@@ -21,6 +21,7 @@ public enum ErrorCode {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1003", "사용자가 존재하지 않습니다."),
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1004", "리프레시 토큰이 존재하지 않습니다."),
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1005", "상품이 존재하지 않습니다."),
+    USER_OWN_PRODUCT(HttpStatus.FORBIDDEN.value(), "DGM-1006", "사용자의 상품이 아닙니다."),
 
     /**
      * SOCIAL
