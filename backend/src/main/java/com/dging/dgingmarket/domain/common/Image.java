@@ -1,8 +1,12 @@
 package com.dging.dgingmarket.domain.common;
 
 import com.dging.dgingmarket.domain.user.User;
-import com.dging.dgingmarket.listener.IpEntityListener;
-import lombok.*;
+import com.dging.dgingmarket.util.converter.ImageTypeAttributeConverter;
+import com.dging.dgingmarket.util.enums.ImageType;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -21,8 +25,9 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Convert(converter = ImageTypeAttributeConverter.class)
     @Column(length = 20, nullable = false)
-    private String type;
+    private ImageType type;
 
     @Column(length = 200, nullable = false)
     private String fileName;
@@ -47,7 +52,7 @@ public class Image {
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     private Long userId;
 
-    public static Image create(User user, String type, String fileName, String path, String url, int size) {
+    public static Image create(User user, ImageType type, String fileName, String path, String url, int size) {
         Image image = new Image();
         image.setUser(user);
         image.setType(type);

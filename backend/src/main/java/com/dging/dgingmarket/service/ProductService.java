@@ -8,8 +8,10 @@ import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
+import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
+import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,52 +34,85 @@ public class ProductService {
     @Transactional
     public void create(ProductCreateRequest request) {
 
-        Product productToCreate = generateProduct(request);
+        final List<Image> imagesToCreate = generateProductImages(request.getImageIds());
+        final List<Tag> tagsToCreate = generateProductTags(request.getTags());
+        Product productToCreate = generateProduct(request, imagesToCreate, tagsToCreate);
         productRepository.save(productToCreate);
-
-        //이미지 업로드(예외처리 포함)
-        //이미지 설정
-
     }
 
-    private Product generateProduct(ProductCreateRequest request) {
+    @Transactional
+    public void update(ProductUpdateRequest request) {
+
+        Product foundProduct = productRepository.findById(request.getId()).orElseThrow(CEntityNotFoundException.CProductNotFoundException::new);
+
+        final List<Image> imagesToCreate = generateProductImages(request.getImageIds());
+        final List<Tag> tagsToCreate = generateProductTags(request.getTags());
+
+        foundProduct.update(
+                request.getTitle(),
+                request.getContent(),
+                request.getMainCategory(),
+                foundProduct.getMiddleCategory(),
+                foundProduct.getSubCategory(),
+                imagesToCreate,
+                tagsToCreate,
+                foundProduct.getPrice(),
+                request.getQuality(),
+                foundProduct.getQuantity(),
+                foundProduct.isAllowsOffers(),
+                foundProduct.getRegion(),
+                foundProduct.getLocation(),
+                foundProduct.isDirectTradeAvailable(),
+                foundProduct.isShippingFreeIncluded()
+        );
+    }
+
+    private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {
 
         User user = EntityUtils.userThrowable();
         Store store = user.getStore();
-
-        final List<Image> imagesToCreate = new ArrayList<>();
-        final List<Tag> tagsToCreate = new ArrayList<>();
-
-        if(request.getImageIds() != null && !request.getImageIds().isEmpty()) {
-            imagesToCreate.addAll(generateProductImages(request.getImageIds()));
-        }
-
-        if(request.getTags() != null && !request.getTags().isEmpty()) {
-            tagsToCreate.addAll(generateProductTags(request.getTags()));
-        }
 
         return request.toEntityWith(store, imagesToCreate, tagsToCreate);
     }
 
     private List<Image> generateProductImages(List<Long> requestImageIds) {
 
+        final List<Image> imagesToCreate = new ArrayList<>();
+
+        if(requestImageIds == null || requestImageIds.isEmpty()) {
+            return imagesToCreate;
+        }
+
         User user = EntityUtils.userThrowable();
         List<Image> foundImages = imageRepository.findByIdIn(requestImageIds);
 
-        if(foundImages.isEmpty()) {
-            throw new RuntimeException("요청에 대응하는 결과가 없는 경우");
+        if(foundImages.size() < requestImageIds.size()) {
+            throw new RuntimeException("업로드가 되지 않은 파일이 있는 경우");
         }
 
-        if(foundImages.stream().noneMatch(v -> Objects.equals(v.getUser().getId(), user.getId()))) {
-            throw new RuntimeException("요청에 대응하는 결과는 있지만 본인이 업로드한 파일이 아닌 경우");
+        if(foundImages.stream().anyMatch(v -> !Objects.equals(v.getUser().getId(), user.getId()))) {
+            throw new RuntimeException("본인이 업로드하지 않은 파일이 있는 경우");
         }
 
-        return foundImages;
+        for (Long requestImageId : requestImageIds) {
+            foundImages.stream()
+                    .filter(v -> Objects.equals(v.getId(), requestImageId))
+                    .findAny()
+                    .ifPresent(imagesToCreate::add);
+        }
+
+        return imagesToCreate;
     }
 
     private List<Tag> generateProductTags(List<String> requestTagNames) {
+
+        final List<Tag> tagsToCreate = new ArrayList<>();
+
+        if(requestTagNames == null || requestTagNames.isEmpty()) {
+            return tagsToCreate;
+        }
+
         List<Tag> foundTags = tagRepository.findByNameIn(requestTagNames);
-        List<Tag> tagsToCreate = new ArrayList<>();
 
         for (String requestTagName : requestTagNames) {
             Tag tagToCreate = foundTags.stream()

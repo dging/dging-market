@@ -1,17 +1,16 @@
 package com.dging.dgingmarket.web.api.controller;
 
-import com.dging.dgingmarket.util.enums.SocialType;
-import com.dging.dgingmarket.web.api.dto.common.TokenRequest;
-import com.dging.dgingmarket.web.api.dto.common.TokenResponse;
-import com.dging.dgingmarket.web.api.dto.common.SocialLoginRequest;
-import com.dging.dgingmarket.web.api.dto.user.LoginRequest;
-import com.dging.dgingmarket.web.api.dto.user.SocialSignupRequest;
-import com.dging.dgingmarket.web.api.dto.user.UserDetailsResponse;
-import com.dging.dgingmarket.web.api.dto.user.UserUpdateRequest;
 import com.dging.dgingmarket.client.dto.SocialProfile;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CUserNotFoundException;
 import com.dging.dgingmarket.service.AuthService;
 import com.dging.dgingmarket.service.social.OAuthService;
+import com.dging.dgingmarket.util.enums.SocialType;
+import com.dging.dgingmarket.web.api.dto.common.SocialLoginRequest;
+import com.dging.dgingmarket.web.api.dto.common.TokenRequest;
+import com.dging.dgingmarket.web.api.dto.common.TokenResponse;
+import com.dging.dgingmarket.web.api.dto.user.LoginRequest;
+import com.dging.dgingmarket.web.api.dto.user.SocialSignupRequest;
+import com.dging.dgingmarket.web.api.dto.user.UserDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

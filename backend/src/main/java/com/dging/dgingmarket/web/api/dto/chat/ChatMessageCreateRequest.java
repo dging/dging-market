@@ -4,8 +4,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  *  채팅 메시지 생성 요청 DTO
  *  - 웹소켓에서 사용하기 때문에 이미지 파일은 직접적으로 포함할 수 없음

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(of = {"image", "product"})
 @Table(name = "TBL_PRODUCT_IMAGE")
 public class ProductImage {
 

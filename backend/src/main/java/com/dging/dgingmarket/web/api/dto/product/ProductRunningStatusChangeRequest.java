@@ -1,13 +1,11 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
 import com.dging.dgingmarket.util.constant.ValidationMessages;
-import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.util.validation.Enum;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 

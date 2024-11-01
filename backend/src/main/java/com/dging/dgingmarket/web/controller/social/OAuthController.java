@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.controller.social;
 
-import com.dging.dgingmarket.util.enums.SocialType;
 import com.dging.dgingmarket.service.social.OAuthService;
+import com.dging.dgingmarket.util.enums.SocialType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

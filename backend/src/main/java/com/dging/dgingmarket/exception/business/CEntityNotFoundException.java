@@ -13,4 +13,10 @@ public class CEntityNotFoundException extends CBusinessException {
         }
     }
 
+    public static class CProductNotFoundException extends CEntityNotFoundException {
+        public CProductNotFoundException() {
+            super(ErrorCode.PRODUCT_NOT_FOUND);
+        }
+    }
+
 }

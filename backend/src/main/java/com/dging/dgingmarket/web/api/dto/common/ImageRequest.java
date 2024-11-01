@@ -1,5 +1,7 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
+import com.dging.dgingmarket.util.enums.ImageType;
+import com.dging.dgingmarket.util.validation.Enum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ public class ImageRequest {
     private MultipartFile image;
 
     @NotEmpty
+    @Enum(enumClass = ImageType.class, ignoreCase = true, message = "[상품, 채팅] 중에 하나이어야 합니다.")
     private String type;
 
     @JsonIgnore
@@ -26,4 +29,8 @@ public class ImageRequest {
 
     @JsonIgnore
     private String fileName;
+
+    public ImageType getType() {
+        return ImageType.find(type);
+    }
 }

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(of = {"product", "tag"})
 @Table(name = "TBL_PRODUCT_TAG")
 public class ProductTag {
 

@@ -5,9 +5,10 @@ import com.dging.dgingmarket.util.validation.Enum;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 상품 수정 요청 DTO
@@ -16,9 +17,9 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductUpdateRequest {
 
-    MultipartFile image;
+    List<Long> imageIds;
 
-    @NotEmpty
+    @NotNull
     private Long id;
 
     @NotEmpty
@@ -34,11 +35,11 @@ public class ProductUpdateRequest {
 
     @NotEmpty
     @Enum(enumClass = ProductQuality.class, ignoreCase = true, message = "[최상, 상, 중] 중에 하나이어야 합니다.")
-    private ProductQuality quality;
+    private String quality;
 
-    private String description;
+    private String content;
 
-    private String tags;
+    private List<String> tags;
 
     private int price;
 
@@ -55,5 +56,9 @@ public class ProductUpdateRequest {
     private int quantity;
 
     private boolean isTemporarySave;
+
+    public ProductQuality getQuality() {
+        return ProductQuality.find(quality);
+    }
 
 }

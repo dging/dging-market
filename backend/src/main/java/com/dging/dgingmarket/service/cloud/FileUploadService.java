@@ -8,6 +8,7 @@ import com.dging.dgingmarket.domain.common.ImageRepository;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.FileUtils;
+import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class FileUploadService {
     private final ImageRepository imageRepository;
 
     @Transactional
-    public ImageResponse upload(MultipartFile uploadFile, String filePath, String type) {
+    public ImageResponse upload(MultipartFile uploadFile, String filePath, ImageType type) {
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(uploadFile.getSize());

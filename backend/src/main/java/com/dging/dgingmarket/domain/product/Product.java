@@ -108,15 +108,21 @@ public class Product {
     private void setRequiredProductImagesOnly(List<Image> images) {
 
         int size = images.size();
-        ArrayList<ProductImage> tempProductImages = new ArrayList<>();
+        List<ProductImage> tempProductImages = new ArrayList<>();
 
         for (int i = 0; i < size; ++i) {
-
             Image image = images.get(i);
-            ProductImage productImageToCreate = ProductImage.create(this, image, i + 1);
+            tempProductImages.add(ProductImage.create(this, image, i + 1));
+        }
 
-            if(!this.images.contains(productImageToCreate)) {
-                tempProductImages.add(productImageToCreate);
+        for (int i = 0; i < size; ++i) {
+            ProductImage tempProductImage = tempProductImages.get(i);
+            for (ProductImage thisProductImage : this.images) {
+                if(Objects.equals(thisProductImage, tempProductImage)) {
+                    thisProductImage.setPriority(tempProductImage.getPriority());
+                    tempProductImages.set(i, thisProductImage);
+                    break;
+                }
             }
         }
 
@@ -130,11 +136,18 @@ public class Product {
         ArrayList<ProductTag> tempProductTags = new ArrayList<>();
 
         for(int i = 0; i < size; ++i) {
+            Tag tag = tags.get(i);
+            tempProductTags.add(ProductTag.create(this, tag, i + 1));
+        }
 
-            ProductTag productTagToCreate = ProductTag.create(this, tags.get(i), i + 1);
-
-            if(!productTags.contains(productTagToCreate)) {
-                tempProductTags.add(productTagToCreate);
+        for (int i = 0; i < size; ++i) {
+            ProductTag tempProductTag = tempProductTags.get(i);
+            for (ProductTag thisProductTag : this.productTags) {
+                if(Objects.equals(thisProductTag, tempProductTag)) {
+                    thisProductTag.setPriority(tempProductTag.getPriority());
+                    tempProductTags.set(i, thisProductTag);
+                    break;
+                }
             }
         }
 

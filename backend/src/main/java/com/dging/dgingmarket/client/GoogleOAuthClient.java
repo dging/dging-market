@@ -1,12 +1,12 @@
 package com.dging.dgingmarket.client;
 
 import com.dging.dgingmarket.DgingMarketApplication;
-import com.dging.dgingmarket.service.UrlService;
-import com.google.gson.Gson;
 import com.dging.dgingmarket.client.dto.GoogleProfile;
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
 import com.dging.dgingmarket.client.dto.SocialProfile;
 import com.dging.dgingmarket.exception.social.CSocialException.CSocialCommunicationException;
+import com.dging.dgingmarket.service.UrlService;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

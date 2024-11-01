@@ -6,11 +6,9 @@ import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
-import com.dging.dgingmarket.web.api.dto.common.ImageRequest;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
