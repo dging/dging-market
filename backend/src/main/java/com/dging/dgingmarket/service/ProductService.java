@@ -9,7 +9,6 @@ import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CProductNotFoundException;
-import com.dging.dgingmarket.exception.business.CInvalidValueException;
 import com.dging.dgingmarket.exception.business.CInvalidValueException.CUserOwnProductException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.enums.RunningStatus;
@@ -84,6 +83,10 @@ public class ProductService {
 
     public ProductResponse product(Long id) {
         return productRepository.product(id).orElseThrow(CProductNotFoundException::new);
+    }
+
+    public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond) {
+        return productRepository.storeProducts(pageable, storeId, cond);
     }
 
     @Transactional

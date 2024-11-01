@@ -5,6 +5,7 @@ import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
+import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Order;
@@ -46,6 +47,88 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
+    public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond) {
+
+        JPAQuery<Product> query = queryFactory.selectFrom(product)
+                .join(store).on(store.eq(product.store))
+                .leftJoin(productImage).on(productImage.product.eq(product))
+                .leftJoin(image).on(image.eq(productImage.image))
+                .leftJoin(productTag).on(productTag.product.eq(product))
+                .leftJoin(tag).on(tag.eq(productTag.tag))
+                .leftJoin(favorite).on(favorite.product.eq(product))
+                .where(
+                        product.deleted.isFalse(),
+                        store.id.eq(storeId),
+                        search(cond.getQuery()),
+                        dateGoe(cond.getDateFrom()),
+                        dateLt(cond.getDateTo())
+                )
+                .groupBy(product.id);
+
+        for (Sort.Order o : pageable.getSort()) {
+            PathBuilder<? extends Product> pathBuilder = new PathBuilder<Product>(product.getType(), product.getMetadata());
+            query.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC,
+                    pathBuilder.get(o.getProperty())));
+        }
+
+        if(pageable.getSort().isEmpty()) {
+            query = query.orderBy(product.createdAt.desc());
+        }
+
+        List<StoreProductsResponse> queryResult = query
+                .transform(
+                        GroupBy.groupBy(product.id).list(
+                                Projections.constructor(StoreProductsResponse.class,
+                                        product.id,
+                                        store.id,
+                                        store.name,
+                                        product.title,
+                                        favorite.count().castToNum(Integer.class),
+                                        product.runningStatus,
+                                        GroupBy.list(Projections.constructor(ImageResponse.class,
+                                                image.id,
+                                                image.url).skipNulls()),
+                                        product.price,
+                                        GroupBy.list(Projections.constructor(TagResponse.class,
+                                                tag.id,
+                                                tag.name).skipNulls()),
+                                        product.createdAt,
+                                        product.updatedAt
+                                ).skipNulls()
+                        )
+                );
+
+        queryResult.forEach(productsResponse -> {
+
+            List<ImageResponse> distinctImages = productsResponse.getImageUrls().stream()
+                    .distinct()
+                    .collect(Collectors.toList());
+            productsResponse.setImageUrls(distinctImages);
+
+            List<TagResponse> distinctTags = productsResponse.getTags().stream()
+                    .distinct()
+                    .collect(Collectors.toList());
+            productsResponse.setTags(distinctTags);
+        });
+
+        int totalCount = queryResult.size();
+
+        long offset = pageable.getOffset();
+
+        if(offset > totalCount) {
+            return new PageImpl(Collections.EMPTY_LIST, pageable, totalCount);
+        }
+
+        int limit = pageable.getPageSize() * (pageable.getPageNumber() + 1);
+
+        if (limit > totalCount) {
+            limit = totalCount;
+        }
+
+        return new PageImpl(queryResult.subList((int) offset, limit), pageable, totalCount);
+    }
+
+    @Override
     public Page<ProductsResponse> products(Pageable pageable, CommonCondition cond) {
 
         JPAQuery<Product> query = queryFactory.selectFrom(product)
@@ -54,13 +137,13 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .leftJoin(image).on(image.eq(productImage.image))
                 .leftJoin(productTag).on(productTag.product.eq(product))
                 .leftJoin(tag).on(tag.eq(productTag.tag))
-                .distinct()
                 .where(
                         product.deleted.isFalse(),
                         search(cond.getQuery()),
                         dateGoe(cond.getDateFrom()),
                         dateLt(cond.getDateTo())
-                );
+                )
+                .groupBy(product.id);
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Product> pathBuilder = new PathBuilder<Product>(product.getType(), product.getMetadata());
