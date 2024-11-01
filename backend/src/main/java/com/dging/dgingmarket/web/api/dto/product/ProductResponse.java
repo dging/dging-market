@@ -1,6 +1,5 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;

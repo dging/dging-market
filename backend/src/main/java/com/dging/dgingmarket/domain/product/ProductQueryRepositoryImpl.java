@@ -1,17 +1,11 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.domain.common.QImage;
-import com.dging.dgingmarket.domain.common.QTag;
-import com.dging.dgingmarket.domain.store.QStore;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CProductNotFoundException;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -27,7 +21,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.Collections;
 import java.util.Date;
@@ -63,6 +56,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .leftJoin(tag).on(tag.eq(productTag.tag))
                 .distinct()
                 .where(
+                        product.deleted.isFalse(),
                         search(cond.getQuery()),
                         dateGoe(cond.getDateFrom()),
                         dateLt(cond.getDateTo())
@@ -140,7 +134,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .leftJoin(image).on(image.eq(productImage.image))
                 .leftJoin(productTag).on(productTag.product.eq(product))
                 .leftJoin(tag).on(tag.eq(productTag.tag))
-                .where(product.id.eq(id))
+                .where(product.id.eq(id), product.deleted.isFalse())
                 .transform(
                         GroupBy.groupBy(product.id).list(
                                 Projections.constructor(ProductResponse.class,

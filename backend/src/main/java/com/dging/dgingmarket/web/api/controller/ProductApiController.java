@@ -1,7 +1,6 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.service.ProductService;
-import com.dging.dgingmarket.service.cloud.FileUploadService;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 @Slf4j
