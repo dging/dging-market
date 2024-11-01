@@ -25,7 +25,6 @@ import javax.validation.Valid;
 public class ProductApiController {
 
     private final ProductService productService;
-    private final FileUploadService fileUploadService;
 
     @PostMapping
     ResponseEntity<Void> create(@Valid ProductCreateRequest request) {
@@ -57,5 +56,13 @@ public class ProductApiController {
         ProductResponse response = productService.product(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> delete(@PathVariable Long id) {
+
+        productService.delete(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

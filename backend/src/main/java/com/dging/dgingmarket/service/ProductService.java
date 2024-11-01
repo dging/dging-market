@@ -82,6 +82,13 @@ public class ProductService {
         return productRepository.product(id).orElseThrow(CProductNotFoundException::new);
     }
 
+    @Transactional
+    public void delete(Long id) {
+
+        Product foundProduct = productRepository.findById(id).orElseThrow(CProductNotFoundException::new);
+        foundProduct.delete();
+    }
+
     private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {
 
         User user = EntityUtils.userThrowable();
