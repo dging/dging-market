@@ -29,7 +29,7 @@ export default function StoreMenu() {
       flexdirection='column'
       gap='16px'
     >
-      <StyledLink to='/mygoods'>내 상품</StyledLink>
+      <StyledLink to='/goodsmanage'>내 상품</StyledLink>
       <StyledLink to='/keepgoods'>찜한 상품</StyledLink>
       <StyledLink to='/setting'>계정 설정</StyledLink>
       <StyledLink to='/service'>고객센터</StyledLink>

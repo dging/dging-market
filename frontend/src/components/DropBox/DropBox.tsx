@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Btn from '../Button/Btn';
 import ImgBtn from '../Button/ImgBtn';
@@ -8,6 +9,8 @@ import DownArrowBlack from '../../assets/images/DownArrowBlack.png';
 
 type DropBoxType = BtnType & {
   items: Array<string>;
+  type?: string | undefined;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 type WrapItemType = ArrangeType & { $except?: boolean; $status?: boolean };
@@ -48,8 +51,24 @@ const WrapItem = styled(Arrange)<WrapItemType>`
 `;
 
 export default function DropBox(props: DropBoxType) {
+  const navigate = useNavigate();
   const [items, setItems] = useState<string>(props.items[0]);
   const [isShow, setIsShow] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (props.type !== undefined) {
+      setItems(props.type);
+    }
+  }, []);
+
+  const onClickItem = (type: string) => {
+    setItems(type);
+    navigate('/category', {
+      state: {
+        type: type,
+      },
+    });
+  };
 
   return (
     <Arrange position='relative'>
@@ -72,7 +91,7 @@ export default function DropBox(props: DropBoxType) {
               $status={items === value}
               key={index}
               onClick={() => {
-                setItems(value);
+                onClickItem(value);
                 setIsShow(false);
               }}
             >

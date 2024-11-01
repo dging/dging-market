@@ -12,7 +12,7 @@ export default function LoginHeader() {
   return (
     <Arrange $bottom={true} width='100%' display='flex' justifycontent='center'>
       <Arrange
-        width={`${theme.page_size.width_s}`}
+        width={`${theme.page_size.width}`}
         padding={`${theme.size.xxs} 0`}
         display='flex'
         justifycontent='right'

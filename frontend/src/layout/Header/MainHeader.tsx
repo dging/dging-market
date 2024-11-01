@@ -21,7 +21,7 @@ export default function MainHeader() {
       $bottom={true}
     >
       <Arrange
-        width={theme.page_size.width_s}
+        width={theme.page_size.width}
         display='flex'
         justifycontent='space-between'
         alignitems='center'

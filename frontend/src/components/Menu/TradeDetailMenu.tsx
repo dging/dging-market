@@ -25,14 +25,14 @@ export default function TradeDetailMenu() {
   const [isSelect, setIsSelect] = useState('판매내역');
   return (
     <Arrange
-      width='100vw'
-      minwidth='1200px'
+      width='100%'
+      minwidth={theme.page_size.minwidth}
       $bottom={true}
       display='flex'
       justifycontent='center'
     >
       <Arrange
-        width={theme.page_size.width_s}
+        width={theme.page_size.width}
         display='flex'
         alignitems='center'
         gap='20px'

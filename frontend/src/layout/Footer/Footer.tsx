@@ -15,7 +15,7 @@ const WrapFooter = styled(Arrange)`
 
 export default function Footer() {
   return (
-    <WrapFooter width='100vw' display='flex' justifycontent='center'>
+    <WrapFooter width='100%' display='flex' justifycontent='center'>
       <Arrange width='766px' display='flex' justifycontent='space-between'>
         <Arrange>
           <SpanBold>디깅마켓 | 개발자</SpanBold> 김민희, 김혜진, 이원석

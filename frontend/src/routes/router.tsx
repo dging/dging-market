@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from '../layout/Layout';
+import { DefaultLayout, MystoreLayout, HistoryLayout } from '../layout/Layout';
 import MainPage from '../pages/MainPage';
+import MainSearchPage from '../pages/MainSearchPage';
 import MystorePage from '../pages/MystorePage';
 import SellPage from '../pages/SellPage';
 import TalkPage from '../pages/TalkPage';
@@ -13,27 +14,25 @@ import HistoryPage from '../pages/HistoryPage';
 
 export const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <DefaultLayout />,
+    errorElement: <div>error</div>,
     children: [
       {
         path: '/',
         element: <MainPage />,
       },
       {
+        path: '/category',
+        element: <MainSearchPage />,
+      },
+      {
         path: '/mystore',
         element: <MystorePage />,
       },
-      {
-        path: '/sell',
-        element: <SellPage />,
-      },
+
       {
         path: '/talk',
         element: <TalkPage />,
-      },
-      {
-        path: '/mygoods',
-        element: <MygoodsPage />,
       },
       {
         path: '/keepgoods',
@@ -47,13 +46,32 @@ export const router = createBrowserRouter([
         path: '/service',
         element: <ServicePage />,
       },
+
       {
-        path: '/goodsmanage',
-        element: <GoodsManagePage />,
-      },
-      {
-        path: '/history',
-        element: <HistoryPage />,
+        element: <MystoreLayout />,
+        children: [
+          {
+            path: '/mygoods',
+            element: <MygoodsPage />,
+          },
+          {
+            path: '/sell',
+            element: <SellPage />,
+          },
+          {
+            path: '/goodsmanage',
+            element: <GoodsManagePage />,
+          },
+          {
+            element: <HistoryLayout />,
+            children: [
+              {
+                path: '/history',
+                element: <HistoryPage />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },

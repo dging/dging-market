@@ -6,6 +6,7 @@ const color = {
   pink40: '#F5A5F7',
   pink20: '#FAD2FB',
   pink1: '#F6E9FF',
+  pink2: '#E59CE7',
   black0: '#282828',
   black1: '#D1D3D8',
   black2: '#868B94',
@@ -32,12 +33,18 @@ const size = {
 };
 
 const page_size = {
-  width_s: '1160px',
+  width: '1160px',
+  minwidth: '1200px',
 };
 
 const font = {
   body_12: {
     fontFamily: 'NSRegular',
+    fontSize: '12px',
+    lineHeight: '150%',
+  },
+  body_12_bold: {
+    fontFamily: 'NSBold',
     fontSize: '12px',
     lineHeight: '150%',
   },
@@ -65,7 +72,17 @@ const font = {
   category16: {
     fontFamily: 'NSRegular',
     fontSize: '16px',
-    letterSpace: '-1.6px',
+    letterSpacing: '-1.6px',
+  },
+  price18: {
+    fontFamily: 'NSBold',
+    fontSize: '18px',
+    letterSpacing: '-0.36px',
+  },
+  date14: {
+    fontFamily: 'NSRegular',
+    fontSize: '14px',
+    letterSpacing: '-1.12px',
   },
   r12: {
     fontFamily: 'NSRegular',
@@ -79,6 +96,14 @@ const font = {
     fontFamily: 'NSRegular',
     fontSize: '16px',
   },
+  r18: {
+    fontFamily: 'NSRegular',
+    fontSize: '18px',
+  },
+  r32: {
+    fontFamily: 'NSRegular',
+    fontSize: '32px',
+  },
   b12: {
     fontFamily: 'NSBold',
     fontSize: '12px',
@@ -87,9 +112,9 @@ const font = {
     fontFamily: 'NSBold',
     fontSize: '14px',
   },
-  r32: {
-    fontFamily: 'NSRegular',
-    fontSize: '32px',
+  b18: {
+    fontFamily: 'NSBold',
+    fontSize: '18px',
   },
   b32: {
     fontFamily: 'NSBold',

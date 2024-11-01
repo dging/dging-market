@@ -5,6 +5,7 @@ export interface BtnType {
   children?: React.ReactNode;
   width?: string;
   height?: string;
+  borderradius?: string;
   $status?: boolean;
   $backgroundimage?: string;
   $backgroundposition?: string;

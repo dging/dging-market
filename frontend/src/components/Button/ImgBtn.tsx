@@ -19,6 +19,7 @@ const ImageButton = styled.button<BtnType>`
   background-size: contain;
   border: ${(props) =>
     props.$status ? `1px solid ${props.theme.color.black1}` : 'none'};
+  border-radius: ${(props) => props.borderradius || '0px'};
   background-color: transparent;
   ${(props) => (props.as === 'div' ? '' : 'cursor: pointer')}
 `;

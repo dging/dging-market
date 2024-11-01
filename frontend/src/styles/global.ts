@@ -36,8 +36,12 @@ const GlobalStyle = createGlobalStyle`
     body{
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
         /* min-width: 1200px; */
         
+    }
+    html{
+        box-sizing: border-box;
     }
 `;
 
