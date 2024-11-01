@@ -50,7 +50,13 @@ public class ProductService {
     @Transactional
     public void update(ProductUpdateRequest request) {
 
-        Product foundProduct = productRepository.findById(request.getId()).orElseThrow(CProductNotFoundException::new);
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(request.getId()).orElseThrow(CProductNotFoundException::new);
+
+        User user = EntityUtils.userThrowable();
+
+        if (!Objects.equals(foundProduct.getStoreId(), user.getStore().getId())) {
+            throw new CUserOwnProductException();
+        }
 
         final List<Image> imagesToCreate = generateProductImages(request.getImageIds());
         final List<Tag> tagsToCreate = generateProductTags(request.getTags());
