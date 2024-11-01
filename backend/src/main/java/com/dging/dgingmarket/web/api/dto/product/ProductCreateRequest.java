@@ -1,10 +1,12 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
+import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
+import com.dging.dgingmarket.web.api.dto.common.ImageRequest;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductCreateRequest {
 
-    MultipartFile image;
+    List<Long> imageIds;
 
     @NotEmpty
     private String title;
@@ -61,7 +63,7 @@ public class ProductCreateRequest {
         return ProductQuality.find(quality);
     }
 
-    public Product toEntityWith(Store store, List<Tag> tags) {
+    public Product toEntityWith(Store store, List<Image> images, List<Tag> tags) {
 
         if(isTemporarySave) {
             return Product.createTemporally(
@@ -71,6 +73,7 @@ public class ProductCreateRequest {
                     mainCategory,
                     middleCategory,
                     subCategory,
+                    images,
                     tags,
                     price,
                     getQuality(),
@@ -89,6 +92,7 @@ public class ProductCreateRequest {
                     mainCategory,
                     middleCategory,
                     subCategory,
+                    images,
                     tags,
                     price,
                     getQuality(),

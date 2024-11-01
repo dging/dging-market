@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.domain.product;
 
+import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.converter.ProductQualityAttributeConverter;
@@ -104,7 +105,26 @@ public class Product {
     @Column(length = 6, nullable = false)
     private Date updatedAt;
 
-    public void setRequiredProductTagsOnly(List<Tag> tags) {
+    private void setRequiredProductImagesOnly(List<Image> images) {
+
+        int size = images.size();
+        ArrayList<ProductImage> tempProductImages = new ArrayList<>();
+
+        for (int i = 0; i < size; ++i) {
+
+            Image image = images.get(i);
+            ProductImage productImageToCreate = ProductImage.create(this, image, i + 1);
+
+            if(!this.images.contains(productImageToCreate)) {
+                tempProductImages.add(productImageToCreate);
+            }
+        }
+
+        this.images.clear();
+        this.images.addAll(tempProductImages);
+    }
+
+    private void setRequiredProductTagsOnly(List<Tag> tags) {
 
         int size = tags.size();
         ArrayList<ProductTag> tempProductTags = new ArrayList<>();
@@ -122,7 +142,7 @@ public class Product {
         this.productTags.addAll(tempProductTags);
     }
 
-    public static Product create(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+    public static Product create(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
         Product product = new Product();
         product.setStore(store);
         product.setTitle(title);
@@ -130,7 +150,8 @@ public class Product {
         product.setMainCategory(mainCategory);
         product.setMiddleCategory(middleCategory);
         product.setSubCategory(subCategory);
-        product.setRequiredProductTagsOnly(tags);
+        if(images != null && !images.isEmpty()) product.setRequiredProductImagesOnly(images);
+        if(tags != null && !tags.isEmpty()) product.setRequiredProductTagsOnly(tags);
         product.setPrice(price);
         product.setQuality(quality);
         product.setQuantity(quantity);
@@ -144,19 +165,20 @@ public class Product {
         return product;
     }
 
-    public static Product createTemporally(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
-        Product product = create(store, title, content, mainCategory, middleCategory, subCategory, tags, price, quality, quantity, allowsOffers, region, location, isDirectTradeAvailable, isShippingFreeIncluded);
+    public static Product createTemporally(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+        Product product = create(store, title, content, mainCategory, middleCategory, subCategory, images, tags, price, quality, quantity, allowsOffers, region, location, isDirectTradeAvailable, isShippingFreeIncluded);
         product.setUploaded(false);
         return product;
     }
 
-    public void update(String title, String content, String mainCategory, String middleCategory, String subCategory, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+    public void update(String title, String content, String mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
         this.title = title;
         this.content = content;
         this.mainCategory = mainCategory;
         this.middleCategory = middleCategory;
         this.subCategory = subCategory;
-        setRequiredProductTagsOnly(tags);
+        if(images != null && !images.isEmpty()) setRequiredProductImagesOnly(images);
+        if(tags != null && !tags.isEmpty()) setRequiredProductTagsOnly(tags);
         this.price = price;
         this.quality = quality;
         this.quantity = quantity;
@@ -166,14 +188,6 @@ public class Product {
         this.isDirectTradeAvailable = isDirectTradeAvailable;
         this.isShippingFreeIncluded = isShippingFreeIncluded;
         this.uploaded = true;
-    }
-
-    public void addImage(ProductImage image) {
-        this.images.add(image);
-    }
-
-    public void setImage(int index, ProductImage images) {
-        this.images.set(index, images);
     }
 
     public void changeRunningStatus(RunningStatus runningStatus) {

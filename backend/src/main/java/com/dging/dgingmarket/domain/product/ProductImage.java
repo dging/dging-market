@@ -1,10 +1,7 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.domain.common.Image;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,20 +9,37 @@ import javax.persistence.*;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(exclude = {"id"})
 @Table(name = "TBL_PRODUCT_IMAGE")
-@DiscriminatorValue("상품")
-public class ProductImage extends Image {
-    
+public class ProductImage {
+
+    @EmbeddedId
+    private ProductImageId id;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @MapsId(value = "imageId")
+    @JoinColumn(name = "image_id", nullable = false, insertable = false, updatable = false)
+    private Image image;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId(value = "productId")
+    @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
     private Product product;
 
-    public static ProductImage create(String fileName, String path, String url, int size) {
+    private int priority;
+
+    public static ProductImage create(Product product, Image image, int priority) {
+
         ProductImage productImage = new ProductImage();
-        productImage.setFileName(fileName);
-        productImage.setPath(path);
-        productImage.setUrl(url);
-        productImage.setSize(size);
+        productImage.setImage(image);
+        productImage.setProduct(product);
+        productImage.setPriority(priority);
+
+        ProductImageId id = new ProductImageId();
+        id.setImageId(image.getId());
+        id.setProductId(product.getId());
+        productImage.setId(id);
+
         return productImage;
     }
 }

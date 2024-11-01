@@ -3,6 +3,12 @@ package com.dging.dgingmarket.service.cloud;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.dging.dgingmarket.client.UploadClient;
+import com.dging.dgingmarket.domain.common.Image;
+import com.dging.dgingmarket.domain.common.ImageRepository;
+import com.dging.dgingmarket.domain.user.User;
+import com.dging.dgingmarket.util.EntityUtils;
+import com.dging.dgingmarket.util.FileUtils;
+import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,20 +29,36 @@ import static com.dging.dgingmarket.exception.io.CIOException.*;
 public class FileUploadService {
 
     private final UploadClient s3Client;
+    private final ImageRepository imageRepository;
 
-    public String upload(MultipartFile fileToUpload, String filePath) {
+    @Transactional
+    public ImageResponse upload(MultipartFile uploadFile, String filePath, String type) {
+
         ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(fileToUpload.getSize());
-        objectMetadata.setContentType(fileToUpload.getContentType());
+        objectMetadata.setContentLength(uploadFile.getSize());
+        objectMetadata.setContentType(uploadFile.getContentType());
 
-        try (InputStream inputStream = fileToUpload.getInputStream()) {
+        try (InputStream inputStream = uploadFile.getInputStream()) {
             s3Client.upload(inputStream, objectMetadata, filePath);
         } catch (SdkClientException e) {
             throw new CCloudCommunicationException();
         } catch (IOException e) {
             throw new CFileConvertFailedException();
         }
-        return s3Client.getFileUrl(filePath);
+
+        String url = s3Client.getFileUrl(filePath);
+
+        String fileName = FileUtils.filenameFrom(filePath);
+        long fileSize = uploadFile.getSize();
+
+        User user = EntityUtils.userThrowable();
+
+        Image imageToCreate = Image.create(user, type, fileName, filePath, url, (int) fileSize);
+        Image createdImage = imageRepository.saveAndFlush(imageToCreate);
+
+        Long id = createdImage.getId();
+
+        return new ImageResponse(id, url);
     }
 
     public boolean doesFileExists(String fileName) {

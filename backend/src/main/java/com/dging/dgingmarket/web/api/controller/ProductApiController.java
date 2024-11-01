@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.service.ProductService;
+import com.dging.dgingmarket.service.cloud.FileUploadService;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 public class ProductApiController {
 
     private final ProductService productService;
+    private final FileUploadService fileUploadService;
 
     @PostMapping
     ResponseEntity<Void> create(@Valid ProductCreateRequest request) {
