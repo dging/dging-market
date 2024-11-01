@@ -68,4 +68,12 @@ public class ProductApiController {
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
+    @PostMapping("/{productId}/favorite")
+    ResponseEntity<Void> createFavorite(@PathVariable Long productId) {
+
+        productService.createFavorite(productId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    }
 }

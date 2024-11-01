@@ -1,10 +1,7 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.domain.user.User;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(exclude = "id")
 @Table(
         name = "TBL_FAVORITE",
         uniqueConstraints = {

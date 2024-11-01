@@ -4,11 +4,15 @@ import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.common.TagRepository;
+import com.dging.dgingmarket.domain.product.Favorite;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
+import com.dging.dgingmarket.domain.user.UserRepository;
+import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CProductNotFoundException;
+import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CUserNotFoundException;
 import com.dging.dgingmarket.exception.business.CInvalidValueException.CUserOwnProductException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.enums.RunningStatus;
@@ -34,6 +38,7 @@ public class ProductService {
     private final ImageRepository imageRepository;
     private final TagRepository tagRepository;
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void create(ProductCreateRequest request) {
@@ -87,6 +92,17 @@ public class ProductService {
 
     public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond) {
         return productRepository.storeProducts(pageable, storeId, cond);
+    }
+
+    @Transactional
+    public void createFavorite(Long productId) {
+
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
+
+        User user = EntityUtils.userThrowable();
+        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
+
+        foundUser.toFavorite(foundProduct);
     }
 
     @Transactional

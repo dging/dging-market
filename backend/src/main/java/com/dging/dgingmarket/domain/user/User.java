@@ -2,6 +2,7 @@ package com.dging.dgingmarket.domain.user;
 
 import com.dging.dgingmarket.domain.common.enums.Role;
 import com.dging.dgingmarket.domain.product.Favorite;
+import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.listener.CreationIp;
@@ -72,7 +73,7 @@ public class User implements UserDetails {
     private List<Follower> followings = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Favorite> favorites = new ArrayList<>();
+    private Set<Favorite> favorites = new HashSet<>();
 
     @Column(nullable = false, columnDefinition = "tinyint(1) default 0")
     private boolean isAuthenticated;
@@ -130,6 +131,10 @@ public class User implements UserDetails {
         user.setSocialId(snsId);
         user.setThumbnailUrl(thumbnailUrl);
         return user;
+    }
+
+    public void toFavorite(Product product) {
+        favorites.add(Favorite.create(this, product));
     }
 
     @Override
