@@ -67,10 +67,10 @@ public class User implements UserDetails {
     private Store store;
 
     @OneToMany(mappedBy = "from", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Follower> followers = new ArrayList<>();
+    private Set<Follower> followers = new HashSet<>();
 
     @OneToMany(mappedBy = "to", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Follower> followings = new ArrayList<>();
+    private Set<Follower> followings = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Favorite> favorites = new HashSet<>();
@@ -135,6 +135,10 @@ public class User implements UserDetails {
 
     public void toFavorite(Product product) {
         favorites.add(Favorite.create(this, product));
+    }
+
+    public void toUnfavorite(Product product) {
+        favorites.remove(Favorite.create(this, product));
     }
 
     @Override

@@ -76,4 +76,12 @@ public class ProductApiController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
+
+    @DeleteMapping("/{productId}/favorite")
+    ResponseEntity<Void> deleteFavorite(@PathVariable Long productId) {
+
+        productService.deleteFavorite(productId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

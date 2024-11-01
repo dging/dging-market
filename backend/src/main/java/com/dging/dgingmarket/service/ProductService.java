@@ -106,6 +106,17 @@ public class ProductService {
     }
 
     @Transactional
+    public void deleteFavorite(Long productId) {
+
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
+
+        User user = EntityUtils.userThrowable();
+        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
+
+        foundUser.toUnfavorite(foundProduct);
+    }
+
+    @Transactional
     public void delete(Long id) {
 
         User user = EntityUtils.userThrowable();
