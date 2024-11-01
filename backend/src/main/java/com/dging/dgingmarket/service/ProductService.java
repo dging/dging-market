@@ -9,9 +9,11 @@ import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
+import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CProductNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
+import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +50,7 @@ public class ProductService {
     @Transactional
     public void update(ProductUpdateRequest request) {
 
-        Product foundProduct = productRepository.findById(request.getId()).orElseThrow(CEntityNotFoundException.CProductNotFoundException::new);
+        Product foundProduct = productRepository.findById(request.getId()).orElseThrow(CProductNotFoundException::new);
 
         final List<Image> imagesToCreate = generateProductImages(request.getImageIds());
         final List<Tag> tagsToCreate = generateProductTags(request.getTags());
@@ -74,6 +76,10 @@ public class ProductService {
 
     public Page<ProductsResponse> products(Pageable pageable, CommonCondition cond) {
         return productRepository.products(pageable, cond);
+    }
+
+    public ProductResponse product(Long id) {
+        return productRepository.product(id).orElseThrow(CProductNotFoundException::new);
     }
 
     private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {

@@ -18,9 +18,9 @@ public enum ErrorCode {
     LOGIN_FAIL(HttpStatus.BAD_REQUEST.value(), "DGM-1000", "존재하지 않는 계정이거나, 잘못된 비밀번호입니다."),
     ALREADY_SIGNEDUP(HttpStatus.BAD_REQUEST.value(), "DGM-1001", "이미 가입한 사용자입니다."),
     USER_NOT_AUTHENTICATION(HttpStatus.UNAUTHORIZED.value(), "DGM-1002", "인증된 사용자가 아닙니다."),
-    USER_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), "DGM-1003", "사용자가 존재하지 않습니다."),
-    REFRESH_TOKEN_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "DGM-1004", "리프레시 토큰이 존재하지 않습니다."),
-    PRODUCT_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), "DGM-1005", "상품이 존재하지 않습니다."),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1003", "사용자가 존재하지 않습니다."),
+    REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1004", "리프레시 토큰이 존재하지 않습니다."),
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1005", "상품이 존재하지 않습니다."),
 
     /**
      * SOCIAL

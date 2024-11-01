@@ -1,7 +1,10 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
+import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.enums.RunningStatus;
+import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
+import com.dging.dgingmarket.web.api.dto.common.TagResponse;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 상품 상세 조회 응답 DTO
@@ -24,7 +28,7 @@ public class ProductResponse {
     private String title;
     private String content;
     private int favoriteCount;
-    private String viewCount;
+    private int viewCount;
     private ProductQuality quality;
     private int quantity;
     private String region;
@@ -33,10 +37,9 @@ public class ProductResponse {
     private String middleCategory;
     private String subCategory;
     private RunningStatus runningStatus;
-    private String imageUrl;
+    private List<ImageResponse> imageUrls;
     private int price;
-    private String tags;
-//    private UserResponse author;
+    private List<TagResponse> tags;
     private Date createdAt;
 
     public String getQuality() {

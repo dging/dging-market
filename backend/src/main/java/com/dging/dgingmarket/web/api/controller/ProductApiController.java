@@ -4,6 +4,7 @@ import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.cloud.FileUploadService;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
+import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 @Slf4j
@@ -45,6 +47,14 @@ public class ProductApiController {
     ResponseEntity<Page<ProductsResponse>> fetchProducts(Pageable pageable, @Valid CommonCondition cond) {
 
         Page<ProductsResponse> response = productService.products(pageable, cond);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<ProductResponse> fetchProduct(@PathVariable Long id) {
+
+        ProductResponse response = productService.product(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
