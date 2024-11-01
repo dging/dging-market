@@ -1,14 +1,17 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
+import com.dging.dgingmarket.domain.common.Tag;
+import com.dging.dgingmarket.domain.product.Product;
+import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * 상품 등록 요청 DTO
@@ -32,11 +35,11 @@ public class ProductCreateRequest {
 
     @NotEmpty
     @Enum(enumClass = ProductQuality.class, ignoreCase = true, message = "[최상, 상, 중] 중에 하나이어야 합니다.")
-    private ProductQuality quality;
+    private String quality;
 
-    private String description;
+    private String content;
 
-    private String tags;
+    private List<String> tags;
 
     private int price;
 
@@ -54,4 +57,48 @@ public class ProductCreateRequest {
 
     private boolean isTemporarySave;
 
+    public ProductQuality getQuality() {
+        return ProductQuality.find(quality);
+    }
+
+    public Product toEntityWith(Store store, List<Tag> tags) {
+
+        if(isTemporarySave) {
+            return Product.createTemporally(
+                    store,
+                    title,
+                    content,
+                    mainCategory,
+                    middleCategory,
+                    subCategory,
+                    tags,
+                    price,
+                    getQuality(),
+                    quantity,
+                    allowsOffers,
+                    region,
+                    location,
+                    isDirectTradeAvailable,
+                    isShippingFreeIncluded
+            );
+        } else {
+            return Product.create(
+                    store,
+                    title,
+                    content,
+                    mainCategory,
+                    middleCategory,
+                    subCategory,
+                    tags,
+                    price,
+                    getQuality(),
+                    quantity,
+                    allowsOffers,
+                    region,
+                    location,
+                    isDirectTradeAvailable,
+                    isShippingFreeIncluded
+            );
+        }
+    }
 }

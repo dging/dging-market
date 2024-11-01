@@ -68,9 +68,9 @@ public class AuthService {
 
     @Transactional
     public TokenResponse socialLogin(User user) {
-        refreshTokenRepository.findByKey(user.getId().toString()).ifPresent(refreshTokenRepository::delete);
+        refreshTokenRepository.findByKey(user.getId()).ifPresent(refreshTokenRepository::delete);
         TokenResponse tokenResponse = jwtProvider.createToken(user.getId().toString(), user.getRoles().stream().map(Role::getValue).collect(Collectors.toList()));
-        refreshTokenRepository.save(RefreshToken.create(user.getId().toString(), tokenResponse.getRefreshToken()));
+        refreshTokenRepository.save(RefreshToken.create(user.getId(), tokenResponse.getRefreshToken()));
         return tokenResponse;
     }
 
@@ -91,7 +91,7 @@ public class AuthService {
         User foundUser = EntityUtils.userThrowable(userRepository, ((User)authentication.getPrincipal()).getId());
 
         //리프레시 토큰 없음
-        RefreshToken refreshToken = refreshTokenRepository.findByKey(foundUser.getId().toString())
+        RefreshToken refreshToken = refreshTokenRepository.findByKey(foundUser.getId())
                 .orElseThrow(CTokenException.CRefreshTokenException::new);
 
         //리프레시 토큰 불일치
@@ -119,8 +119,8 @@ public class AuthService {
     }
 
     @Transactional
-    public void delete(Integer userSeq) {
-        userRepository.deleteById(userSeq);
-        refreshTokenRepository.deleteByKey(userSeq.toString());
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+        refreshTokenRepository.deleteByKey(id);
     }
 }

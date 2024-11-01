@@ -91,10 +91,10 @@ public class UserApiController {
         return authService.userDetails();
     }
 
-    @DeleteMapping("/{userSeq}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer userSeq) {
-        authService.delete(userSeq);
+    public void delete(@PathVariable Long id) {
+        authService.delete(id);
     }
 
 }

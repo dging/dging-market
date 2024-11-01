@@ -2,26 +2,21 @@ package com.dging.dgingmarket.domain.product;
 
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+@Embeddable
+@EqualsAndHashCode
 @Getter
-@Setter(value = AccessLevel.PROTECTED)
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class ProductTagId implements Serializable {
 
+    @Column(name = "product_id")
     private Long productId;
+
+    @Column(name = "tag_id")
     private Long tagId;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProductTagId)) return false;
-        ProductTagId that = (ProductTagId) o;
-        return productId.equals(that.productId) && tagId.equals(that.tagId);
-    }
-
-    @Override
-    public int hashCode() {
-        return productId.hashCode() + tagId.hashCode();
-    }
 }

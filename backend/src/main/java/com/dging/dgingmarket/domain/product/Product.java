@@ -1,9 +1,7 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.domain.common.Tag;
-import com.dging.dgingmarket.domain.store.Review;
 import com.dging.dgingmarket.domain.store.Store;
-import com.dging.dgingmarket.listener.IpEntityListener;
 import com.dging.dgingmarket.util.converter.ProductQualityAttributeConverter;
 import com.dging.dgingmarket.util.converter.RunningStatusAttributeConverter;
 import com.dging.dgingmarket.util.enums.ProductQuality;
@@ -20,7 +18,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -70,10 +68,6 @@ public class Product {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
-    private Review review;
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductTag> productTags = new ArrayList<>();
 
@@ -110,15 +104,35 @@ public class Product {
     @Column(length = 6, nullable = false)
     private Date updatedAt;
 
-    public Product create(String title, String content, String mainCategory, String middleCategory, String subCategory, List<String> tags, int price, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+    public void setRequiredProductTagsOnly(List<Tag> tags) {
+
+        int size = tags.size();
+        ArrayList<ProductTag> tempProductTags = new ArrayList<>();
+
+        for(int i = 0; i < size; ++i) {
+
+            ProductTag productTagToCreate = ProductTag.create(this, tags.get(i), i + 1);
+
+            if(!productTags.contains(productTagToCreate)) {
+                tempProductTags.add(productTagToCreate);
+            }
+        }
+
+        this.productTags.clear();
+        this.productTags.addAll(tempProductTags);
+    }
+
+    public static Product create(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
         Product product = new Product();
+        product.setStore(store);
         product.setTitle(title);
         product.setContent(content);
         product.setMainCategory(mainCategory);
         product.setMiddleCategory(middleCategory);
         product.setSubCategory(subCategory);
-        product.setProductTags(createProductTags(tags));
+        product.setRequiredProductTagsOnly(tags);
         product.setPrice(price);
+        product.setQuality(quality);
         product.setQuantity(quantity);
         product.setRunningStatus(RunningStatus.AVAILABLE);
         product.setAllowsOffers(allowsOffers);
@@ -130,20 +144,21 @@ public class Product {
         return product;
     }
 
-    public Product saveTemporally(String title, String content, String mainCategory, String middleCategory, String subCategory, List<String> tags, int price, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
-        Product product = create(title, content, mainCategory, middleCategory, subCategory, tags, price, quantity, allowsOffers, region, location, isDirectTradeAvailable, isShippingFreeIncluded);
+    public static Product createTemporally(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+        Product product = create(store, title, content, mainCategory, middleCategory, subCategory, tags, price, quality, quantity, allowsOffers, region, location, isDirectTradeAvailable, isShippingFreeIncluded);
         product.setUploaded(false);
         return product;
     }
 
-    public void update(String title, String content, String mainCategory, String middleCategory, String subCategory, List<String> tags, int price, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+    public void update(String title, String content, String mainCategory, String middleCategory, String subCategory, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
         this.title = title;
         this.content = content;
         this.mainCategory = mainCategory;
         this.middleCategory = middleCategory;
         this.subCategory = subCategory;
-        updateProductTags(tags);
+        setRequiredProductTagsOnly(tags);
         this.price = price;
+        this.quality = quality;
         this.quantity = quantity;
         this.allowsOffers = allowsOffers;
         this.region = region;
@@ -165,30 +180,26 @@ public class Product {
         this.runningStatus = runningStatus;
     }
 
-    private List<ProductTag> createProductTags(List<String> tags) {
-        return tags.stream().filter(tag -> !tag.isEmpty()).map(Tag::create).map(tag -> ProductTag.create(this, tag)).collect(Collectors.toList());
-    }
-
-    private void updateProductTags(List<String> tags) {
-
-        List<ProductTag> productTags = tags.stream().filter(tag -> !tag.isEmpty()).map(Tag::create).map(tag -> ProductTag.create(this, tag)).collect(Collectors.toList());
-
-        List<ProductTag> tempProductTags = new ArrayList<>();
-
-        for (ProductTag thisProductTag : this.productTags) {
-            for (ProductTag productTag : productTags) {
-                if (!thisProductTag.equals(productTag)) {
-                    tempProductTags.add(productTag);
-                } else {
-                    tempProductTags.add(thisProductTag);
-                }
-            }
-        }
-
-        this.productTags.clear();
-        this.productTags.addAll(tempProductTags);
-
-    }
+//    private void updateProductTags(List<String> tags) {
+//
+//        List<ProductTag> productTags = tags.stream().filter(tag -> !tag.isEmpty()).map(Tag::create).map(tag -> ProductTag.create(this, tag)).collect(Collectors.toList());
+//
+//        List<ProductTag> tempProductTags = new ArrayList<>();
+//
+//        for (ProductTag thisProductTag : this.productTags) {
+//            for (ProductTag productTag : productTags) {
+//                if (!thisProductTag.equals(productTag)) {
+//                    tempProductTags.add(productTag);
+//                } else {
+//                    tempProductTags.add(thisProductTag);
+//                }
+//            }
+//        }
+//
+//        this.productTags.clear();
+//        this.productTags.addAll(tempProductTags);
+//
+//    }
 
     public void countView() {
         this.views += 1;
