@@ -36,12 +36,23 @@ export default function MainHeaderMenu() {
         onClick={() => navigate('/talk')}
       />
       <Bar />
-      <Arrange position='relative'>
+      <Arrange
+        position='relative'
+        display='flex'
+        justifycontent='center'
+        alignitems='center'
+        gap='4px'
+      >
         <IncludeImgBtn
           $leftbgimg={Store}
-          $rightbgimg={DownArrowBlack}
           $textheight='16px'
           text='내상점'
+          onClick={() => navigate('/mystore')}
+        />
+        <ImgBtn
+          width='16px'
+          height='16px'
+          $backgroundimage={DownArrowBlack}
           onClick={() => setIsShow(!isShow)}
         />
 

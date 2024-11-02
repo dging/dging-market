@@ -30,6 +30,13 @@ const DropBoxButton = styled(Btn)<BtnType>`
   ${({ theme }) => theme.font.r14};
 `;
 
+const DropBoxText = styled(Arrange)`
+  width: calc(100% - 16px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
 const DropBoxBoard = styled(Arrange)<ArrangeType>`
   width: ${(props) => props.width || '140px'};
   border: 1px solid ${({ theme }) => theme.color.black1};
@@ -70,11 +77,13 @@ export default function DropBox(props: DropBoxType) {
     });
   };
 
+  // 로직 다시 짜기
+
   return (
     <Arrange position='relative'>
       <DropBoxButton $status={isShow} onClick={() => setIsShow(!isShow)}>
         <Arrange display='flex' width='118px' justifycontent='space-between'>
-          {items}
+          <DropBoxText>{items}</DropBoxText>
           <ImgBtn
             as='div'
             width='16px'
