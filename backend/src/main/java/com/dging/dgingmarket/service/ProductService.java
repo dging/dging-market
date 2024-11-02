@@ -95,28 +95,6 @@ public class ProductService {
     }
 
     @Transactional
-    public void createFavorite(Long productId) {
-
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
-
-        User user = EntityUtils.userThrowable();
-        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
-
-        foundUser.toFavorite(foundProduct);
-    }
-
-    @Transactional
-    public void deleteFavorite(Long productId) {
-
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
-
-        User user = EntityUtils.userThrowable();
-        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
-
-        foundUser.toUnfavorite(foundProduct);
-    }
-
-    @Transactional
     public void delete(Long id) {
 
         User user = EntityUtils.userThrowable();
@@ -142,6 +120,35 @@ public class ProductService {
         }
 
         foundProduct.changeRunningStatus(runningStatus);
+    }
+
+    @Transactional
+    public void createFavorite(Long productId) {
+
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
+
+        User user = EntityUtils.userThrowable();
+        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
+
+        foundUser.toFavorite(foundProduct);
+    }
+
+    @Transactional
+    public void deleteFavorite(Long productId) {
+
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
+
+        User user = EntityUtils.userThrowable();
+        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
+
+        foundUser.toUnfavorite(foundProduct);
+    }
+
+    public Page<FavoriteProductsResponse> favoriteProducts(Pageable pageable, CommonCondition cond) {
+
+        User user = EntityUtils.userThrowable();
+
+        return productRepository.favoriteProducts(pageable, user.getId(), cond);
     }
 
     private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {

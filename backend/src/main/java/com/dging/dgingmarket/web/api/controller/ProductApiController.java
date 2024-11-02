@@ -84,4 +84,12 @@ public class ProductApiController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/favorite")
+    ResponseEntity<Page<FavoriteProductsResponse>> fetchFavoriteProducts(Pageable pageable, @Valid CommonCondition cond) {
+
+        Page<FavoriteProductsResponse> response = productService.favoriteProducts(pageable, cond);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
