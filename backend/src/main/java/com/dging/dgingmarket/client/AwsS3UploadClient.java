@@ -17,6 +17,7 @@ import java.util.List;
 public class AwsS3UploadClient implements UploadClient {
 
     private final AmazonS3 amazonS3;
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 

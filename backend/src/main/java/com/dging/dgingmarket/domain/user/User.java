@@ -8,6 +8,7 @@ import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.listener.CreationIp;
 import com.dging.dgingmarket.listener.IpEntityListener;
 import com.dging.dgingmarket.listener.UpdateIp;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class CIOException extends RuntimeException {
 
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
 
     public CIOException(ErrorCode errorCode) {
         this.errorCode = errorCode;

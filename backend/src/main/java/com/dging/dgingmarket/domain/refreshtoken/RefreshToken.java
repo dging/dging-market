@@ -1,14 +1,13 @@
 package com.dging.dgingmarket.domain.refreshtoken;
 
 import com.dging.dgingmarket.domain.base.BaseTimeEntity;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
-import javax.persistence.*;
 
 @DynamicInsert
 @DynamicUpdate

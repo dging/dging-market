@@ -1,11 +1,10 @@
 package com.dging.dgingmarket.util.converter;
 
 import com.dging.dgingmarket.util.enums.RunningStatus;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 
 @Converter
 public class RunningStatusAttributeConverter implements AttributeConverter<RunningStatus, String> {

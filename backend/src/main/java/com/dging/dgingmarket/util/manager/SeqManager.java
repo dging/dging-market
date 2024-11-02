@@ -5,7 +5,6 @@ import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.type.LongType;
 import org.hibernate.type.Type;
 
 import java.io.Serializable;
@@ -28,7 +27,7 @@ public class SeqManager extends SequenceStyleGenerator {
     @Override
     public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
 
-        super.configure(LongType.INSTANCE, params, serviceRegistry);
+        super.configure(type, params, serviceRegistry);
         valueUserParameter = getString(VALUE_USER_SEQ_PARAMETER, params, VALUE_USER_SEQ_DEFAULT);
         numberFormat = getString(NUMBER_FORMAT_PARAMETER, params, NUMBER_FORMAT_DEFAULT);
     }

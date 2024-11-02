@@ -1,15 +1,15 @@
 package com.dging.dgingmarket.domain.product;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
 @EqualsAndHashCode
 @Getter
-@Setter
+@Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class ProductTagId implements Serializable {

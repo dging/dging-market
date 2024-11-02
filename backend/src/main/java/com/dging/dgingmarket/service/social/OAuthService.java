@@ -6,11 +6,11 @@ import com.dging.dgingmarket.client.dto.SocialProfile;
 import com.dging.dgingmarket.exception.social.CSocialException.CInvalidSocialTypeException;
 import com.dging.dgingmarket.exception.social.CSocialException.CSocialCommunicationException;
 import com.dging.dgingmarket.util.enums.SocialType;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -72,8 +73,8 @@ public class FacebookOAuthClient implements OAuthClient {
         return webClient.get()
                 .uri(facebookTokenUrl, builder -> builder.queryParams(params).build())
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
                 .bodyToMono(OAuthTokenResponse.class)
                 .block();
     }
@@ -88,8 +89,8 @@ public class FacebookOAuthClient implements OAuthClient {
         FacebookProfile facebookProfile = webClient.get()
                 .uri(facebookProfileUrl, builder -> builder.queryParams(params).build())
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
                 .bodyToMono(FacebookProfile.class)
                 .block();
 

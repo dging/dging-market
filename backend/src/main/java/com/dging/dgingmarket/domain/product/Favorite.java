@@ -1,9 +1,8 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.domain.user.User;
+import jakarta.persistence.*;
 import lombok.*;
-
-import javax.persistence.*;
 
 @Entity
 @Getter

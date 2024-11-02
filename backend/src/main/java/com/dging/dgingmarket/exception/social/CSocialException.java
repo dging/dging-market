@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class CSocialException extends RuntimeException {
 
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
 
     public CSocialException(ErrorCode errorCode) {
         this.errorCode = errorCode;

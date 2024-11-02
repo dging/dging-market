@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class CBusinessException extends RuntimeException {
 
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
 
     public CBusinessException(ErrorCode errorCode) {
         this.errorCode = errorCode;

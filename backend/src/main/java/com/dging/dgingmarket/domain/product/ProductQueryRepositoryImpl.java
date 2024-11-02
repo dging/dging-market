@@ -1,6 +1,5 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.domain.user.QUser;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagResponse;

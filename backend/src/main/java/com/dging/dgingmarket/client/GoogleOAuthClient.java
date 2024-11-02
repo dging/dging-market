@@ -104,8 +104,8 @@ public class GoogleOAuthClient implements OAuthClient {
         GoogleProfile googleProfile = webClient.get()
                 .uri(googleProfileUrl, builder -> builder.queryParam("id_token", idToken).build())
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
                 .bodyToMono(GoogleProfile.class)
                 .block();
 

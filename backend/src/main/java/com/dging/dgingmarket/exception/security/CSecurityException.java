@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class CSecurityException extends RuntimeException {
 
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
 
     public CSecurityException(ErrorCode errorCode) {
         this.errorCode = errorCode;

@@ -7,6 +7,7 @@ import com.dging.dgingmarket.util.converter.ProductQualityAttributeConverter;
 import com.dging.dgingmarket.util.converter.RunningStatusAttributeConverter;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.enums.RunningStatus;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +24,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
+@Access(AccessType.FIELD)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "TBL_PRODUCT")
 @EntityListeners({AuditingEntityListener.class})

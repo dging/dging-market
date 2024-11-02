@@ -1,12 +1,11 @@
 package com.dging.dgingmarket.web.api.dto.user;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
