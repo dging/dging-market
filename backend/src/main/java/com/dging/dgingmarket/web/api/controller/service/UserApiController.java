@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.web.api.controller;
+package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.client.dto.SocialProfile;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CUserNotFoundException;
@@ -11,6 +11,7 @@ import com.dging.dgingmarket.web.api.dto.common.TokenResponse;
 import com.dging.dgingmarket.web.api.dto.user.LoginRequest;
 import com.dging.dgingmarket.web.api.dto.user.SocialSignupRequest;
 import com.dging.dgingmarket.web.api.dto.user.UserDetailsResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,14 +20,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@Tag(name = "상품 서비스", description = "상품 관리 API 엔드포인트")
+@RestController
 public class UserApiController {
 
     private final AuthService authService;
     private final OAuthService oauthService;
-
 
 /*
     @PostMapping

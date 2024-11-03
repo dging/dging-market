@@ -66,8 +66,7 @@ public class AuthService {
         return socialLogin(user);
     }
 
-    @Transactional
-    public TokenResponse socialLogin(User user) {
+    private TokenResponse socialLogin(User user) {
         refreshTokenRepository.findByKey(user.getId()).ifPresent(refreshTokenRepository::delete);
         TokenResponse tokenResponse = jwtProvider.createToken(user.getId().toString(), user.getRoles().stream().map(Role::getValue).collect(Collectors.toList()));
         refreshTokenRepository.save(RefreshToken.create(user.getId(), tokenResponse.getRefreshToken()));

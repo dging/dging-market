@@ -66,7 +66,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                         dateGoe(cond.getDateFrom()),
                         dateLt(cond.getDateTo())
                 )
-                .groupBy(product.id);
+                .groupBy(product.id, tag.id, image.id);
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Product> pathBuilder = new PathBuilder<Product>(product.getType(), product.getMetadata());
@@ -146,7 +146,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                         dateGoe(cond.getDateFrom()),
                         dateLt(cond.getDateTo())
                 )
-                .groupBy(product.id);
+                .groupBy(product.id, tag.id, image.id);
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Product> pathBuilder = new PathBuilder<Product>(product.getType(), product.getMetadata());
@@ -183,10 +183,10 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
         queryResult.forEach(productsResponse -> {
 
-            List<ImageResponse> distinctImages = productsResponse.getImageUrls().stream()
+            List<ImageResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
                     .collect(Collectors.toList());
-            productsResponse.setImageUrls(distinctImages);
+            productsResponse.setImages(distinctImages);
 
             List<TagResponse> distinctTags = productsResponse.getTags().stream()
                     .distinct()
@@ -226,7 +226,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                         dateGoe(cond.getDateFrom()),
                         dateLt(cond.getDateTo())
                 )
-                .groupBy(product.id);
+                .groupBy(product.id, tag.id, image.id);
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Product> pathBuilder = new PathBuilder<Product>(product.getType(), product.getMetadata());
@@ -261,10 +261,10 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
         queryResult.forEach(productsResponse -> {
 
-            List<ImageResponse> distinctImages = productsResponse.getImageUrls().stream()
+            List<ImageResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
                     .collect(Collectors.toList());
-            productsResponse.setImageUrls(distinctImages);
+            productsResponse.setImages(distinctImages);
 
             List<TagResponse> distinctTags = productsResponse.getTags().stream()
                     .distinct()
@@ -335,10 +335,10 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 ).stream().findAny();
 
         optional.ifPresent(queryResult -> {
-            List<ImageResponse> distinctImages = queryResult.getImageUrls().stream()
+            List<ImageResponse> distinctImages = queryResult.getImages().stream()
                     .distinct()
                     .collect(Collectors.toList());
-            queryResult.setImageUrls(distinctImages);
+            queryResult.setImages(distinctImages);
 
             List<TagResponse> distinctTags = queryResult.getTags().stream()
                     .distinct()

@@ -48,9 +48,9 @@ public class ProductService {
     }
 
     @Transactional
-    public void update(ProductUpdateRequest request) {
+    public void update(Long id, ProductUpdateRequest request) {
 
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(request.getId()).orElseThrow(CProductNotFoundException::new);
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(CProductNotFoundException::new);
 
         User user = EntityUtils.userThrowable();
 

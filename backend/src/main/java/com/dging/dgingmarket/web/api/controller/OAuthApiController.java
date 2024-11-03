@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.web.api.controller.social;
+package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
 import com.dging.dgingmarket.service.social.OAuthService;

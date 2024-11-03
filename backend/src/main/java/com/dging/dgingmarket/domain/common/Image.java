@@ -46,7 +46,7 @@ public class Image {
     private Date createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
@@ -60,6 +60,13 @@ public class Image {
         image.setPath(path);
         image.setUrl(url);
         image.setSize(size);;
+        return image;
+    }
+
+    public static Image createMock(User user) {
+        Image image = new Image();
+        image.setId(1L);
+        image.setUser(user);
         return image;
     }
 }

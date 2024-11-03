@@ -78,7 +78,7 @@ public class SecurityConfiguration {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
         return (web) -> web.ignoring()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/docs/openapi3.yaml")
+                .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/docs/openapi3.yaml")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }

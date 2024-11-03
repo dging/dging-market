@@ -7,11 +7,13 @@ import org.springframework.restdocs.headers.HeaderDescriptor;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
+import org.springframework.restdocs.request.RequestPartDescriptor;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 
 @AutoConfigureRestDocs
 public abstract class ApiDocumentationTest extends BaseSpringBootTest {
@@ -58,7 +60,25 @@ public abstract class ApiDocumentationTest extends BaseSpringBootTest {
             fieldWithPath("reason").type(JsonFieldType.STRING).description("검증에 실패한 이유입니다.")
     };
 
-    //VALUE_DESC
+    //COMMON_DESC
+    protected RequestPartDescriptor[] imageRequestFields = new RequestPartDescriptor[] {
+            partWithName("image").description("업로드할 이미지입니다.."),
+            partWithName("type").description("이미지 타입입니다. [상품, 채팅] 중에 하나이어야 합니다."),
+    };
+
+    protected ParameterDescriptor[] imageFormParamRequestFields = new ParameterDescriptor[] {
+            parameterWithName("type").description("이미지 종류입니다. [상품, 채팅] 중에 하나이어야 합니다.")
+    };
+
+    protected FieldDescriptor[] imageResponseFields = new FieldDescriptor[] {
+            fieldWithPath("id").type(JsonFieldType.NUMBER).description("이미지 아이디입니다."),
+            fieldWithPath("url").type(JsonFieldType.STRING).description("이미지 URL 입니다.")
+    };
+
+    protected FieldDescriptor[] tagResponseFields = new FieldDescriptor[] {
+            fieldWithPath("id").type(JsonFieldType.NUMBER).description("태그 아이디입니다."),
+            fieldWithPath("name").type(JsonFieldType.STRING).description("태그명입니다.")
+    };
 
 
     //USER_DESC
@@ -70,6 +90,7 @@ public abstract class ApiDocumentationTest extends BaseSpringBootTest {
             headerWithName("Authorization").description("로그인 성공 시 발급받은 액세스토큰입니다.")
     };
 
+    //PRODUCT_DESC
     protected FieldDescriptor[] productsResponseFields = new FieldDescriptor[] {
             fieldWithPath("id").type(JsonFieldType.NUMBER).description("상품 아이디입니다."),
             fieldWithPath("storeId").type(JsonFieldType.NUMBER).description("상점 아이디입니다."),
@@ -82,14 +103,5 @@ public abstract class ApiDocumentationTest extends BaseSpringBootTest {
             fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일시입니다."),
     };
 
-    protected FieldDescriptor[] imageResponseFields = new FieldDescriptor[] {
-            fieldWithPath("id").type(JsonFieldType.NUMBER).description("이미지 아이디입니다."),
-            fieldWithPath("url").type(JsonFieldType.STRING).description("이미지 URL 입니다.")
-    };
-
-    protected FieldDescriptor[] tagResponseFields = new FieldDescriptor[] {
-            fieldWithPath("id").type(JsonFieldType.NUMBER).description("태그 아이디입니다."),
-            fieldWithPath("name").type(JsonFieldType.STRING).description("태그명입니다.")
-    };
 
 }

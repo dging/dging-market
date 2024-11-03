@@ -115,6 +115,14 @@ public class User implements UserDetails {
     @Column(length = 6)
     private Date loggedOutAt;
 
+    public static User createMock(Long id, String password, List<Role> roles) {
+        User user = new User();
+        user.setId(id);
+        user.setPassword(password);
+        user.setRoles(roles);
+        return user;
+    }
+
     public static User create(String id, String password, String username) {
         User user = new User();
         user.setUserId(id);
