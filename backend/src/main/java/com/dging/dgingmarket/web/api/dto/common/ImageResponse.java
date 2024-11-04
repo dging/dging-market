@@ -51,6 +51,7 @@ public class ImageResponse {
     public static ImageResponse of(Image image) {
         ImageResponse response = new ImageResponse();
         response.setId(image.getId());
+        response.setType(image.getType());
         response.setFileName(image.getFileName());
         response.setPath(image.getPath());
         response.setUrl(image.getUrl());

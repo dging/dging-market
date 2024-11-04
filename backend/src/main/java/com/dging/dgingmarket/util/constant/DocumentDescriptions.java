@@ -1,7 +1,5 @@
 package com.dging.dgingmarket.util.constant;
 
-import com.dging.dgingmarket.util.enums.ProductQuality;
-
 public class DocumentDescriptions {
 
     public static final String REQUEST_PRODUCT_ID = "상품의 고유 식별자인 productId입니다.";
@@ -25,6 +23,10 @@ public class DocumentDescriptions {
     public static final String REQUEST_RUNNING_STATUS = "진행 상태입니다.";
     public static final String REQUEST_IMAGE = "이미지 파일입니다.";
     public static final String REQUEST_IMAGE_TYPE = "이미지 타입명입니다." + " " + ValidationMessages.IMAGE_TYPE;
+    public static final String REQUEST_SOCIAL_ACCESS_TOKEN = "배급사로부터 발급받은 액세스 토큰입니다.";
+    public static final String REQUEST_SOCIAL_TYPE = "배급사명입니다." + " " + ValidationMessages.SOCIAL_TYPE;
+    public static final String REQUEST_ACCESS_TOKEN = "자체 발급받은 액세스 토큰입니다.";
+    public static final String REQUEST_REFRESH_TOKEN = "자체 발급받은 리프레시 토큰입니다. 토큰 재발급에 사용됩니다.";
 
     public static final String RESPONSE_QUANTITY = "수량입니다.";
     public static final String RESPONSE_FAVORITE_COUNT = "찜 수입니다.";
@@ -52,6 +54,10 @@ public class DocumentDescriptions {
     public static final String RESPONSE_IMAGE_URL = "이미지 URL입니다.";
     public static final String RESPONSE_CREATED_AT = "생성 일시입니다.";
     public static final String RESPONSE_UPDATE_AT = "수정 일시입니다.";
+    public static final String RESPONSE_GRANT_TYPE = "승인 타입입니다.";
+    public static final String RESPONSE_ACCESS_TOKEN = "자체 발급받은 액세스 토큰입니다.";
+    public static final String RESPONSE_REFRESH_TOKEN = "자체 발급받은 리프레시 토큰입니다. 토큰 재발급에 사용됩니다. 유효기간 만료 시 세션이 만료됩니다.";
+    public static final String RESPONSE_ACCESS_TOKEN_EXPIRES_IN = "액세스 토큰 만료 타임스탬프입니다.";
 
     public static final String EXAMPLE_ID = "1";
     public static final String EXAMPLE_STORE_NAME = "Tenacy";

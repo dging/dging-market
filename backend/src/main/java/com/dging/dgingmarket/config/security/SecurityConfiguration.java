@@ -38,10 +38,7 @@ public class SecurityConfiguration {
                                 "/users",
                                 "/users/token",
                                 "/users/token/expiration",
-                                "/users/social/kakao/**",
-                                "/users/social/google/**",
-                                "/users/social/naver/**",
-                                "/users/social/facebook/**"
+                                "/users/social/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/exception/**",

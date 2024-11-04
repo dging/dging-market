@@ -61,7 +61,7 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
                             new Date()
                     )).toList();
 
-            Page<ProductsResponse> page = new PageImpl<>(queryResult.subList((int) 0, 10), Pageable.unpaged(), 20);
+            Page<ProductsResponse> page = new PageImpl<>(queryResult.subList(0, 10), Pageable.unpaged(), 20);
 
             when(productRepository.products(any(), any())).thenReturn(page);
 
