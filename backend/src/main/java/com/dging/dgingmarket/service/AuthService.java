@@ -40,7 +40,7 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
-    public void socialSignup(SocialProfile socialProfile, SocialType socialType, SocialSignupRequest request) {
+    public void socialSignup(SocialProfile socialProfile, SocialType socialType) {
 
         userRepository.findBySocialIdAndProvider(socialProfile.getSnsId(), socialType.name().toLowerCase())
                 .ifPresent(user -> {

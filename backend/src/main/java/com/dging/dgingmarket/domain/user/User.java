@@ -115,26 +115,18 @@ public class User implements UserDetails {
     @Column(length = 6)
     private Date loggedOutAt;
 
-    public static User createMock(Long id, String password, List<Role> roles) {
-        User user = new User();
-        user.setId(id);
-        user.setPassword(password);
-        user.setRoles(roles);
-        return user;
-    }
-
-    public static User create(String id, String password, String username) {
+    public static User create(String id, String password, String username, List<Role> roles) {
         User user = new User();
         user.setUserId(id);
-        user.setPassword(password);
         user.setUsername(username);
+        user.setPassword(password);
+        user.setRoles(roles);
         user.setStore(Store.createEmpty(user));
         return user;
     }
 
     public static User createSocial(String password, String provider, String snsId, String username, String thumbnailUrl) {
-        User user = create(provider + RandomStringUtils.random(20-provider.length(), true, true), password, username);
-        user.setRoles(Collections.singletonList(Role.USER));
+        User user = create(provider + RandomStringUtils.random(20-provider.length(), true, true), password, username, List.of(Role.USER));
         user.setProvider(provider);
         user.setSocialId(snsId);
         user.setThumbnailUrl(thumbnailUrl);

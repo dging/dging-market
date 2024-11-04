@@ -13,7 +13,7 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.RESPONSE_
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Schema(description = "태그 응답 DTO")
-public class TagResponse {
+public class TagsResponse {
 
     @Schema(description = RESPONSE_ID)
     private Long id;

@@ -6,10 +6,12 @@ import com.dging.dgingmarket.client.UploadClient;
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
 import com.dging.dgingmarket.domain.user.User;
+import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.FileUtils;
 import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
+import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,8 +34,15 @@ public class FileUploadService {
     private final UploadClient s3Client;
     private final ImageRepository imageRepository;
 
+    public ImageResponse image(Long id) {
+
+        Image foundImage = imageRepository.findById(id).orElseThrow(CEntityNotFoundException.CImageNotFoundException::new);
+
+        return ImageResponse.of(foundImage);
+    }
+
     @Transactional
-    public ImageResponse upload(MultipartFile uploadFile, String filePath, ImageType type) {
+    public ImagesResponse upload(MultipartFile uploadFile, String filePath, ImageType type) {
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(uploadFile.getSize());
@@ -59,7 +68,7 @@ public class FileUploadService {
 
         Long id = createdImage.getId();
 
-        return new ImageResponse(id, url);
+        return new ImagesResponse(id, url);
     }
 
     public boolean doesFileExists(String fileName) {

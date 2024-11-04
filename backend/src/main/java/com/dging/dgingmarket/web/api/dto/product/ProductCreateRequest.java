@@ -124,4 +124,25 @@ public class ProductCreateRequest {
             );
         }
     }
+
+    public static ProductCreateRequest example() {
+        ProductCreateRequest request = new ProductCreateRequest();
+        request.setTitle(EXAMPLE_TITLE);
+        request.setMainCategory(EXAMPLE_MAIN_CATEGORY);
+        request.setMiddleCategory(EXAMPLE_MIDDLE_CATEGORY);
+        request.setSubCategory(EXAMPLE_SUB_CATEGORY);
+        request.setQuality(EXAMPLE_QUALITY);
+        request.setContent(EXAMPLE_CONTENT);
+        request.setImageIds(List.of(1L, 2L));
+        request.setTags(List.of(EXAMPLE_TAG, EXAMPLE_TAG));
+        request.setPrice(Integer.parseInt(EXAMPLE_PRICE));
+        request.setAllowsOffers(Boolean.parseBoolean(EXAMPLE_ALLOWS_OFFERS));
+        request.setShippingFeeIncluded(Boolean.parseBoolean(EXAMPLE_IS_SHIPPING_FEE_INCLUDED));
+        request.setDirectTradeAvailable(Boolean.parseBoolean(EXAMPLE_IS_DIRECT_TRADE_AVAILABLE));
+        request.setRegion(EXAMPLE_REGION);
+        request.setLocation(EXAMPLE_LOCATION);
+        request.setQuantity(Integer.parseInt(EXAMPLE_QUANTITY));
+        request.setTemporarySave(Boolean.parseBoolean(EXAMPLE_TEMPORARY_SAVE));
+        return request;
+    }
 }

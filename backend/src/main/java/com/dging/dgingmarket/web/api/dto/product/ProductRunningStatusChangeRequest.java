@@ -26,4 +26,10 @@ public class ProductRunningStatusChangeRequest {
     public RunningStatus getRunningStatus() {
         return RunningStatus.find(runningStatus);
     }
+
+    public static ProductRunningStatusChangeRequest example() {
+        ProductRunningStatusChangeRequest request = new ProductRunningStatusChangeRequest();
+        request.setRunningStatus(DocumentDescriptions.EXAMPLE_RUNNING_STATUS);
+        return request;
+    }
 }

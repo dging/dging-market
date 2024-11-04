@@ -1,8 +1,8 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
-import com.dging.dgingmarket.web.api.dto.common.TagResponse;
+import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
+import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import com.dging.dgingmarket.web.api.dto.product.FavoriteProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
@@ -87,11 +87,11 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         store.name,
                                         product.title,
                                         product.runningStatus,
-                                        GroupBy.list(Projections.constructor(ImageResponse.class,
+                                        GroupBy.list(Projections.constructor(ImagesResponse.class,
                                                 image.id,
                                                 image.url).skipNulls()),
                                         product.price,
-                                        GroupBy.list(Projections.constructor(TagResponse.class,
+                                        GroupBy.list(Projections.constructor(TagsResponse.class,
                                                 tag.id,
                                                 tag.name).skipNulls()),
                                         product.createdAt
@@ -101,12 +101,12 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
         queryResult.forEach(productsResponse -> {
 
-            List<ImageResponse> distinctImages = productsResponse.getImageUrls().stream()
+            List<ImagesResponse> distinctImages = productsResponse.getImageUrls().stream()
                     .distinct()
                     .collect(Collectors.toList());
             productsResponse.setImageUrls(distinctImages);
 
-            List<TagResponse> distinctTags = productsResponse.getTags().stream()
+            List<TagsResponse> distinctTags = productsResponse.getTags().stream()
                     .distinct()
                     .collect(Collectors.toList());
             productsResponse.setTags(distinctTags);
@@ -168,11 +168,11 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         product.title,
                                         favorite.count().castToNum(Integer.class),
                                         product.runningStatus,
-                                        GroupBy.list(Projections.constructor(ImageResponse.class,
+                                        GroupBy.list(Projections.constructor(ImagesResponse.class,
                                                 image.id,
                                                 image.url).skipNulls()),
                                         product.price,
-                                        GroupBy.list(Projections.constructor(TagResponse.class,
+                                        GroupBy.list(Projections.constructor(TagsResponse.class,
                                                 tag.id,
                                                 tag.name).skipNulls()),
                                         product.createdAt,
@@ -183,12 +183,12 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
         queryResult.forEach(productsResponse -> {
 
-            List<ImageResponse> distinctImages = productsResponse.getImages().stream()
+            List<ImagesResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
                     .collect(Collectors.toList());
             productsResponse.setImages(distinctImages);
 
-            List<TagResponse> distinctTags = productsResponse.getTags().stream()
+            List<TagsResponse> distinctTags = productsResponse.getTags().stream()
                     .distinct()
                     .collect(Collectors.toList());
             productsResponse.setTags(distinctTags);
@@ -248,10 +248,10 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         product.title,
                                         product.runningStatus,
                                         product.price,
-                                        GroupBy.list(Projections.constructor(ImageResponse.class,
+                                        GroupBy.list(Projections.constructor(ImagesResponse.class,
                                                 image.id,
                                                 image.url).skipNulls()),
-                                        GroupBy.list(Projections.constructor(TagResponse.class,
+                                        GroupBy.list(Projections.constructor(TagsResponse.class,
                                                 tag.id,
                                                 tag.name).skipNulls()),
                                         product.createdAt
@@ -261,12 +261,12 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
         queryResult.forEach(productsResponse -> {
 
-            List<ImageResponse> distinctImages = productsResponse.getImages().stream()
+            List<ImagesResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
                     .collect(Collectors.toList());
             productsResponse.setImages(distinctImages);
 
-            List<TagResponse> distinctTags = productsResponse.getTags().stream()
+            List<TagsResponse> distinctTags = productsResponse.getTags().stream()
                     .distinct()
                     .collect(Collectors.toList());
             productsResponse.setTags(distinctTags);
@@ -322,11 +322,11 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         product.middleCategory,
                                         product.subCategory,
                                         product.runningStatus,
-                                        GroupBy.list(Projections.constructor(ImageResponse.class,
+                                        GroupBy.list(Projections.constructor(ImagesResponse.class,
                                                 image.id,
                                                 image.url).skipNulls()),
                                         product.price,
-                                        GroupBy.list(Projections.constructor(TagResponse.class,
+                                        GroupBy.list(Projections.constructor(TagsResponse.class,
                                                 tag.id,
                                                 tag.name).skipNulls()),
                                         product.createdAt
@@ -335,12 +335,12 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 ).stream().findAny();
 
         optional.ifPresent(queryResult -> {
-            List<ImageResponse> distinctImages = queryResult.getImages().stream()
+            List<ImagesResponse> distinctImages = queryResult.getImages().stream()
                     .distinct()
                     .collect(Collectors.toList());
             queryResult.setImages(distinctImages);
 
-            List<TagResponse> distinctTags = queryResult.getTags().stream()
+            List<TagsResponse> distinctTags = queryResult.getTags().stream()
                     .distinct()
                     .collect(Collectors.toList());
             queryResult.setTags(distinctTags);

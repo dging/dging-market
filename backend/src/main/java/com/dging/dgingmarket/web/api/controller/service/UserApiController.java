@@ -56,7 +56,7 @@ public class UserApiController {
         }
 */
 
-        authService.socialSignup(socialProfile, socialType, request);
+        authService.socialSignup(socialProfile, socialType);
     }
 
 /*

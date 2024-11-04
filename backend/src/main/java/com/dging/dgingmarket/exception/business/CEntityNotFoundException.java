@@ -19,4 +19,9 @@ public class CEntityNotFoundException extends CBusinessException {
         }
     }
 
+    public static class CImageNotFoundException extends CEntityNotFoundException {
+        public CImageNotFoundException() {
+            super(ErrorCode.IMAGE_NOT_FOUND);
+        }
+    }
 }

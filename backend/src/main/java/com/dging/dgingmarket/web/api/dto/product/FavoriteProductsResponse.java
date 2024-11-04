@@ -1,8 +1,8 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
 import com.dging.dgingmarket.util.enums.RunningStatus;
-import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
-import com.dging.dgingmarket.web.api.dto.common.TagResponse;
+import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
+import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,13 +40,13 @@ public class FavoriteProductsResponse {
     private RunningStatus runningStatus;
 
     @Schema(description = RESPONSE_IMAGES)
-    private List<ImageResponse> imageUrls;
+    private List<ImagesResponse> imageUrls;
 
     @Schema(description = RESPONSE_PRICE)
     private int price;
 
     @Schema(description = RESPONSE_TAGS)
-    private List<TagResponse> tags;
+    private List<TagsResponse> tags;
 
     @Schema(description = RESPONSE_CREATED_AT)
     private Date createdAt;

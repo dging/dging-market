@@ -1,11 +1,14 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
+import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +20,7 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
  * 상품 수정 요청 DTO
  */
 @Data
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "상품 수정 요청 DTO")
 public class ProductUpdateRequest {
@@ -78,4 +82,23 @@ public class ProductUpdateRequest {
         return ProductQuality.find(quality);
     }
 
+    public static ProductUpdateRequest of(Product product) {
+        ProductUpdateRequest request = new ProductUpdateRequest();
+        request.setTitle(product.getTitle());
+        request.setMainCategory(product.getMainCategory());
+        request.setMiddleCategory(product.getMiddleCategory());
+        request.setSubCategory(product.getSubCategory());
+        request.setQuality(product.getQuality().getValue());
+        request.setContent(product.getContent());
+        request.setTags(product.getProductTags().stream().map(v -> v.getTag().getName()).toList());
+        request.setPrice(product.getPrice());
+        request.setAllowsOffers(product.isAllowsOffers());
+        request.setShippingFeeIncluded(product.isShippingFreeIncluded());
+        request.setDirectTradeAvailable(product.isDirectTradeAvailable());
+        request.setRegion(product.getRegion());
+        request.setLocation(product.getLocation());
+        request.setQuantity(product.getQuantity());
+        request.setTemporarySave(!product.isUploaded());
+        return request;
+    }
 }

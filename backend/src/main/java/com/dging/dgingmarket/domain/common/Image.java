@@ -62,11 +62,4 @@ public class Image {
         image.setSize(size);;
         return image;
     }
-
-    public static Image createMock(User user) {
-        Image image = new Image();
-        image.setId(1L);
-        image.setUser(user);
-        return image;
-    }
 }

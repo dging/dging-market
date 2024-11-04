@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.api.base;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.restdocs.headers.HeaderDescriptor;
 import org.springframework.restdocs.payload.FieldDescriptor;
@@ -18,8 +18,9 @@ import static org.springframework.restdocs.request.RequestDocumentation.partWith
 @AutoConfigureRestDocs
 public abstract class ApiDocumentationTest extends BaseSpringBootTest {
 
-    @BeforeAll
+    @BeforeEach
     public void setup() {
+
     }
 
     @AfterAll
@@ -70,16 +71,20 @@ public abstract class ApiDocumentationTest extends BaseSpringBootTest {
             parameterWithName("type").description("이미지 종류입니다. [상품, 채팅] 중에 하나이어야 합니다.")
     };
 
-    protected FieldDescriptor[] imageResponseFields = new FieldDescriptor[] {
+    protected FieldDescriptor[] imagesResponseFields = new FieldDescriptor[] {
             fieldWithPath("id").type(JsonFieldType.NUMBER).description("이미지 아이디입니다."),
             fieldWithPath("url").type(JsonFieldType.STRING).description("이미지 URL 입니다.")
     };
+
+//    protected FieldDescriptor[] imageResponseFields = new FieldDescriptor[] {
+//            fieldWithPath("id").type(JsonFieldType.NUMBER).description("이미지 아이디입니다."),
+//            fieldWithPath("url").type(JsonFieldType.STRING).description("이미지 URL 입니다.")
+//    };
 
     protected FieldDescriptor[] tagResponseFields = new FieldDescriptor[] {
             fieldWithPath("id").type(JsonFieldType.NUMBER).description("태그 아이디입니다."),
             fieldWithPath("name").type(JsonFieldType.STRING).description("태그명입니다.")
     };
-
 
     //USER_DESC
     protected FieldDescriptor[] socialRequestFields = new FieldDescriptor[] {
@@ -98,7 +103,7 @@ public abstract class ApiDocumentationTest extends BaseSpringBootTest {
             fieldWithPath("title").type(JsonFieldType.STRING).description("제목입니다."),
             fieldWithPath("runningStatus").type(JsonFieldType.STRING).description("진행 상황입니다."),
             fieldWithPath("price").type(JsonFieldType.NUMBER).description("가격입니다."),
-            fieldWithPath("imageUrls").type(JsonFieldType.ARRAY).description("이미지 URL 배열입니다."),
+            fieldWithPath("images").type(JsonFieldType.ARRAY).description("이미지 URL 배열입니다."),
             fieldWithPath("tags").type(JsonFieldType.ARRAY).description("태그 배열입니다.").optional(),
             fieldWithPath("createdAt").type(JsonFieldType.STRING).description("작성일시입니다."),
     };

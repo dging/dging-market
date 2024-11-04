@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "이미지 요청 DTO")
-public class ImageRequest {
+public class ImageCreateRequest {
 
     @NotNull
     @Schema(description = "이미지 요청 DTO")

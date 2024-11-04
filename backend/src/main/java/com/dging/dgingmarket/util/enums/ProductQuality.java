@@ -1,11 +1,12 @@
 package com.dging.dgingmarket.util.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
 
-@Getter
+@Getter(onMethod_ = {@JsonValue})
 @AllArgsConstructor
 public enum ProductQuality {
     BEST("최상"),
