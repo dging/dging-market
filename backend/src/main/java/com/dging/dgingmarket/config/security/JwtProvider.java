@@ -2,7 +2,7 @@ package com.dging.dgingmarket.config.security;
 
 import com.dging.dgingmarket.domain.common.exception.AuthenticationEntryPointException;
 import com.dging.dgingmarket.service.security.CustomUserDetailsService;
-import com.dging.dgingmarket.web.api.dto.common.TokenResponse;
+import com.dging.dgingmarket.web.api.dto.user.TokenResponse;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;

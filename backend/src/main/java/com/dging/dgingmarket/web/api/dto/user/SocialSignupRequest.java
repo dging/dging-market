@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class SocialSignupRequest {
 
     @NotEmpty
-    @Schema(description = DocumentDescriptions.REQUEST_SOCIAL_ACCESS_TOKEN)
+    @Schema(description = DocumentDescriptions.REQUEST_SOCIAL_ACCESS_TOKEN, example = DocumentDescriptions.EXAMPLE_SOCIAL_ACCESS_TOKEN)
     private String accessToken;
 }

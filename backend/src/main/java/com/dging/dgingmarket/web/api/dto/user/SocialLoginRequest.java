@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.web.api.dto.common;
+package com.dging.dgingmarket.web.api.dto.user;
 
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class SocialLoginRequest {
 
     @NotEmpty
-    @Schema(description = DocumentDescriptions.REQUEST_SOCIAL_ACCESS_TOKEN)
+    @Schema(description = DocumentDescriptions.REQUEST_SOCIAL_ACCESS_TOKEN, example = DocumentDescriptions.EXAMPLE_SOCIAL_ACCESS_TOKEN)
     private String accessToken;
 }

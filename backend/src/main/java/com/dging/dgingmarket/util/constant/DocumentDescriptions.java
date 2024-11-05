@@ -23,7 +23,7 @@ public class DocumentDescriptions {
     public static final String REQUEST_RUNNING_STATUS = "진행 상태입니다.";
     public static final String REQUEST_IMAGE = "이미지 파일입니다.";
     public static final String REQUEST_IMAGE_TYPE = "이미지 타입명입니다." + " " + ValidationMessages.IMAGE_TYPE;
-    public static final String REQUEST_SOCIAL_ACCESS_TOKEN = "배급사로부터 발급받은 액세스 토큰입니다.";
+    public static final String REQUEST_SOCIAL_ACCESS_TOKEN = "배급사로부터 발급받은 액세스 토큰입니다. 배급사별로 토큰의 형태가 다르며, 구글은 ID 토큰 값을 액세스 토큰에 포함시켜야 합니다.";
     public static final String REQUEST_SOCIAL_TYPE = "배급사명입니다." + " " + ValidationMessages.SOCIAL_TYPE;
     public static final String REQUEST_ACCESS_TOKEN = "자체 발급받은 액세스 토큰입니다.";
     public static final String REQUEST_REFRESH_TOKEN = "자체 발급받은 리프레시 토큰입니다. 토큰 재발급에 사용됩니다.";
@@ -82,6 +82,11 @@ public class DocumentDescriptions {
     public static final String EXAMPLE_IS_TEMPORARY_SAVE = "false";
     public static final String EXAMPLE_URL = "url";
     public static final String EXAMPLE_TAG = "tag";
+    public static final String EXAMPLE_GRANT_TYPE = "bearer";
+    public static final String EXAMPLE_ACCESS_TOKEN_EXPIRES_IN = "86400000";
+    public static final String EXAMPLE_ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTczMDc4OTU0MCwiZXhwIjoxNzMwODc1OTQwfQ.HU8AXkTUHYG4h4QqcemZK2Wu7QIhsiHiNmjhas6sT9A";
+    public static final String EXAMPLE_REFRESH_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mzg1NjU1NDB9.azNCscUt81h1m1OIHy5BEGJ2cKUoyJvbaYqfsawGJIw";
+    public static final String EXAMPLE_SOCIAL_ACCESS_TOKEN = "4mDn_8tw6kKL7ukIYr7vqTWMArAirLX8AAAAAQorDR4AAAGS-xVm1sLen3w93lOl";
 
     public static final String CONDITION_DATE_FROM = "조회 시작 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";
     public static final String CONDITION_DATE_TO = "조회 끝 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";
