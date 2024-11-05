@@ -2,6 +2,7 @@ package com.dging.dgingmarket.service;
 
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
+import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
@@ -36,5 +37,16 @@ public class StoreService {
 
         Follower follower = Follower.create(from, to);
         followerRepository.save(follower);
+    }
+
+    @Transactional
+    public void unfollow(Long id) {
+
+        User from = EntityUtils.userThrowable();
+        User to = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+
+        Follower follower = followerRepository.findByFromAndTo(from, to).orElseThrow(FollowerNotFoundException::new);
+
+        followerRepository.delete(follower);
     }
 }

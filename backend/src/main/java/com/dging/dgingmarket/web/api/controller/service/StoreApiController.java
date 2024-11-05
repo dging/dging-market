@@ -70,18 +70,18 @@ public class StoreApiController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    /*@DeleteMapping("/{id}/followers")
-    @Operation(summary = "상점 팔로우", description = "상점을 팔로우합니다.")
-    @ApiErrorCodeExample(StoreErrorCode.class)
-    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @DeleteMapping("/{id}/followers")
+    @Operation(summary = "상점 언팔로우", description = "상점을 언팔로우합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
+    @ApiErrorCodeExample({StoreErrorCode._FOLLOWER_NOT_FOUND, UserErrorCode._USER_NOT_FOUND})
     ResponseEntity<Void> unfollow(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
     ) {
 
-        storeService.follow(id);
+        storeService.unfollow(id);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }*/
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
+import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.util.EntityUtils;
@@ -115,6 +116,60 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
                             requestHeaders(jwtHeader)));
 
             then(storeService).should().follow(toId);
+        }
+    }
+
+    @Nested
+    @DisplayName("상점 언팔로우")
+    @Transactional
+    class UnfollowTest {
+
+        @Test
+        @DisplayName("성공")
+        @WithCustomMockUser
+        public void Success() throws Exception {
+
+            //given
+            Long toId = 2L;
+            willDoNothing().given(storeService).unfollow(toId);
+
+            //when
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/stores/{id}/followers", toId)
+                    .header("Authorization", "")
+                    .contentType(MediaType.APPLICATION_JSON));
+
+            //then
+            result.andDo(print())
+                    .andExpect(status().isNoContent())
+                    .andDo(document("상점 언팔로우 - 성공",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(jwtHeader)));
+
+            then(storeService).should().unfollow(toId);
+        }
+
+        @Test
+        @DisplayName("팔로우하지 않은 상점을 팔로우하려 하면 실패")
+        @WithCustomMockUser
+        public void FollowMyself_Fail() throws Exception {
+
+            //given
+            Long toId = 2L;
+            willThrow(FollowerNotFoundException.EXCEPTION).given(storeService).unfollow(toId);
+
+            //when
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/stores/{id}/followers", toId)
+                    .header("Authorization", "")
+                    .contentType(MediaType.APPLICATION_JSON));
+
+            //then
+            result.andDo(print())
+                    .andExpect(status().isNotFound())
+                    .andDo(document("상점 언팔로우 - 팔로우하지 않은 상점을 팔로우하려 하면 실패",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(jwtHeader)));
         }
     }
 

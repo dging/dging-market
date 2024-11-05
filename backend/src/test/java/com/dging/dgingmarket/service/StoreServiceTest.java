@@ -4,6 +4,7 @@ import com.dging.dgingmarket.config.WithCustomMockUser;
 import com.dging.dgingmarket.domain.common.enums.Role;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
+import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
@@ -84,6 +85,50 @@ public class StoreServiceTest {
             //when & then
             assertThrows(FollowMyselfException.class, () -> storeService.follow(sameUserId));
 
+        }
+    }
+
+    @Nested
+    @DisplayName("상점 언팔로우")
+    @Transactional
+    @WithCustomMockUser
+    class UnfollowTest {
+
+
+        @Test
+        @DisplayName("성공")
+        public void Success() {
+
+            // given
+            Long toId = 2L;
+            User from = EntityUtils.userThrowable();
+            User to = User.create("userId2", "password", "username", List.of(Role.USER));
+            ReflectionTestUtils.setField(to, "id", toId);
+
+            Follower follower = Follower.create(from, to);
+
+            given(userRepository.findById(toId)).willReturn(Optional.of(to));
+            given(followerRepository.findByFromAndTo(from, to)).willReturn(Optional.of(follower));
+
+            // when
+            storeService.unfollow(toId);
+
+            // then
+            verify(followerRepository, times(1)).delete(follower);
+        }
+
+        @Test
+        @DisplayName("팔로우하지 않은 상점을 팔로우하려 하면 실패")
+        public void Fail_FollowUnfollowedStore() {
+
+            // given
+            Long toId = 2L;
+            User to = User.create("userId2", "password", "username", List.of(Role.USER));
+
+            given(userRepository.findById(toId)).willReturn(Optional.of(to));
+
+            // when & then
+            assertThrows(FollowerNotFoundException.class, () -> storeService.unfollow(toId));
         }
     }
 
