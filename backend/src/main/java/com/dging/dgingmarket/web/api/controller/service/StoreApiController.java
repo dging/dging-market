@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.service.ProductService;
+import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
@@ -18,10 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -31,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreApiController {
 
     private final ProductService productService;
+    private final StoreService storeService;
 
     @GetMapping("/{id}/products")
     @CustomPageableParameter
@@ -48,4 +47,18 @@ public class StoreApiController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PostMapping("/{id}/followers")
+    @Operation(summary = "상점 팔로우", description = "상점을 팔로우합니다.")
+    @ApiResponse(responseCode = "201", description = "성공")
+    ResponseEntity<Void> follow(
+            @Parameter(description = DocumentDescriptions.REQUEST_ID)
+            @PathVariable Long id
+    ) {
+
+        storeService.follow(id);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }

@@ -3,7 +3,6 @@ package com.dging.dgingmarket.web.api.dto.product;
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.product.Product;
-import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.enums.ImageType;
@@ -103,30 +102,6 @@ public class ProductResponse {
         } else {
             return runningStatus.getValue();
         }
-    }
-
-    public static ProductResponse example() {
-        return new ProductResponse(
-                Long.parseLong(EXAMPLE_ID),
-                Long.parseLong(EXAMPLE_ID),
-                EXAMPLE_STORE_NAME,
-                EXAMPLE_TITLE,
-                EXAMPLE_CONTENT,
-                Integer.parseInt(EXAMPLE_FAVORITE_COUNT),
-                Integer.parseInt(EXAMPLE_VIEW_COUNT),
-                ProductQuality.find(EXAMPLE_QUALITY),
-                Integer.parseInt(EXAMPLE_QUANTITY),
-                EXAMPLE_REGION,
-                EXAMPLE_LOCATION,
-                EXAMPLE_MAIN_CATEGORY,
-                EXAMPLE_MIDDLE_CATEGORY,
-                EXAMPLE_SUB_CATEGORY,
-                RunningStatus.AVAILABLE,
-                List.of(new ImagesResponse(1L, EXAMPLE_URL), new ImagesResponse(2L, EXAMPLE_URL)),
-                Integer.parseInt(EXAMPLE_PRICE),
-                List.of(new TagsResponse(1L, EXAMPLE_TAG), new TagsResponse(2L, EXAMPLE_TAG)),
-                new Date()
-        );
     }
 
     public Product toProductWith() {

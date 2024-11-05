@@ -4,10 +4,7 @@ import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
@@ -19,6 +16,7 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
  * 찜한 상품 조회 응답 DTO
  */
 @Data
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Schema(description = "상품 조회 응답 DTO")
@@ -40,7 +38,7 @@ public class FavoriteProductsResponse {
     private RunningStatus runningStatus;
 
     @Schema(description = RESPONSE_IMAGES)
-    private List<ImagesResponse> imageUrls;
+    private List<ImagesResponse> images;
 
     @Schema(description = RESPONSE_PRICE)
     private int price;

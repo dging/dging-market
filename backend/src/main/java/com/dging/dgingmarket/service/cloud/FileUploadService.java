@@ -6,6 +6,7 @@ import com.dging.dgingmarket.client.UploadClient;
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
 import com.dging.dgingmarket.domain.user.User;
+import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.FileUtils;
@@ -33,6 +34,7 @@ public class FileUploadService {
 
     private final UploadClient s3Client;
     private final ImageRepository imageRepository;
+    private final UserRepository userRepository;
 
     public ImageResponse image(Long id) {
 
@@ -64,6 +66,7 @@ public class FileUploadService {
         User user = EntityUtils.userThrowable();
 
         Image imageToCreate = Image.create(user, type, fileName, filePath, url, (int) fileSize);
+        User user1 = userRepository.findById(user.getId()).orElseThrow();
         Image createdImage = imageRepository.saveAndFlush(imageToCreate);
 
         Long id = createdImage.getId();

@@ -2,13 +2,18 @@ package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
 import com.dging.dgingmarket.domain.common.Image;
+import com.dging.dgingmarket.util.ResponseFixture;
+import com.dging.dgingmarket.util.constant.BasePaths;
+import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.web.api.base.ApiDocumentationTest;
+import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
@@ -20,8 +25,10 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import java.io.FileInputStream;
 import java.util.Optional;
 
+import static com.dging.dgingmarket.util.constant.DocumentDescriptions.EXAMPLE_ID;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -32,22 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class FileApiControllerTest extends ApiDocumentationTest {
-
-    @BeforeEach
-    public void setup() {
-
-        //given(업로드)
-        when(imageRepository.saveAndFlush(any())).thenAnswer(i -> {
-
-            Image image = i.getArgument(0, Image.class);
-
-            when(imageRepository.findById(any())).thenReturn(Optional.of(image));
-
-            ReflectionTestUtils.setField(image, "id", 1L);
-
-            return image;
-        });
-    }
 
     @Nested
     @DisplayName("이미지 업로드")
@@ -68,6 +59,12 @@ public class FileApiControllerTest extends ApiDocumentationTest {
                     MediaType.IMAGE_JPEG_VALUE,
                     new FileInputStream(filePath)
             );
+
+            ImagesResponse images = ImagesResponse.builder()
+                    .id(Long.parseLong(DocumentDescriptions.EXAMPLE_ID))
+                    .url("http://www.example.com/" + filePath)
+                    .build();
+            given(fileUploadService.upload(any(), any(), any())).willReturn(images);
 
             //when
             MockMultipartHttpServletRequestBuilder builder = RestDocumentationRequestBuilders.multipart("/files/s3");
@@ -106,21 +103,11 @@ public class FileApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            final String originalFilename = "N1.jpg";
-            final String filePath = "src/test/resources/static/" + originalFilename;
-
-            MockMultipartFile mockFile = new MockMultipartFile(
-                    "image",
-                    originalFilename,
-                    MediaType.IMAGE_JPEG_VALUE,
-                    new FileInputStream(filePath)
-            );
-
-            ImagesResponse uploaded = fileUploadService.upload(mockFile, filePath, ImageType.PRODUCT);
-            Long imageId = uploaded.getId();
+            ImageResponse image = ResponseFixture.IMAGE;
+            given(fileUploadService.image(eq(image.getId()))).willReturn(image);
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/files/s3/{id}", imageId)
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/files/s3/{id}", image.getId())
                     .header("Authorization", "")
                     .contentType(MediaType.APPLICATION_JSON));
 

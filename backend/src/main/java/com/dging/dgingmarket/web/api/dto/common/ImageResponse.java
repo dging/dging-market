@@ -3,10 +3,7 @@ package com.dging.dgingmarket.web.api.dto.common;
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.util.enums.ImageType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
@@ -14,7 +11,7 @@ import java.util.Date;
 import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @AllArgsConstructor
 @Schema(description = "이미지 상세 조회 응답 DTO")
 public class ImageResponse {
@@ -49,14 +46,14 @@ public class ImageResponse {
     }
 
     public static ImageResponse of(Image image) {
-        ImageResponse response = new ImageResponse();
-        response.setId(image.getId());
-        response.setType(image.getType());
-        response.setFileName(image.getFileName());
-        response.setPath(image.getPath());
-        response.setUrl(image.getUrl());
-        response.setSize(image.getSize());
-        response.setCreatedAt(image.getCreatedAt());
-        return response;
+        return ImageResponse.builder()
+                .id(image.getId())
+                .type(image.getType())
+                .fileName(image.getFileName())
+                .path(image.getPath())
+                .url(image.getUrl())
+                .size(image.getSize())
+                .createdAt(image.getCreatedAt())
+                .build();
     }
 }

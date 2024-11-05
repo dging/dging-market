@@ -1,16 +1,9 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
-import com.dging.dgingmarket.domain.common.Image;
-import com.dging.dgingmarket.domain.common.Tag;
-import com.dging.dgingmarket.domain.product.Product;
-import com.dging.dgingmarket.domain.user.User;
-import com.dging.dgingmarket.util.EntityUtils;
-import com.dging.dgingmarket.util.enums.ImageType;
-import com.dging.dgingmarket.util.enums.RunningStatus;
+import com.dging.dgingmarket.util.RequestFixture;
+import com.dging.dgingmarket.util.ResponseFixture;
 import com.dging.dgingmarket.web.api.base.ApiDocumentationTest;
-import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
-import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import com.dging.dgingmarket.web.api.dto.product.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -20,20 +13,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.LongStream;
 
-import static com.dging.dgingmarket.util.constant.DocumentDescriptions.EXAMPLE_FAVORITE_COUNT;
-import static com.dging.dgingmarket.util.constant.DocumentDescriptions.EXAMPLE_PRICE;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -53,17 +40,9 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            List<ProductsResponse> queryResult = LongStream.range(1L, 20L).mapToObj(i ->
-                    new ProductsResponse(
-                            i, i, "storeName", "title", RunningStatus.AVAILABLE, 0,
-                            List.of(new ImagesResponse(2 * i - 1, "url"), new ImagesResponse(2 * i, "url")),
-                            List.of(new TagsResponse(2 * i - 1, "tag"), new TagsResponse(2 * i, "tag")),
-                            new Date()
-                    )).toList();
-
-            Page<ProductsResponse> page = new PageImpl<>(queryResult.subList(0, 10), Pageable.unpaged(), 20);
-
-            when(productRepository.products(any(), any())).thenReturn(page);
+            List<ProductsResponse> products = ResponseFixture.PRODUCTS;
+            Page<ProductsResponse> page = new PageImpl<>(products.subList(0, 10), Pageable.unpaged(), products.size());
+            given(productService.products(any(), any())).willReturn(page);
 
             //when
             ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/products")
@@ -89,20 +68,18 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
     @DisplayName("상품 상세 조회")
     class ProductTest {
 
-        private ProductResponse product;
-
         @Test
         @DisplayName("성공")
         @WithCustomMockUser
         public void Success() throws Exception {
 
             //given
-            ProductResponse product = ProductResponse.example();
+            ProductResponse product = ResponseFixture.PRODUCT;
 
-            when(productRepository.product(any())).thenReturn(Optional.of(product));
+            given(productService.product(any())).willReturn(product);
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/products/{id}", 1L)
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/products/{id}", product.getId())
                     .header("Authorization", "")
                     .contentType(MediaType.APPLICATION_JSON));
 
@@ -126,21 +103,13 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            User user = EntityUtils.userThrowable();
-            ProductResponse productResponse = ProductResponse.example();
-            Product product = productResponse.toProductWith();
-            ReflectionTestUtils.setField(product, "storeId", user.getId());
+            long productId = 1L;
+            ProductUpdateRequest request = RequestFixture.PRODUCT_UPDATE;
 
-            when(productRepository.findByIdAndDeletedIsFalse(any())).thenReturn(Optional.of(product));
-
-//            ArgumentCaptor<Product> captor = ArgumentCaptor.forClass(Product.class);
-
-            ProductUpdateRequest request = ProductUpdateRequest.of(product);
-            request.setTitle("변경된 제목");
-            request.setContent("변경된 내용");
+            willDoNothing().given(productService).update(productId, request);
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.put("/products/{id}", productResponse.getId())
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.put("/products/{id}", productId)
                     .content(mapper.writeValueAsString(request))
                     .header("Authorization", "")
                     .contentType(MediaType.APPLICATION_JSON));
@@ -152,12 +121,6 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));
-
-//            verify(productRepository).save(captor.capture());
-
-//            Product updatedProduct = captor.getValue();
-//            assertEquals("변경된 제목", updatedProduct.getTitle());
-//            assertEquals("변경된 내용", updatedProduct.getContent());
         }
     }
 
@@ -171,27 +134,9 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            ProductCreateRequest request = ProductCreateRequest.example();
+            ProductCreateRequest request = RequestFixture.PRODUCT_CREATE;
 
-            User user = EntityUtils.userThrowable();
-
-            List<Image> images = request.getImageIds().stream()
-                    .map(i -> {
-                        Image image = Image.create(user, ImageType.PRODUCT, "fileName", "path", "url", 0);
-                        ReflectionTestUtils.setField(image, "id", i);
-                        return image;
-                    }).toList();
-
-            List<String> tagsRequest = request.getTags();
-            List<Tag> tags = LongStream.rangeClosed(1, tagsRequest.size())
-                    .mapToObj(i -> {
-                        Tag tag = Tag.create(tagsRequest.get(Long.valueOf(i - 1).intValue()));
-                        ReflectionTestUtils.setField(tag, "id", i);
-                        return tag;
-                    }).toList();
-
-            when(imageRepository.findByIdIn(any())).thenReturn(images);
-            when(tagRepository.findByNameIn(any())).thenReturn(tags);
+            willDoNothing().given(productService).create(request);
 
             //when
             ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.post("/products")
@@ -219,15 +164,12 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            User user = EntityUtils.userThrowable();
-            ProductResponse productResponse = ProductResponse.example();
-            Product product = productResponse.toProductWith();
-            ReflectionTestUtils.setField(product, "storeId", user.getId());
+            long productId = 1L;
 
-            when(productRepository.findByIdAndDeletedIsFalse(any())).thenReturn(Optional.of(product));
+            willDoNothing().given(productService).delete(productId);
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/products/{id}", productResponse.getId())
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/products/{id}", productId)
                     .header("Authorization", "")
                     .contentType(MediaType.APPLICATION_JSON));
 
@@ -251,17 +193,13 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            User user = EntityUtils.userThrowable();
-            ProductResponse productResponse = ProductResponse.example();
-            Product product = productResponse.toProductWith();
-            ReflectionTestUtils.setField(product, "storeId", user.getId());
+            long productId = 1L;
+            ProductRunningStatusChangeRequest request = RequestFixture.PRODUCT_RUNNING_STATUS_CHANGE;
 
-            when(productRepository.findByIdAndDeletedIsFalse(any())).thenReturn(Optional.of(product));
-
-            ProductRunningStatusChangeRequest request = ProductRunningStatusChangeRequest.example();
+            willDoNothing().given(productService).changeRunningStatus(productId, request.getRunningStatus());
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.patch("/products/{id}", productResponse.getId())
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.patch("/products/{id}", productId)
                     .content(mapper.writeValueAsString(request))
                     .header("Authorization", request)
                     .contentType(MediaType.APPLICATION_JSON));
@@ -286,16 +224,11 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            User user = EntityUtils.userThrowable();
-            ProductResponse productResponse = ProductResponse.example();
-            Product product = productResponse.toProductWith();
-            ReflectionTestUtils.setField(product, "storeId", user.getId());
-
-            when(productRepository.findByIdAndDeletedIsFalse(any())).thenReturn(Optional.of(product));
-            when(userRepository.findById(any())).thenReturn(Optional.of(user));
+            long productId = 1L;
+            willDoNothing().given(productService).createFavorite(productId);
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.post("/products/{productId}/favorite", productResponse.getId())
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.post("/products/{productId}/favorite", productId)
                     .header("Authorization", "")
                     .contentType(MediaType.APPLICATION_JSON));
 
@@ -319,16 +252,11 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            User user = EntityUtils.userThrowable();
-            ProductResponse productResponse = ProductResponse.example();
-            Product product = productResponse.toProductWith();
-            ReflectionTestUtils.setField(product, "storeId", user.getId());
-
-            when(productRepository.findByIdAndDeletedIsFalse(any())).thenReturn(Optional.of(product));
-            when(userRepository.findById(any())).thenReturn(Optional.of(user));
+            long productId = 1L;
+            willDoNothing().given(productService).deleteFavorite(productId);
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/products/{productId}/favorite", productResponse.getId())
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/products/{productId}/favorite", productId)
                     .header("Authorization", "")
                     .contentType(MediaType.APPLICATION_JSON));
 
@@ -352,18 +280,10 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
         public void Success() throws Exception {
 
             //given
-            User user = EntityUtils.userThrowable();
-            List<FavoriteProductsResponse> queryResult = LongStream.range(1L, 20L).mapToObj(i ->
-                    new FavoriteProductsResponse(
-                            i, i, "storeName", "title", RunningStatus.AVAILABLE,
-                            List.of(new ImagesResponse(2 * i - 1, "url"), new ImagesResponse(2 * i, "url")), 0,
-                            List.of(new TagsResponse(2 * i - 1, "tag"), new TagsResponse(2 * i, "tag")),
-                            new Date()
-                    )).toList();
+            List<FavoriteProductsResponse> favoriteProducts = ResponseFixture.FAVORITE_PRODUCTS;
+            Page<FavoriteProductsResponse> page = new PageImpl<>(favoriteProducts.subList(0, 10), Pageable.unpaged(), favoriteProducts.size());
 
-            Page<FavoriteProductsResponse> page = new PageImpl<>(queryResult.subList((int) 0, 10), Pageable.unpaged(), 20);
-
-            when(productRepository.favoriteProducts(any(), eq(user.getId()), any())).thenReturn(page);
+            given(productService.favoriteProducts(any(), any())).willReturn(page);
 
             //when
             ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/products/favorite")
@@ -374,44 +294,6 @@ public class ProductApiControllerTest extends ApiDocumentationTest {
             result.andDo(print())
                     .andExpect(status().isOk())
                     .andDo(document("찜한 상품 조회 - 성공",
-                            preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            requestHeaders(jwtHeader)));
-        }
-    }
-
-    @Nested
-    @DisplayName("상점 상품 조회")
-    class StoreProductsTest {
-
-        @Test
-        @DisplayName("성공")
-        @WithCustomMockUser
-        public void Success() throws Exception {
-
-            //given
-            User user = EntityUtils.userThrowable();
-            List<StoreProductsResponse> queryResult = LongStream.range(1L, 20L).mapToObj(i ->
-                    new StoreProductsResponse(
-                            i, i, "storeName", "title", Integer.parseInt(EXAMPLE_FAVORITE_COUNT), RunningStatus.AVAILABLE,
-                            List.of(new ImagesResponse(2 * i - 1, "url"), new ImagesResponse(2 * i, "url")), Integer.parseInt(EXAMPLE_PRICE),
-                            List.of(new TagsResponse(2 * i - 1, "tag"), new TagsResponse(2 * i, "tag")),
-                            new Date(), new Date()
-                    )).toList();
-
-            Page<StoreProductsResponse> page = new PageImpl<>(queryResult.subList((int) 0, 10), Pageable.unpaged(), 20);
-
-            when(productRepository.storeProducts(any(), eq(user.getId()), any())).thenReturn(page);
-
-            //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/products/favorite")
-                    .header("Authorization", "")
-                    .contentType(MediaType.APPLICATION_JSON));
-
-            //then
-            result.andDo(print())
-                    .andExpect(status().isOk())
-                    .andDo(document("상점 상품 조회 - 성공",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));

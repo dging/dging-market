@@ -4,10 +4,7 @@ import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
@@ -20,6 +17,7 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
  * - 조회 조건에 따라 여러 API에서 공통으로 사용됨
  */
 @Data
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Schema(description = "상품 조회 응답 DTO")

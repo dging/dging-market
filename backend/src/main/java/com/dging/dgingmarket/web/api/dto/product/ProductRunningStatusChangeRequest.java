@@ -7,6 +7,7 @@ import com.dging.dgingmarket.util.validation.Enum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
  * 상품 진행상태 변경 요청 DTO
  */
 @Data
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "상품 진행 상태 변경 요청 DTO")
 public class ProductRunningStatusChangeRequest {
@@ -25,11 +27,5 @@ public class ProductRunningStatusChangeRequest {
 
     public RunningStatus getRunningStatus() {
         return RunningStatus.find(runningStatus);
-    }
-
-    public static ProductRunningStatusChangeRequest example() {
-        ProductRunningStatusChangeRequest request = new ProductRunningStatusChangeRequest();
-        request.setRunningStatus(DocumentDescriptions.EXAMPLE_RUNNING_STATUS);
-        return request;
     }
 }

@@ -81,24 +81,4 @@ public class ProductUpdateRequest {
     public ProductQuality getQuality() {
         return ProductQuality.find(quality);
     }
-
-    public static ProductUpdateRequest of(Product product) {
-        ProductUpdateRequest request = new ProductUpdateRequest();
-        request.setTitle(product.getTitle());
-        request.setMainCategory(product.getMainCategory());
-        request.setMiddleCategory(product.getMiddleCategory());
-        request.setSubCategory(product.getSubCategory());
-        request.setQuality(product.getQuality().getValue());
-        request.setContent(product.getContent());
-        request.setTags(product.getProductTags().stream().map(v -> v.getTag().getName()).toList());
-        request.setPrice(product.getPrice());
-        request.setAllowsOffers(product.isAllowsOffers());
-        request.setShippingFeeIncluded(product.isShippingFreeIncluded());
-        request.setDirectTradeAvailable(product.isDirectTradeAvailable());
-        request.setRegion(product.getRegion());
-        request.setLocation(product.getLocation());
-        request.setQuantity(product.getQuantity());
-        request.setTemporarySave(!product.isUploaded());
-        return request;
-    }
 }

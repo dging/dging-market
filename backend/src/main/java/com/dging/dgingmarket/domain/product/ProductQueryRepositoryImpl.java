@@ -101,10 +101,10 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
         queryResult.forEach(productsResponse -> {
 
-            List<ImagesResponse> distinctImages = productsResponse.getImageUrls().stream()
+            List<ImagesResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
                     .collect(Collectors.toList());
-            productsResponse.setImageUrls(distinctImages);
+            productsResponse.setImages(distinctImages);
 
             List<TagsResponse> distinctTags = productsResponse.getTags().stream()
                     .distinct()

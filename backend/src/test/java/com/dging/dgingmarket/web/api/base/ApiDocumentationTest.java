@@ -18,15 +18,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.partWith
 @AutoConfigureRestDocs
 public abstract class ApiDocumentationTest extends BaseSpringBootTest {
 
-    @BeforeEach
-    public void setup() {
-
-    }
-
-    @AfterAll
-    public void teardown() {
-    }
-
     //COMMON_DESC
     protected ParameterDescriptor[] pageParams = new ParameterDescriptor[] {
             parameterWithName("page").description("조회할 페이지입니다. 0부터 시작합니다.").optional(),
