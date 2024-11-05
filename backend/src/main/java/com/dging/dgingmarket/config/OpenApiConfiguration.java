@@ -1,9 +1,6 @@
 package com.dging.dgingmarket.config;
 
-import com.dging.dgingmarket.exception.ApiErrorCodeExample;
-import com.dging.dgingmarket.exception.BaseErrorCode;
-import com.dging.dgingmarket.exception.ErrorReason;
-import com.dging.dgingmarket.exception.ExampleHolder;
+import com.dging.dgingmarket.exception.*;
 import com.dging.dgingmarket.web.api.dto.common.ErrorResponse;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -18,14 +15,13 @@ import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
+import org.reflections.Reflections;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -64,20 +60,44 @@ public class OpenApiConfiguration {
     public OperationCustomizer customize() {
         return (Operation operation, HandlerMethod handlerMethod) -> {
 
+            ApiErrorCodeClassExample apiErrorCodeClassExample = handlerMethod.getMethodAnnotation(ApiErrorCodeClassExample.class);
+
+            if (apiErrorCodeClassExample != null) {
+                // 해당 이넘에 선언된 에러코드들의 목록을 가져옵니다.
+                BaseErrorCode[] errorCodes = apiErrorCodeClassExample.value().getEnumConstants();
+                generateErrorCodeResponseExample(operation.getResponses(), errorCodes);
+            }
+
             ApiErrorCodeExample apiErrorCodeExample = handlerMethod.getMethodAnnotation(ApiErrorCodeExample.class);
 
             if (apiErrorCodeExample != null) {
-                generateErrorCodeResponseExample(operation, apiErrorCodeExample.value());
+
+                Reflections reflections = new Reflections(BaseErrorCode.class.getPackageName());
+                Set<Class<? extends BaseErrorCode>> errorCodeClasses = reflections.getSubTypesOf(BaseErrorCode.class);
+
+                BaseErrorCode[] errorCodes = Arrays.stream(apiErrorCodeExample.value()).flatMap(code -> {
+                    // 구현체 인스턴스 생성 후 메서드 호출
+                    return errorCodeClasses.stream().map(errorCodeClass -> {
+                                try {
+                                    return Arrays.stream(errorCodeClass.getEnumConstants())
+                                            .filter(i -> Objects.equals(i.getErrorReason().getCode(), code))
+                                            .findAny().orElse(null);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            })
+                            .filter(Objects::nonNull);
+                }).toArray(BaseErrorCode[]::new);
+
+                generateErrorCodeResponseExample(operation.getResponses(), errorCodes);
             }
 
             return operation;
         };
     }
 
-    private void generateErrorCodeResponseExample(Operation operation, Class<? extends BaseErrorCode> type) {
-        ApiResponses responses = operation.getResponses();
-        // 해당 이넘에 선언된 에러코드들의 목록을 가져옵니다.
-        BaseErrorCode[] errorCodes = type.getEnumConstants();
+    private void generateErrorCodeResponseExample(ApiResponses responses, BaseErrorCode[] errorCodes) {
+
         // 400, 401, 404 등 에러코드의 상태코드들로 리스트로 모읍니다.
         // 400 같은 상태코드에 여러 에러코드들이 있을 수 있습니다.
         Map<Integer, List<ExampleHolder>> statusWithExampleHolders =

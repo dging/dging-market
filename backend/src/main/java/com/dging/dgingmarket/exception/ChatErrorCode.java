@@ -3,6 +3,7 @@ package com.dging.dgingmarket.exception;
 import lombok.Getter;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Getter
@@ -32,4 +33,8 @@ public enum ChatErrorCode implements BaseErrorCode {
         return Objects.nonNull(annotation) ? annotation.value() : this.getReason();
     }
 
+    @Override
+    public BaseErrorCode find(String value) throws NoSuchFieldException {
+        return Arrays.stream(values()).filter((errorCode) -> errorCode.getCode().equals(value)).findAny().orElse(null);
+    }
 }

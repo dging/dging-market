@@ -2,16 +2,15 @@ package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.exception.StoreErrorCode;
+import com.dging.dgingmarket.exception.UserErrorCode;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.common.ErrorResponse;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -39,7 +38,7 @@ public class StoreApiController {
     @GetMapping("/{id}/products")
     @CustomPageableParameter
     @Operation(summary = "상점 상품 조회", description = "여러 상점 상품을 조회합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Page<StoreProductsResponse>> fetchStoreProducts(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id,
@@ -55,13 +54,8 @@ public class StoreApiController {
 
     @PostMapping("/{id}/followers")
     @Operation(summary = "상점 팔로우", description = "상점을 팔로우합니다.")
-    @ApiErrorCodeExample(StoreErrorCode.class)
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "성공"),
-            @ApiResponse(responseCode = "400", description = "성공",
-            content = @Content(mediaType = "application/json",
-            schema = @Schema(implementation = ErrorResponse.class))),
-    })
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({StoreErrorCode._FOLLOW_MYSELF_ERROR, UserErrorCode._USER_NOT_FOUND})
     ResponseEntity<Void> follow(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
@@ -71,5 +65,19 @@ public class StoreApiController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    /*@DeleteMapping("/{id}/followers")
+    @Operation(summary = "상점 팔로우", description = "상점을 팔로우합니다.")
+    @ApiErrorCodeExample(StoreErrorCode.class)
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    ResponseEntity<Void> unfollow(
+            @Parameter(description = DocumentDescriptions.REQUEST_ID)
+            @PathVariable Long id
+    ) {
+
+        storeService.follow(id);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }*/
 
 }

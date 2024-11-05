@@ -3,6 +3,7 @@ package com.dging.dgingmarket.exception;
 import lombok.Getter;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Getter
@@ -30,5 +31,10 @@ public enum NotificationErrorCode implements BaseErrorCode {
         Field field = this.getClass().getField(this.name());
         ErrorExplanation annotation = field.getAnnotation(ErrorExplanation.class);
         return Objects.nonNull(annotation) ? annotation.value() : this.getReason();
+    }
+
+    @Override
+    public BaseErrorCode find(String value) throws NoSuchFieldException {
+        return Arrays.stream(values()).filter((errorCode) -> errorCode.getCode().equals(value)).findAny().orElse(null);
     }
 }

@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,7 @@ public class UserApiController {
 
     @PostMapping("/social/{socialType}")
     @Operation(summary = "소셜 회원가입", description = "소셜 계정을 통해 회원가입을 진행합니다.")
-    @ApiResponse(responseCode = "201", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
     public ResponseEntity<Void> socialSignup(
             @Parameter(description = DocumentDescriptions.REQUEST_SOCIAL_TYPE)
             @PathVariable(name = "socialType") SocialType socialType,
@@ -82,7 +83,7 @@ public class UserApiController {
 
     @PostMapping("/social/{socialType}/token")
     @Operation(summary = "소셜 로그인", description = "소셜 계정을 통해 로그인을 진행합니다.")
-    @ApiResponse(responseCode = "201", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
     public ResponseEntity<TokenResponse> socialLogin(
             @Parameter(description = DocumentDescriptions.REQUEST_SOCIAL_TYPE)
             @PathVariable(name = "socialType") SocialType socialType,
@@ -101,7 +102,7 @@ public class UserApiController {
 
     @PostMapping("/token/expiration")
     @Operation(summary = "액세스 토큰 재발급", description = "리프레시 토큰을 사용하여 액세스 토큰을 재발급합니다.")
-    @ApiResponse(responseCode = "201", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
     public ResponseEntity<TokenResponse> reissue(
             @RequestBody @Validated
             @Schema(implementation = TokenRequest.class)

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class ProductApiController {
 
     @PostMapping
     @Operation(summary = "상품 등록", description = "단일 상품을 등록합니다.")
-    @ApiResponse(responseCode = "201", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
     ResponseEntity<Void> create(
             @Valid
             @RequestBody @Schema(implementation = ProductCreateRequest.class)
@@ -45,7 +46,7 @@ public class ProductApiController {
 
     @PutMapping("/{id}")
     @Operation(summary = "상품 수정", description = "단일 상품을 수정합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Void> update(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id,
@@ -62,10 +63,7 @@ public class ProductApiController {
     @GetMapping
     @CustomPageableParameter
     @Operation(summary = "상품 조회", description = "여러 상품을 조회합니다.")
-    @ApiResponse(
-            responseCode = "200",
-            description = "성공"
-    )
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Page<ProductsResponse>> fetchProducts(
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
@@ -79,7 +77,7 @@ public class ProductApiController {
 
     @GetMapping("/{id}")
     @Operation(summary = "상품 상세 조회", description = "단일 상품 상세를 조회합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<ProductResponse> fetchProduct(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
@@ -92,7 +90,7 @@ public class ProductApiController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "상품 삭제", description = "단일 상품을 삭제합니다.")
-    @ApiResponse(responseCode = "204", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
     ResponseEntity<Void> delete(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
@@ -105,7 +103,7 @@ public class ProductApiController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "상품 진행 상태 변경", description = "단일 상품의 진행 상태를 변경합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Void> changeRunningStatus(
 
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
@@ -123,7 +121,7 @@ public class ProductApiController {
 
     @PostMapping("/{productId}/favorite")
     @Operation(summary = "상품 찜하기", description = "단일 상품을 찜합니다.")
-    @ApiResponse(responseCode = "201", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
     ResponseEntity<Void> createFavorite(
             @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
             @PathVariable Long productId
@@ -136,7 +134,7 @@ public class ProductApiController {
 
     @DeleteMapping("/{productId}/favorite")
     @Operation(summary = "상품 찜 해제하기 ", description = "단일 상품을 찜 해제합니다.")
-    @ApiResponse(responseCode = "204", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
     ResponseEntity<Void> deleteFavorite(
             @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
             @PathVariable Long productId
@@ -150,7 +148,7 @@ public class ProductApiController {
     @GetMapping("/favorite")
     @CustomPageableParameter
     @Operation(summary = "찜한 상품 조회", description = "찜한 여러 상품을 조회합니다.")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Page<FavoriteProductsResponse>> fetchFavoriteProducts(
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)

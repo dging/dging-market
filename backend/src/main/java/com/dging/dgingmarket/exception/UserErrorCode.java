@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Getter
@@ -23,6 +24,12 @@ public enum UserErrorCode implements BaseErrorCode {
 
     USER_NOT_AUTHENTICATION(HttpStatus.UNAUTHORIZED.value(), "DGM-2102", "인증된 사용자가 아닙니다."),
     ;
+
+    public static final String _USER_NOT_FOUND = "DGM-2000";
+    public static final String _REFRESH_TOKEN_NOT_FOUND = "DGM-2001";
+    public static final String _LOGIN_FAIL = "DGM-2100";
+    public static final String _ALREADY_SIGNEDUP = "DGM-2101";
+    public static final String _USER_NOT_AUTHENTICATION = "DGM-2102";
 
     private int status;
     private final String code;
@@ -45,4 +52,10 @@ public enum UserErrorCode implements BaseErrorCode {
         ErrorExplanation annotation = field.getAnnotation(ErrorExplanation.class);
         return Objects.nonNull(annotation) ? annotation.value() : this.getReason();
     }
+
+    @Override
+    public BaseErrorCode find(String value) throws NoSuchFieldException {
+        return Arrays.stream(values()).filter((errorCode) -> errorCode.getCode().equals(value)).findAny().orElse(null);
+    }
+
 }

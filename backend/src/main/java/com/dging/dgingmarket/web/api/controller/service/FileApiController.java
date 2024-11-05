@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
+import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.cloud.FileUploadService;
 import com.dging.dgingmarket.util.FileUtils;
 import com.dging.dgingmarket.util.constant.BasePaths;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +33,7 @@ public class FileApiController {
     @PostMapping(value = "/s3",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "이미지 업로드", description = "단일 이미지를 업로드 후 관련 정보를 반환합니다.")
-    @ApiResponse(responseCode = "201", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
     public ResponseEntity<ImagesResponse> uploadS3(
             @ModelAttribute
             @Parameter(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
@@ -48,7 +50,7 @@ public class FileApiController {
 
     @GetMapping(value = "/s3/{id}")
     @Operation(summary = "이미지 상세 조회", description = "단일 이미지 상세를 조회합니다..")
-    @ApiResponse(responseCode = "200", description = "성공")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     public ResponseEntity<ImageResponse> fetchS3Image(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id

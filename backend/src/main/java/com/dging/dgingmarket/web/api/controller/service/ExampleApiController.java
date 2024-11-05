@@ -18,31 +18,31 @@ public class ExampleApiController {
 
     @GetMapping("/global")
     @Operation(summary = "글로벌(인증, 서버 내부 에러 등) 에러코드")
-    @ApiErrorCodeExample(CommonErrorCode.class)
+    @ApiErrorCodeClassExample(CommonErrorCode.class)
     public void globalErrorCodes() {}
 
     @GetMapping("/user")
     @Operation(summary = "사용자 도메인 관련 에러코드")
-    @ApiErrorCodeExample(UserErrorCode.class)
+    @ApiErrorCodeClassExample(UserErrorCode.class)
     public void userErrorCodes() {}
 
     @GetMapping("/product")
     @Operation(summary = "상품 도메인 관련 에러코드")
-    @ApiErrorCodeExample(ProductErrorCode.class)
+    @ApiErrorCodeClassExample(ProductErrorCode.class)
     public void productErrorCodes() {}
 
     @GetMapping("/store")
     @Operation(summary = "상점 도메인 관련 에러코드")
-    @ApiErrorCodeExample(StoreErrorCode.class)
+    @ApiErrorCodeClassExample(StoreErrorCode.class)
     public void storeErrorCodes() {}
 
     @GetMapping("/notification")
     @Operation(summary = "알림 도메인 관련 에러코드")
-    @ApiErrorCodeExample(NotificationErrorCode.class)
+    @ApiErrorCodeClassExample(NotificationErrorCode.class)
     public void notificationErrorCodes() {}
 
     @GetMapping("/chat")
     @Operation(summary = "채팅 도메인 관련 에러코드")
-    @ApiErrorCodeExample(ChatErrorCode.class)
+    @ApiErrorCodeClassExample(ChatErrorCode.class)
     public void chatErrorCodes() {}
 }
