@@ -23,6 +23,7 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1005", "상품이 존재하지 않습니다."),
     USER_OWN_PRODUCT(HttpStatus.FORBIDDEN.value(), "DGM-1006", "사용자의 상품이 아닙니다."),
     IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-1007", "이미지가 존재하지 않습니다."),
+    FOLLOW_MYSELF_ERROR(HttpStatus.BAD_REQUEST.value(), "DGM-1008", "본인을 팔로우 할 수는 없습니다."),
 
     /**
      * SOCIAL

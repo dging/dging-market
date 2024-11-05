@@ -4,6 +4,7 @@ import com.dging.dgingmarket.config.WithCustomMockUser;
 import com.dging.dgingmarket.domain.common.enums.Role;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.user.User;
+import com.dging.dgingmarket.exception.business.CInvalidValueException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.ResponseFixture;
 import com.dging.dgingmarket.util.enums.RunningStatus;
@@ -95,6 +96,31 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
             result.andDo(print())
                     .andExpect(status().isCreated())
                     .andDo(document("상점 팔로우 - 성공",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(jwtHeader)));
+
+            then(storeService).should().follow(toId);
+        }
+
+        @Test
+        @DisplayName("본인을 팔로우하면 실패")
+        @WithCustomMockUser
+        public void FollowMyself_Fail() throws Exception {
+
+            //given
+            Long toId = 1L;
+            willThrow(new CInvalidValueException.CFollowMyselfException()).given(storeService).follow(toId);
+
+            //when
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.post("/stores/{id}/followers", toId)
+                    .header("Authorization", "")
+                    .contentType(MediaType.APPLICATION_JSON));
+
+            //then
+            result.andDo(print())
+                    .andExpect(status().isBadRequest())
+                    .andDo(document("상점 팔로우 - 본인을 팔로우하면 실패",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));

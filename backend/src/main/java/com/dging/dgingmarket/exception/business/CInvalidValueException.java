@@ -24,4 +24,10 @@ public class CInvalidValueException extends CBusinessException {
             super(ErrorCode.USER_OWN_PRODUCT);
         }
     }
+
+    public static class CFollowMyselfException extends CInvalidValueException {
+        public CFollowMyselfException() {
+            super(ErrorCode.FOLLOW_MYSELF_ERROR);
+        }
+    }
 }
