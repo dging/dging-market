@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
+import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.util.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
@@ -21,6 +22,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_UPLOADED;
+import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_YOURS;
+import static com.dging.dgingmarket.exception.ProductErrorCode._PRODUCT_NOT_FOUND;
+import static com.dging.dgingmarket.exception.ProductErrorCode._USER_OWN_PRODUCT;
+import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
+
 @Slf4j
 @RequestMapping("/products")
 @RequiredArgsConstructor
@@ -33,6 +40,11 @@ public class ProductApiController {
     @PostMapping
     @Operation(summary = "상품 등록", description = "단일 상품을 등록합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _SOME_FILE_NOT_UPLOADED,
+            _SOME_FILE_NOT_YOURS,
+    })
     ResponseEntity<Void> create(
             @Valid
             @RequestBody @Schema(implementation = ProductCreateRequest.class)
@@ -47,6 +59,13 @@ public class ProductApiController {
     @PutMapping("/{id}")
     @Operation(summary = "상품 수정", description = "단일 상품을 수정합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _SOME_FILE_NOT_UPLOADED,
+            _SOME_FILE_NOT_YOURS,
+            _PRODUCT_NOT_FOUND,
+            _USER_OWN_PRODUCT,
+    })
     ResponseEntity<Void> update(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id,
@@ -64,6 +83,13 @@ public class ProductApiController {
     @CustomPageableParameter
     @Operation(summary = "상품 조회", description = "여러 상품을 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _SOME_FILE_NOT_UPLOADED,
+            _SOME_FILE_NOT_YOURS,
+            _PRODUCT_NOT_FOUND,
+            _USER_OWN_PRODUCT,
+    })
     ResponseEntity<Page<ProductsResponse>> fetchProducts(
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
@@ -78,6 +104,9 @@ public class ProductApiController {
     @GetMapping("/{id}")
     @Operation(summary = "상품 상세 조회", description = "단일 상품 상세를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({
+            _PRODUCT_NOT_FOUND,
+    })
     ResponseEntity<ProductResponse> fetchProduct(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
@@ -91,6 +120,10 @@ public class ProductApiController {
     @DeleteMapping("/{id}")
     @Operation(summary = "상품 삭제", description = "단일 상품을 삭제합니다.")
     @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
+    @ApiErrorCodeExample({
+            _PRODUCT_NOT_FOUND,
+            _USER_OWN_PRODUCT,
+    })
     ResponseEntity<Void> delete(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
@@ -104,6 +137,11 @@ public class ProductApiController {
     @PatchMapping("/{id}")
     @Operation(summary = "상품 진행 상태 변경", description = "단일 상품의 진행 상태를 변경합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _PRODUCT_NOT_FOUND,
+            _USER_OWN_PRODUCT,
+    })
     ResponseEntity<Void> changeRunningStatus(
 
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
@@ -122,6 +160,10 @@ public class ProductApiController {
     @PostMapping("/{productId}/favorite")
     @Operation(summary = "상품 찜하기", description = "단일 상품을 찜합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _PRODUCT_NOT_FOUND,
+    })
     ResponseEntity<Void> createFavorite(
             @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
             @PathVariable Long productId
@@ -135,6 +177,10 @@ public class ProductApiController {
     @DeleteMapping("/{productId}/favorite")
     @Operation(summary = "상품 찜 해제하기 ", description = "단일 상품을 찜 해제합니다.")
     @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _PRODUCT_NOT_FOUND,
+    })
     ResponseEntity<Void> deleteFavorite(
             @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
             @PathVariable Long productId
@@ -149,6 +195,9 @@ public class ProductApiController {
     @CustomPageableParameter
     @Operation(summary = "찜한 상품 조회", description = "찜한 여러 상품을 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+    })
     ResponseEntity<Page<FavoriteProductsResponse>> fetchFavoriteProducts(
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)

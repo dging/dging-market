@@ -25,6 +25,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.dging.dgingmarket.exception.CommonErrorCode._ACCESS_TOKEN_ERROR;
+import static com.dging.dgingmarket.exception.CommonErrorCode._REFRESH_TOKEN_ERROR;
+import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
+
 @Slf4j
 @RestController
 @RequestMapping("/stores")

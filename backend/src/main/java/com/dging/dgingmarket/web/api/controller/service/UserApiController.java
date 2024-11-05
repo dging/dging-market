@@ -2,6 +2,10 @@ package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.client.dto.SocialProfile;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
+import com.dging.dgingmarket.exception.ApiErrorCodeExample;
+import com.dging.dgingmarket.exception.CommonErrorCode;
+import com.dging.dgingmarket.exception.StoreErrorCode;
+import com.dging.dgingmarket.exception.UserErrorCode;
 import com.dging.dgingmarket.service.AuthService;
 import com.dging.dgingmarket.service.social.OAuthService;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
@@ -26,6 +30,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static com.dging.dgingmarket.exception.CommonErrorCode.*;
+import static com.dging.dgingmarket.exception.UserErrorCode.*;
+
 @Slf4j
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -48,6 +55,12 @@ public class UserApiController {
     @PostMapping("/social/{socialType}")
     @Operation(summary = "소셜 회원가입", description = "소셜 계정을 통해 회원가입을 진행합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({
+            _INVALID_SOCIAL_TYPE,
+            _SOCIAL_COMMUNICATION_ERROR,
+            _ALREADY_SIGNEDUP,
+            _USER_NOT_FOUND
+    })
     public ResponseEntity<Void> socialSignup(
             @Parameter(description = DocumentDescriptions.REQUEST_SOCIAL_TYPE)
             @PathVariable(name = "socialType") SocialType socialType,
@@ -84,6 +97,11 @@ public class UserApiController {
     @PostMapping("/social/{socialType}/token")
     @Operation(summary = "소셜 로그인", description = "소셜 계정을 통해 로그인을 진행합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({
+            _INVALID_SOCIAL_TYPE,
+            _SOCIAL_COMMUNICATION_ERROR,
+            _USER_NOT_FOUND
+    })
     public ResponseEntity<TokenResponse> socialLogin(
             @Parameter(description = DocumentDescriptions.REQUEST_SOCIAL_TYPE)
             @PathVariable(name = "socialType") SocialType socialType,
@@ -103,6 +121,11 @@ public class UserApiController {
     @PostMapping("/token/expiration")
     @Operation(summary = "액세스 토큰 재발급", description = "리프레시 토큰을 사용하여 액세스 토큰을 재발급합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _REFRESH_TOKEN_ERROR,
+            _ACCESS_TOKEN_ERROR,
+    })
     public ResponseEntity<TokenResponse> reissue(
             @RequestBody @Validated
             @Schema(implementation = TokenRequest.class)

@@ -21,6 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.dging.dgingmarket.exception.CommonErrorCode.*;
+import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
+
 @Slf4j
 @RestController
 @RequestMapping("/files")
@@ -34,6 +37,12 @@ public class FileApiController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "이미지 업로드", description = "단일 이미지를 업로드 후 관련 정보를 반환합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _INVALID_FILE,
+            _CLOUD_COMMUNICATION_ERROR,
+            _FILE_CONVERT_FAILED,
+    })
     public ResponseEntity<ImagesResponse> uploadS3(
             @ModelAttribute
             @Parameter(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
@@ -51,6 +60,9 @@ public class FileApiController {
     @GetMapping(value = "/s3/{id}")
     @Operation(summary = "이미지 상세 조회", description = "단일 이미지 상세를 조회합니다..")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({
+            _IMAGE_NOT_FOUND,
+    })
     public ResponseEntity<ImageResponse> fetchS3Image(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id

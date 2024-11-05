@@ -4,6 +4,8 @@ import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.common.TagRepository;
+import com.dging.dgingmarket.domain.common.exception.SomeFileNotUploadedException;
+import com.dging.dgingmarket.domain.common.exception.SomeFileNotYoursException;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
@@ -169,11 +171,11 @@ public class ProductService {
         List<Image> foundImages = imageRepository.findByIdIn(requestImageIds);
 
         if(foundImages.size() < requestImageIds.size()) {
-            throw new RuntimeException("업로드가 되지 않은 파일이 있는 경우");
+            throw SomeFileNotUploadedException.EXCEPTION;
         }
 
         if(foundImages.stream().anyMatch(v -> !Objects.equals(v.getUser().getId(), user.getId()))) {
-            throw new RuntimeException("본인이 업로드하지 않은 파일이 있는 경우");
+            throw SomeFileNotYoursException.EXCEPTION;
         }
 
         for (Long requestImageId : requestImageIds) {

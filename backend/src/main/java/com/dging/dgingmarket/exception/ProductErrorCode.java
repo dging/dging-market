@@ -14,8 +14,11 @@ public enum ProductErrorCode implements BaseErrorCode {
      * DGM-2xxx
      */
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-3000", "상품이 존재하지 않습니다."),
-    USER_OWN_PRODUCT(HttpStatus.FORBIDDEN.value(), "DGM-3100", "사용자의 상품이 아닙니다."),
+    USER_OWN_PRODUCT(HttpStatus.FORBIDDEN.value(), "DGM-3100", "사용자 본인의 상품이 아닙니다."),
     ;
+
+    public static final String _PRODUCT_NOT_FOUND = "DGM-3000";
+    public static final String _USER_OWN_PRODUCT = "DGM-3100";
 
     private int status;
     private final String code;
