@@ -1,19 +1,14 @@
 import React from 'react';
 import { Arrange, WrapLayout } from '../../components/Base';
 import { Outlet } from 'react-router-dom';
-import StoreProfile from '../../components/Profile/StoreProfile';
-import { MystoreTitle } from '../../components/Title';
-import { MystoreMainMenu } from '../../components/Menu';
+import { MystoreMenu } from '../../components/Menu';
 import { useTheme } from 'styled-components';
 
-export default function MystoreLayout() {
+export default function MystoreManageLayout() {
   const theme = useTheme();
   return (
     <Arrange width='100%' minwidth={theme.page_size.minwidth}>
-      <StoreProfile />
-      <MystoreMainMenu />
-      <MystoreTitle />
-
+      <MystoreMenu />
       <Outlet />
     </Arrange>
   );

@@ -586,6 +586,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-star-rating-component@^1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@types/react-star-rating-component/-/react-star-rating-component-1.4.4.tgz#e2e16701366fe787ad0ebdfe11198318e5f5af60"
+  integrity sha512-sRzK4a18SqXqpR8+U4fq5nXfcHrtULxDSz6QgP+MB6NolWvEDrcqn2v+w2RjmH8s4nwUzi7tfDFMjd4hZHxqTA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-stars@^2.2.4":
   version "2.2.4"
   resolved "https://registry.npmjs.org/@types/react-stars/-/react-stars-2.2.4.tgz"

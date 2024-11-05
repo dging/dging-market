@@ -69,6 +69,22 @@ const font = {
     fontSize: '18px',
     lineHeight: '150%',
   },
+  info14: {
+    fontFamily: 'NSRegular',
+    fontSize: '14px',
+    letterSpacing: '-1.28px',
+  },
+
+  info12: {
+    fontFamily: 'NSRegular',
+    fontSize: '12px',
+    letterSpacing: '-0.96px',
+  },
+  ac12: {
+    FontFamily: 'NSRegular',
+    fontSize: '12px',
+    letterSpacing: '-0.96px',
+  },
   category16: {
     fontFamily: 'NSRegular',
     fontSize: '16px',
@@ -116,9 +132,17 @@ const font = {
     fontFamily: 'NSBold',
     fontSize: '18px',
   },
+  b24: {
+    fontFamily: 'NSBold',
+    fontSize: '24px',
+  },
   b32: {
     fontFamily: 'NSBold',
     fontSize: '32px',
+  },
+  eb24: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '24px',
   },
 };
 

@@ -4,3 +4,4 @@ export { default as MystoreMenu } from './MystoreMenu';
 export { default as TradeDetailMenu } from './TradeDetailMenu';
 export { default as MainGoodsMenu } from './MainGoodsMenu';
 export { default as MainSearchMenu } from './MainSearchMenu';
+export { default as MystoreMainMenu } from './MystoreMainMenu';

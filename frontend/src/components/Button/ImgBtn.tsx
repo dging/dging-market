@@ -17,6 +17,7 @@ const ImageButton = styled.button<BtnType>`
   background-image: url(${(props) => props.$backgroundimage || null});
   background-position: ${(props) => props.$backgroundposition || '100%'};
   background-size: contain;
+  background-repeat: no-repeat;
   border: ${(props) =>
     props.$status ? `1px solid ${props.theme.color.black1}` : 'none'};
   border-radius: ${(props) => props.borderradius || '0px'};

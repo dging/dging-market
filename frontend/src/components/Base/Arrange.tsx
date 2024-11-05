@@ -20,7 +20,7 @@ const WrapArrange = styled.div<ArrangeType>`
   border-top: ${(props) =>
     props.$top ? `1px solid ${props.theme.color.black5}` : 'none'};
   border-bottom: ${(props) =>
-    props.$bottom ? `1px solid ${props.theme.color.black5} ` : 'none'};
+    props.$bottom ? `1px solid ${props.theme.color.black5}` : 'none'};
   background-image: url(${(props) => props.$backgroundimage || null});
   background-position: ${(props) => props.$backgroundposition || 'center'};
   background-size: contain;

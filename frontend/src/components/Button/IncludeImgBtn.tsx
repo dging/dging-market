@@ -28,7 +28,7 @@ const RightImg = styled.div<RightImgType>`
       : `url(${props.$rightbgimg})`};
   background-position: ${(props) => props.$rightbgposition || '100%'};
   background-size: contain;
-  background-color: white;
+  background-color: transparent;
 `;
 
 const Text = styled.div<IncludeImgBtnType>`

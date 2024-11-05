@@ -1,8 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { DefaultLayout, MystoreLayout, HistoryLayout } from '../layout/Layout';
+import {
+  DefaultLayout,
+  MystoreManageLayout,
+  HistoryLayout,
+  MystoreLayout,
+} from '../layout/Layout';
+
+import {
+  MystoreGoods,
+  MystoreReview,
+  MystoreKeep,
+  MystoreFollowing,
+  MystoreFollower,
+} from '../templates';
 import MainPage from '../pages/MainPage';
 import MainSearchPage from '../pages/MainSearchPage';
-import MystorePage from '../pages/MystorePage';
 import SellPage from '../pages/SellPage';
 import TalkPage from '../pages/TalkPage';
 import MygoodsPage from '../pages/MygoodsPage';
@@ -25,10 +37,6 @@ export const router = createBrowserRouter([
         path: '/category',
         element: <MainSearchPage />,
       },
-      {
-        path: '/mystore',
-        element: <MystorePage />,
-      },
 
       {
         path: '/talk',
@@ -46,9 +54,34 @@ export const router = createBrowserRouter([
         path: '/service',
         element: <ServicePage />,
       },
-
       {
         element: <MystoreLayout />,
+        children: [
+          {
+            path: '/mystore/goods',
+            element: <MystoreGoods />,
+          },
+          {
+            path: '/mystore/review',
+            element: <MystoreReview />,
+          },
+          {
+            path: '/mystore/keep',
+            element: <MystoreKeep />,
+          },
+          {
+            path: '/mystore/following',
+            element: <MystoreFollowing />,
+          },
+          {
+            path: '/mystore/follower',
+            element: <MystoreFollower />,
+          },
+        ],
+      },
+
+      {
+        element: <MystoreManageLayout />,
         children: [
           {
             path: '/mygoods',

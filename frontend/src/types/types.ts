@@ -50,6 +50,7 @@ export interface IncludeImgBtnType {
   height?: string;
   $textwidth?: string;
   $textheight?: string;
+  $status?: any;
   gap?: string;
   $change?: boolean;
   text?: string;
