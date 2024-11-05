@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.config.security;
 
-import com.dging.dgingmarket.exception.security.CSecurityException;
+import com.dging.dgingmarket.domain.common.exception.AuthenticationEntryPointException;
 import com.dging.dgingmarket.service.security.CustomUserDetailsService;
 import com.dging.dgingmarket.web.api.dto.common.TokenResponse;
 import io.jsonwebtoken.*;
@@ -74,7 +74,7 @@ public class JwtProvider {
         Claims claims = parseClaims(token);
 
         if (ObjectUtils.isEmpty(claims.get(ROLES))) {
-            throw new CSecurityException.CAuthenticationEntryPointException();
+            throw AuthenticationEntryPointException.EXCEPTION;
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());

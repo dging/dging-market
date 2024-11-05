@@ -3,7 +3,7 @@ package com.dging.dgingmarket.client;
 import com.dging.dgingmarket.client.dto.NaverProfile;
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
 import com.dging.dgingmarket.client.dto.SocialProfile;
-import com.dging.dgingmarket.exception.social.CSocialException.CSocialCommunicationException;
+import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
 import com.dging.dgingmarket.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -77,8 +77,8 @@ public class NaverOAuthClient implements OAuthClient {
         return webClient.post()
                 .uri(naverTokenUrl, builder -> builder.queryParams(params).build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
                 .bodyToMono(OAuthTokenResponse.class)
                 .block();
     }
@@ -89,8 +89,8 @@ public class NaverOAuthClient implements OAuthClient {
                 .uri(naverProfileUrl)
                 .header("Authorization", "Bearer " + accessToken)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
                 .bodyToMono(NaverProfile.class)
                 .block();
 

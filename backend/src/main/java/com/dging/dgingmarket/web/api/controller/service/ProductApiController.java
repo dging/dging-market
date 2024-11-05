@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/products")
 @RequiredArgsConstructor
-@Tag(name = "상품 서비스", description = "상품 관리 API 엔드포인트")
+@Tag(name = "2. 상품 서비스", description = "상품 관리 API 엔드포인트")
 @RestController
 public class ProductApiController {
 

@@ -1,15 +1,20 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
+import com.dging.dgingmarket.exception.ApiErrorCodeExample;
+import com.dging.dgingmarket.exception.StoreErrorCode;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.common.ErrorResponse;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/stores")
-@Tag(name = "상점 서비스", description = "상점 관리 API 엔드포인트")
+@Tag(name = "3. 상점 서비스", description = "상점 관리 API 엔드포인트")
 @RequiredArgsConstructor
 public class StoreApiController {
 
@@ -50,7 +55,13 @@ public class StoreApiController {
 
     @PostMapping("/{id}/followers")
     @Operation(summary = "상점 팔로우", description = "상점을 팔로우합니다.")
-    @ApiResponse(responseCode = "201", description = "성공")
+    @ApiErrorCodeExample(StoreErrorCode.class)
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "성공",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = ErrorResponse.class))),
+    })
     ResponseEntity<Void> follow(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id

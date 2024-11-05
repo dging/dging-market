@@ -1,5 +1,7 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
+import com.dging.dgingmarket.exception.BaseErrorCode;
+import com.dging.dgingmarket.exception.ErrorReason;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,25 +19,27 @@ public class ErrorResponse {
     private String message;
     private List<FieldError> errors;
 
-    private ErrorResponse(final ErrorCode code) {
-        this.code = code.getCode();
-        this.status = code.getStatus();
-        this.message = code.getMessage();
+    private ErrorResponse(final BaseErrorCode code) {
+        ErrorReason errorReason = code.getErrorReason();
+        this.code = errorReason.getCode();
+        this.status = errorReason.getStatus();
+        this.message = errorReason.getReason();
         this.errors = new ArrayList<>();
     }
 
-    private ErrorResponse(final ErrorCode code, final List<FieldError> errors) {
-        this.code = code.getCode();
-        this.status = code.getStatus();
-        this.message = code.getMessage();
+    private ErrorResponse(final BaseErrorCode code, final List<FieldError> errors) {
+        ErrorReason errorReason = code.getErrorReason();
+        this.code = errorReason.getCode();
+        this.status = errorReason.getStatus();
+        this.message = errorReason.getReason();
         this.errors = errors;
     }
 
-    public static ErrorResponse of(final ErrorCode code, final BindingResult bindingResult) {
+    public static ErrorResponse of(final BaseErrorCode code, final BindingResult bindingResult) {
         return new ErrorResponse(code, FieldError.of(bindingResult));
     }
 
-    public static ErrorResponse of(final ErrorCode errorCode) {
+    public static ErrorResponse of(final BaseErrorCode errorCode) {
         return new ErrorResponse(errorCode);
     }
 

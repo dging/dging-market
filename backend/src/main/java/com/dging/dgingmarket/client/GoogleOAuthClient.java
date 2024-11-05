@@ -4,7 +4,7 @@ import com.dging.dgingmarket.DgingMarketApplication;
 import com.dging.dgingmarket.client.dto.GoogleProfile;
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
 import com.dging.dgingmarket.client.dto.SocialProfile;
-import com.dging.dgingmarket.exception.social.CSocialException.CSocialCommunicationException;
+import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
 import com.dging.dgingmarket.service.UrlService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -95,7 +95,7 @@ public class GoogleOAuthClient implements OAuthClient {
         } catch (HttpClientErrorException e) {
             log.error("e={}", e.toString());
         }
-        throw new CSocialCommunicationException();
+        throw SocialCommunicationException.EXCEPTION;
     }
 
     @Override
@@ -104,8 +104,8 @@ public class GoogleOAuthClient implements OAuthClient {
         GoogleProfile googleProfile = webClient.get()
                 .uri(googleProfileUrl, builder -> builder.queryParam("id_token", idToken).build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
                 .bodyToMono(GoogleProfile.class)
                 .block();
 

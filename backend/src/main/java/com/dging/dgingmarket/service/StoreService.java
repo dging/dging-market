@@ -4,8 +4,8 @@ import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
-import com.dging.dgingmarket.exception.business.CInvalidValueException;
+import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +27,11 @@ public class StoreService {
     public void follow(Long id) {
 
         User from = EntityUtils.userThrowable();
-        User to = userRepository.findById(id).orElseThrow(CEntityNotFoundException.CUserNotFoundException::new);
+        User to = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
         //본인을 팔로우 하는 경우 예외
         if(Objects.equals(from.getId(), to.getId())) {
-            throw new CInvalidValueException.CFollowMyselfException();
+            throw FollowMyselfException.EXCEPTION;
         }
 
         Follower follower = Follower.create(from, to);

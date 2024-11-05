@@ -1,8 +1,9 @@
 package com.dging.dgingmarket.config.security;
 
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
-import com.dging.dgingmarket.exception.security.CSecurityException;
-import com.dging.dgingmarket.web.api.dto.common.ErrorCode;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
+import com.dging.dgingmarket.domain.common.exception.AuthenticationEntryPointException;
+import com.dging.dgingmarket.exception.CommonErrorCode;
+import com.dging.dgingmarket.exception.UserErrorCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,12 +36,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Authentication authentication = jwtProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-                throw new CSecurityException.CAuthenticationEntryPointException();
+                throw AuthenticationEntryPointException.EXCEPTION;
             }
-        } catch (CEntityNotFoundException.CUserNotFoundException e) {
-            request.setAttribute("exception", ErrorCode.USER_NOT_FOUND.getCode());
-        } catch (CSecurityException.CAuthenticationEntryPointException e) {
-            request.setAttribute("exception", ErrorCode.ACCESS_TOKEN_ERROR.getCode());
+        } catch (UserNotFoundException e) {
+            request.setAttribute("exception", UserErrorCode.USER_NOT_FOUND.getCode());
+        } catch (AuthenticationEntryPointException e) {
+            request.setAttribute("exception", CommonErrorCode.ACCESS_TOKEN_ERROR.getCode());
         } finally {
             chain.doFilter(request, response);
         }

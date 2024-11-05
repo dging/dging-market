@@ -5,9 +5,12 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.dging.dgingmarket.client.UploadClient;
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
+import com.dging.dgingmarket.domain.common.exception.ImageNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
+import com.dging.dgingmarket.domain.common.exception.CloudCommunicationException;
+import com.dging.dgingmarket.domain.common.exception.FileConvertFailedException;
+import com.dging.dgingmarket.domain.common.exception.InvalidFileFormatException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.FileUtils;
 import com.dging.dgingmarket.util.enums.ImageType;
@@ -24,8 +27,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
-import static com.dging.dgingmarket.exception.io.CIOException.*;
-
 @Slf4j
 @Service
 @Transactional(readOnly = true)
@@ -38,7 +39,7 @@ public class FileUploadService {
 
     public ImageResponse image(Long id) {
 
-        Image foundImage = imageRepository.findById(id).orElseThrow(CEntityNotFoundException.CImageNotFoundException::new);
+        Image foundImage = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
 
         return ImageResponse.of(foundImage);
     }
@@ -53,9 +54,9 @@ public class FileUploadService {
         try (InputStream inputStream = uploadFile.getInputStream()) {
             s3Client.upload(inputStream, objectMetadata, filePath);
         } catch (SdkClientException e) {
-            throw new CCloudCommunicationException();
+            throw CloudCommunicationException.EXCEPTION;
         } catch (IOException e) {
-            throw new CFileConvertFailedException();
+            throw FileConvertFailedException.EXCEPTION;
         }
 
         String url = s3Client.getFileUrl(filePath);
@@ -83,7 +84,7 @@ public class FileUploadService {
         try {
             s3Client.delete(fileUrl);
         } catch (SdkClientException e) {
-            throw new CCloudCommunicationException();
+            throw CloudCommunicationException.EXCEPTION;
         }
     }
 
@@ -91,7 +92,7 @@ public class FileUploadService {
         try {
             s3Client.deleteFiles(fileNames);
         } catch (SdkClientException e) {
-            throw new CCloudCommunicationException();
+            throw CloudCommunicationException.EXCEPTION;
         }
     }
 
@@ -105,7 +106,7 @@ public class FileUploadService {
         try {
             return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
-            throw new CInvalidFileFormatException();
+            throw InvalidFileFormatException.EXCEPTION;
         }
     }
 }

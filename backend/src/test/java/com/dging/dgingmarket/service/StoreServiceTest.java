@@ -6,7 +6,7 @@ import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.exception.business.CInvalidValueException;
+import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.util.EntityUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -82,7 +82,7 @@ public class StoreServiceTest {
             given(userRepository.findById(sameUserId)).willReturn(Optional.of(from));
 
             //when & then
-            assertThrows(CInvalidValueException.CFollowMyselfException.class, () -> storeService.follow(sameUserId));
+            assertThrows(FollowMyselfException.class, () -> storeService.follow(sameUserId));
 
         }
     }

@@ -3,8 +3,8 @@ package com.dging.dgingmarket.service.social;
 import com.dging.dgingmarket.client.OAuthClient;
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
 import com.dging.dgingmarket.client.dto.SocialProfile;
-import com.dging.dgingmarket.exception.social.CSocialException.CInvalidSocialTypeException;
-import com.dging.dgingmarket.exception.social.CSocialException.CSocialCommunicationException;
+import com.dging.dgingmarket.domain.common.exception.InvalidSocialTypeException;
+import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
 import com.dging.dgingmarket.util.enums.SocialType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class OAuthService {
             response.sendRedirect(redirectURL);
         } catch (IOException e) {
             log.error(e.toString());
-            throw new CSocialCommunicationException();
+            throw SocialCommunicationException.EXCEPTION;
         }
     }
 
@@ -61,7 +61,7 @@ public class OAuthService {
         return socialOAuthList.stream()
                 .filter(x -> x.type() == socialType)
                 .findFirst()
-                .orElseThrow(CInvalidSocialTypeException::new);
+                .orElseThrow(InvalidSocialTypeException::new);
     }
 
 }

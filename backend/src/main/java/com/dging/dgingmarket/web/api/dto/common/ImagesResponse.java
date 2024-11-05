@@ -1,7 +1,9 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 import static com.dging.dgingmarket.util.constant.DocumentDescriptions.RESPONSE_ID;
 import static com.dging.dgingmarket.util.constant.DocumentDescriptions.RESPONSE_IMAGE_URL;

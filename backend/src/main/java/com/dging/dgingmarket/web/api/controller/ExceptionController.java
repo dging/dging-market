@@ -1,8 +1,8 @@
 package com.dging.dgingmarket.web.api.controller;
 
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CUserNotFoundException;
-import com.dging.dgingmarket.exception.security.CSecurityException.CAuthenticationEntryPointException;
-import com.dging.dgingmarket.exception.security.CTokenException.CAccessDeniedException;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
+import com.dging.dgingmarket.domain.common.exception.AccessDeniedException;
+import com.dging.dgingmarket.domain.common.exception.AuthenticationEntryPointException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,16 +14,16 @@ public class ExceptionController {
 
     @RequestMapping("/entrypoint")
     public void entryPointException() throws Exception {
-        throw new CAuthenticationEntryPointException();
+        throw AuthenticationEntryPointException.EXCEPTION;
     }
 
     @RequestMapping("/access-denied")
     public void accessDeniedException() {
-        throw new CAccessDeniedException();
+        throw AccessDeniedException.EXCEPTION;
     }
 
     @RequestMapping(value = "/user-not-found")
     public void userNotFoundException() {
-        throw new CUserNotFoundException();
+        throw UserNotFoundException.EXCEPTION;
     }
 }

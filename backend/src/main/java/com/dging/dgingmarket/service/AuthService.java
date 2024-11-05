@@ -7,14 +7,14 @@ import com.dging.dgingmarket.domain.refreshtoken.RefreshToken;
 import com.dging.dgingmarket.domain.refreshtoken.RefreshTokenRepository;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.exception.business.CInvalidValueException.CAlreadySignedupException;
-import com.dging.dgingmarket.exception.security.CTokenException;
+import com.dging.dgingmarket.domain.user.exception.AlreadySignedupException;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
+import com.dging.dgingmarket.domain.common.exception.RefreshTokenException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.enums.SocialType;
 import com.dging.dgingmarket.web.api.dto.common.TokenRequest;
 import com.dging.dgingmarket.web.api.dto.common.TokenResponse;
 import com.dging.dgingmarket.web.api.dto.user.LoginRequest;
-import com.dging.dgingmarket.web.api.dto.user.SocialSignupRequest;
 import com.dging.dgingmarket.web.api.dto.user.UserDetailsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import static com.dging.dgingmarket.exception.business.CEntityNotFoundException.CUserNotFoundException;
 
 @Slf4j
 @Service
@@ -44,7 +42,7 @@ public class AuthService {
 
         userRepository.findBySocialIdAndProvider(socialProfile.getSnsId(), socialType.name().toLowerCase())
                 .ifPresent(user -> {
-                    throw new CAlreadySignedupException();
+                    throw AlreadySignedupException.EXCEPTION;
                 });
 
         userRepository.save(
@@ -62,7 +60,7 @@ public class AuthService {
     @Transactional
     public TokenResponse socialLogin(LoginRequest request) {
         User user = userRepository.findBySocialIdAndProvider(request.getId(), request.getProvider())
-                .orElseThrow(CUserNotFoundException::new);
+                .orElseThrow(UserNotFoundException::new);
         return socialLogin(user);
     }
 
@@ -82,7 +80,7 @@ public class AuthService {
 
         //리프레시 토큰 만료
         if(!jwtProvider.validationToken(request.getRefreshToken())) {
-            throw new CTokenException.CRefreshTokenException();
+            throw RefreshTokenException.EXCEPTION;
         }
 
         String accessToken = request.getAccessToken();
@@ -91,11 +89,11 @@ public class AuthService {
 
         //리프레시 토큰 없음
         RefreshToken refreshToken = refreshTokenRepository.findByKey(foundUser.getId())
-                .orElseThrow(CTokenException.CRefreshTokenException::new);
+                .orElseThrow(RefreshTokenException::new);
 
         //리프레시 토큰 불일치
         if(!refreshToken.getToken().equals(request.getRefreshToken())) {
-            throw new CTokenException.CRefreshTokenException();
+            throw RefreshTokenException.EXCEPTION;
         }
 
         TokenResponse newCreatedToken = jwtProvider.createToken(foundUser.getId().toString(), foundUser.getRoles().stream().map(Role::getValue).collect(Collectors.toList()));

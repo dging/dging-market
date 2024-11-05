@@ -1,18 +1,12 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
-import com.dging.dgingmarket.domain.common.enums.Role;
-import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.user.User;
-import com.dging.dgingmarket.exception.business.CInvalidValueException;
+import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.ResponseFixture;
-import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.base.ApiDocumentationTest;
-import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
-import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,17 +18,12 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
-import java.util.stream.LongStream;
 
-import static com.dging.dgingmarket.util.constant.DocumentDescriptions.EXAMPLE_FAVORITE_COUNT;
-import static com.dging.dgingmarket.util.constant.DocumentDescriptions.EXAMPLE_PRICE;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -110,7 +99,7 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
 
             //given
             Long toId = 1L;
-            willThrow(new CInvalidValueException.CFollowMyselfException()).given(storeService).follow(toId);
+            willThrow(FollowMyselfException.EXCEPTION).given(storeService).follow(toId);
 
             //when
             ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.post("/stores/{id}/followers", toId)

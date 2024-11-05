@@ -3,7 +3,7 @@ package com.dging.dgingmarket.client;
 import com.dging.dgingmarket.client.dto.FacebookProfile;
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
 import com.dging.dgingmarket.client.dto.SocialProfile;
-import com.dging.dgingmarket.exception.social.CSocialException.CSocialCommunicationException;
+import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
 import com.dging.dgingmarket.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -72,8 +72,8 @@ public class FacebookOAuthClient implements OAuthClient {
         return webClient.get()
                 .uri(facebookTokenUrl, builder -> builder.queryParams(params).build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
                 .bodyToMono(OAuthTokenResponse.class)
                 .block();
     }
@@ -88,8 +88,8 @@ public class FacebookOAuthClient implements OAuthClient {
         FacebookProfile facebookProfile = webClient.get()
                 .uri(facebookProfileUrl, builder -> builder.queryParams(params).build())
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new CSocialCommunicationException()))
-                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new CSocialCommunicationException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
+                .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(SocialCommunicationException.EXCEPTION))
                 .bodyToMono(FacebookProfile.class)
                 .block();
 

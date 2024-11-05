@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.client.dto.SocialProfile;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CUserNotFoundException;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.service.AuthService;
 import com.dging.dgingmarket.service.social.OAuthService;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
@@ -9,7 +9,6 @@ import com.dging.dgingmarket.util.enums.SocialType;
 import com.dging.dgingmarket.web.api.dto.common.SocialLoginRequest;
 import com.dging.dgingmarket.web.api.dto.common.TokenRequest;
 import com.dging.dgingmarket.web.api.dto.common.TokenResponse;
-import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
 import com.dging.dgingmarket.web.api.dto.user.LoginRequest;
 import com.dging.dgingmarket.web.api.dto.user.SocialSignupRequest;
 import com.dging.dgingmarket.web.api.dto.user.UserDetailsResponse;
@@ -29,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@Tag(name = "사용자 서비스", description = "사용자 관리 API 엔드포인트")
+@Tag(name = "1. 사용자 서비스", description = "사용자 관리 API 엔드포인트")
 @RestController
 public class UserApiController {
 
@@ -59,7 +58,7 @@ public class UserApiController {
         SocialProfile socialProfile = oauthService.profile(socialType, request.getAccessToken());
 
         //소셜 프로필이 없는 경우 에러                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             a
-        if (ObjectUtils.isEmpty(socialProfile)) throw new CUserNotFoundException();
+        if (ObjectUtils.isEmpty(socialProfile)) throw new UserNotFoundException();
 
 /*
         //동의 항목(이메일)에 동의하지 않은 경우 연결 끊은 후 에러
@@ -95,7 +94,7 @@ public class UserApiController {
         SocialProfile socialProfile = oauthService.profile(socialType, request.getAccessToken());
 
         //소셜 프로필이 없는 경우 에러
-        if (ObjectUtils.isEmpty(socialProfile)) throw new CUserNotFoundException();
+        if (ObjectUtils.isEmpty(socialProfile)) throw new UserNotFoundException();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.socialLogin(new LoginRequest(socialProfile.getSnsId(), null, socialType.name().toLowerCase())));
     }

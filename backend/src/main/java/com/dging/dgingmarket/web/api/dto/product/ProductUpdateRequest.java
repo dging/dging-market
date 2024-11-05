@@ -1,10 +1,8 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
-import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;

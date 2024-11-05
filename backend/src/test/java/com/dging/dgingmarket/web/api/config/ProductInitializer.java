@@ -6,14 +6,13 @@ import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.constant.BasePaths;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Order;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
@@ -36,7 +35,7 @@ public class ProductInitializer implements ApplicationRunner {
             log.info("[Store] 더미 데이터 존재");
         } else {
 
-            User user = userRepository.findByUserId("userId").orElseThrow(CEntityNotFoundException.CUserNotFoundException::new);
+            User user = userRepository.findByUserId("userId").orElseThrow(UserNotFoundException::new);
 
             List<Product> products = dummy(user);
 

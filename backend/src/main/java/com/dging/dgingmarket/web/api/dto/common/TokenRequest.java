@@ -1,6 +1,5 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
-import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
@@ -8,7 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
+import static com.dging.dgingmarket.util.constant.DocumentDescriptions.REQUEST_ACCESS_TOKEN;
+import static com.dging.dgingmarket.util.constant.DocumentDescriptions.REQUEST_REFRESH_TOKEN;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

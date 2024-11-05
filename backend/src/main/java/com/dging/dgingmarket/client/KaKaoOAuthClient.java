@@ -3,7 +3,7 @@ package com.dging.dgingmarket.client;
 import com.dging.dgingmarket.client.dto.KakaoProfile;
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
 import com.dging.dgingmarket.client.dto.SocialProfile;
-import com.dging.dgingmarket.exception.social.CSocialException.CSocialCommunicationException;
+import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
 import com.dging.dgingmarket.service.UrlService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +78,7 @@ public class KaKaoOAuthClient implements OAuthClient {
         ResponseEntity<String> response = restTemplate.postForEntity(kakaoTokenUrl, request, String.class);
         if (response.getStatusCode() == HttpStatus.OK)
             return gson.fromJson(response.getBody(), OAuthTokenResponse.class);
-        throw new CSocialCommunicationException();
+        throw SocialCommunicationException.EXCEPTION;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class KaKaoOAuthClient implements OAuthClient {
                 })
                 .onErrorResume(error -> {
                     log.error(error.getMessage());
-                    return Mono.error(new CSocialCommunicationException());
+                    return Mono.error(SocialCommunicationException.EXCEPTION);
                 })
                 .block();
 

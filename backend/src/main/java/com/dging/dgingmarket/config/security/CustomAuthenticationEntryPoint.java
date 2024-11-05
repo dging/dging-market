@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.config.security;
 
-import com.dging.dgingmarket.web.api.dto.common.ErrorCode;
+import com.dging.dgingmarket.exception.CommonErrorCode;
+import com.dging.dgingmarket.exception.UserErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,9 +21,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         if(ObjectUtils.isEmpty(exception)) return;
 
-        if (exception.equals(ErrorCode.USER_NOT_FOUND.getCode())) {
+        if (exception.equals(UserErrorCode.USER_NOT_FOUND.getCode())) {
             response.sendRedirect("/exception/user-not-found");
-        } else if (exception.equals(ErrorCode.ACCESS_TOKEN_ERROR.getCode())) {
+        } else if (exception.equals(CommonErrorCode.ACCESS_TOKEN_ERROR.getCode())) {
             response.sendRedirect("/exception/entrypoint");
         }
     }

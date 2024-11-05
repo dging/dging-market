@@ -6,12 +6,12 @@ import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.common.TagRepository;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
+import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CProductNotFoundException;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException.CUserNotFoundException;
-import com.dging.dgingmarket.exception.business.CInvalidValueException.CUserOwnProductException;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
+import com.dging.dgingmarket.domain.store.exception.UserOwnProductException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
@@ -50,12 +50,12 @@ public class ProductService {
     @Transactional
     public void update(Long id, ProductUpdateRequest request) {
 
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(CProductNotFoundException::new);
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(ProductNotFoundException::new);
 
         User user = EntityUtils.userThrowable();
 
         if (!Objects.equals(foundProduct.getStoreId(), user.getStore().getId())) {
-            throw new CUserOwnProductException();
+            throw UserOwnProductException.EXCEPTION;
         }
 
         final List<Image> imagesToCreate = generateProductImages(request.getImageIds());
@@ -85,7 +85,7 @@ public class ProductService {
     }
 
     public ProductResponse product(Long id) {
-        return productRepository.product(id).orElseThrow(CProductNotFoundException::new);
+        return productRepository.product(id).orElseThrow(ProductNotFoundException::new);
     }
 
     public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond) {
@@ -97,10 +97,10 @@ public class ProductService {
 
         User user = EntityUtils.userThrowable();
 
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(CProductNotFoundException::new);
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(ProductNotFoundException::new);
 
         if (!Objects.equals(foundProduct.getStoreId(), user.getStore().getId())) {
-            throw new CUserOwnProductException();
+            throw UserOwnProductException.EXCEPTION;
         }
 
         foundProduct.delete();
@@ -111,10 +111,10 @@ public class ProductService {
 
         User user = EntityUtils.userThrowable();
 
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(CProductNotFoundException::new);
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(id).orElseThrow(ProductNotFoundException::new);
 
         if (!Objects.equals(foundProduct.getStoreId(), user.getStore().getId())) {
-            throw new CUserOwnProductException();
+            throw UserOwnProductException.EXCEPTION;
         }
 
         foundProduct.changeRunningStatus(runningStatus);
@@ -123,10 +123,10 @@ public class ProductService {
     @Transactional
     public void createFavorite(Long productId) {
 
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(ProductNotFoundException::new);
 
         User user = EntityUtils.userThrowable();
-        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
+        User foundUser = userRepository.findById(user.getId()).orElseThrow(UserNotFoundException::new);
 
         foundUser.toFavorite(foundProduct);
     }
@@ -134,10 +134,10 @@ public class ProductService {
     @Transactional
     public void deleteFavorite(Long productId) {
 
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(CProductNotFoundException::new);
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(ProductNotFoundException::new);
 
         User user = EntityUtils.userThrowable();
-        User foundUser = userRepository.findById(user.getId()).orElseThrow(CUserNotFoundException::new);
+        User foundUser = userRepository.findById(user.getId()).orElseThrow(UserNotFoundException::new);
 
         foundUser.toUnfavorite(foundProduct);
     }

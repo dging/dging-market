@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.service.security;
 
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.exception.business.CEntityNotFoundException;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +16,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userPk) throws UsernameNotFoundException {
-        return userRepository.findById(Long.parseLong(userPk)).orElseThrow(CEntityNotFoundException.CUserNotFoundException::new);
+        return userRepository.findById(Long.parseLong(userPk)).orElseThrow(UserNotFoundException::new);
     }
 }
