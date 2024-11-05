@@ -23,32 +23,33 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
 @Schema(description = "상품 조회 응답 DTO")
 public class ProductsResponse {
 
-    @Schema(description = RESPONSE_ID)
+    @Schema(description = RESPONSE_ID, example = EXAMPLE_ID)
     private Long id;
 
-    @Schema(description = RESPONSE_STORE_ID)
+    @Schema(description = RESPONSE_STORE_ID, example = EXAMPLE_ID)
     private Long storeId;
 
-    @Schema(description = RESPONSE_STORE_NAME)
+    @Schema(description = RESPONSE_STORE_NAME, example = EXAMPLE_STORE_NAME)
     private String storeName;
 
-    @Schema(description = RESPONSE_TITLE)
+    @Schema(description = RESPONSE_TITLE, example = EXAMPLE_TITLE)
     private String title;
 
-    @Schema(description = RESPONSE_RUNNING_STATUS)
+    @Schema(description = RESPONSE_RUNNING_STATUS, example = EXAMPLE_RUNNING_STATUS)
     private RunningStatus runningStatus;
 
-    @Schema(description = RESPONSE_PRICE)
-    private int price;
-
-    @Schema(description = RESPONSE_IMAGES)
+    @Schema(description = RESPONSE_IMAGES, example = "[]")
     private List<ImagesResponse> images;
 
-    @Schema(description = RESPONSE_TAGS)
+    @Schema(description = RESPONSE_PRICE, example = EXAMPLE_PRICE)
+    private int price;
+
+    @Schema(description = RESPONSE_TAGS, example = "[]")
     private List<TagsResponse> tags;
 
-    @Schema(description = RESPONSE_CREATED_AT)
+    @Schema(description = RESPONSE_CREATED_AT, example = EXAMPLE_CREATED_AT)
     private Date createdAt;
+
 
     public String getRunningStatus() {
         if(ObjectUtils.isEmpty(runningStatus)) {

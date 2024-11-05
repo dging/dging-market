@@ -9,6 +9,7 @@ import com.dging.dgingmarket.util.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,10 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static com.dging.dgingmarket.exception.CommonErrorCode._ACCESS_TOKEN_ERROR;
-import static com.dging.dgingmarket.exception.CommonErrorCode._REFRESH_TOKEN_ERROR;
-import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 
 @Slf4j
 @RestController
@@ -59,7 +56,12 @@ public class StoreApiController {
     @PostMapping("/{id}/followers")
     @Operation(summary = "상점 팔로우", description = "상점을 팔로우합니다.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
-    @ApiErrorCodeExample({StoreErrorCode._FOLLOW_MYSELF_ERROR, UserErrorCode._USER_NOT_FOUND})
+    @ApiErrorCodeExample({
+            StoreErrorCode._FOLLOW_MYSELF_ERROR, 
+            UserErrorCode._USER_NOT_FOUND,
+            StoreErrorCode._ALREADY_FOLLOWED,
+            StoreErrorCode._STORE_NOT_FOUND
+    })
     ResponseEntity<Void> follow(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
@@ -73,7 +75,7 @@ public class StoreApiController {
     @DeleteMapping("/{id}/followers")
     @Operation(summary = "상점 언팔로우", description = "상점을 언팔로우합니다.")
     @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
-    @ApiErrorCodeExample({StoreErrorCode._FOLLOWER_NOT_FOUND, UserErrorCode._USER_NOT_FOUND})
+    @ApiErrorCodeExample({StoreErrorCode._FOLLOWER_NOT_FOUND, UserErrorCode._USER_NOT_FOUND, StoreErrorCode._STORE_NOT_FOUND})
     ResponseEntity<Void> unfollow(
             @Parameter(description = DocumentDescriptions.REQUEST_ID)
             @PathVariable Long id
@@ -82,6 +84,23 @@ public class StoreApiController {
         storeService.unfollow(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/{id}/followers")
+    @CustomPageableParameter
+    @Operation(summary = "팔로워 조회", description = "상점을 팔로우한 여러 사용자를 조회합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    ResponseEntity<Page<FollowersResponse>> fetchFollowers(
+            @Parameter(description = DocumentDescriptions.REQUEST_ID)
+            @PathVariable Long id,
+            @ParameterObject Pageable pageable,
+            @Valid @Schema(implementation = CommonCondition.class)
+            @ParameterObject CommonCondition cond
+    ) {
+
+        Page<FollowersResponse> response = storeService.followers(pageable, id, cond);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }

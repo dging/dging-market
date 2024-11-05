@@ -13,19 +13,18 @@ import org.springframework.boot.ApplicationRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
 //@LocalDummyDataInitialization
 //@Order(1)
 public class UserInitializer implements ApplicationRunner {
 
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public void run(ApplicationArguments args) {
 
         if (userRepository.count() > 0) {
-            log.info("[User] 더미 데이터 존재");
+
         } else {
 
             List<User> users = new ArrayList<>();

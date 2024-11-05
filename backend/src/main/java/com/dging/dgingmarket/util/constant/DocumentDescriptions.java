@@ -41,8 +41,11 @@ public class DocumentDescriptions {
     public static final String RESPONSE_STORE_ID = "상점의 고유 식별자인 storeId입니다.";
     public static final String RESPONSE_MAIN_CATEGORY = "대분류 카테고리명입니다.";
     public static final String RESPONSE_STORE_NAME = "상점명입니다.";
+    public static final String RESPONSE_RATING = "펑점입니다. 5점 만점입니다.";
     public static final String RESPONSE_TITLE = "제목입니다.";
+    public static final String RESPONSE_SALES_COUNT = "상품 갯수입니다.";
     public static final String RESPONSE_RUNNING_STATUS = "진행 상태입니다..";
+    public static final String RESPONSE_FOLLOWERS_COUNT = "팔로워 수입니다..";
     public static final String RESPONSE_PRICE = "가격입니다.";
     public static final String RESPONSE_IMAGES = "이미지 배열입니다.";
     public static final String RESPONSE_FILE_NAME = "파일명입니다.";
@@ -60,6 +63,8 @@ public class DocumentDescriptions {
     public static final String RESPONSE_ACCESS_TOKEN_EXPIRES_IN = "액세스 토큰 만료 타임스탬프입니다.";
 
     public static final String EXAMPLE_ID = "1";
+    public static final String EXAMPLE_CREATED_AT = "2024-11-03T20:50:04.000+00:00";
+    public static final String EXAMPLE_UPDATED_AT = "2024-11-03T20:50:04.000+00:00";
     public static final String EXAMPLE_STORE_NAME = "Tenacy";
     public static final String EXAMPLE_FAVORITE_COUNT = "12";
     public static final String EXAMPLE_VIEW_COUNT = "141";
@@ -87,6 +92,9 @@ public class DocumentDescriptions {
     public static final String EXAMPLE_ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTczMDc4OTU0MCwiZXhwIjoxNzMwODc1OTQwfQ.HU8AXkTUHYG4h4QqcemZK2Wu7QIhsiHiNmjhas6sT9A";
     public static final String EXAMPLE_REFRESH_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mzg1NjU1NDB9.azNCscUt81h1m1OIHy5BEGJ2cKUoyJvbaYqfsawGJIw";
     public static final String EXAMPLE_SOCIAL_ACCESS_TOKEN = "4mDn_8tw6kKL7ukIYr7vqTWMArAirLX8AAAAAQorDR4AAAGS-xVm1sLen3w93lOl";
+    public static final String EXAMPLE_RATING = "4.7";
+    public static final String EXAMPLE_SALES_COUNT = "162";
+    public static final String EXAMPLE_FOLLOWERS_COUNT = "45";
 
     public static final String CONDITION_DATE_FROM = "조회 시작 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";
     public static final String CONDITION_DATE_TO = "조회 끝 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";

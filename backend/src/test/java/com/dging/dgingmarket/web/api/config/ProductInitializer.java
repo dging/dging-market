@@ -19,20 +19,19 @@ import org.springframework.boot.ApplicationRunner;
 import java.util.List;
 import java.util.stream.IntStream;
 
-@Slf4j
 @RequiredArgsConstructor
 //@LocalDummyDataInitialization
 //@Order(2)
 public class ProductInitializer implements ApplicationRunner {
 
-    private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+    private ProductRepository productRepository;
+    private UserRepository userRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
         if(productRepository.count() > 0) {
-            log.info("[Store] 더미 데이터 존재");
+
         } else {
 
             User user = userRepository.findByUserId("userId").orElseThrow(UserNotFoundException::new);

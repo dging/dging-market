@@ -4,11 +4,14 @@ import com.dging.dgingmarket.config.WithCustomMockUser;
 import com.dging.dgingmarket.domain.common.enums.Role;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
+import com.dging.dgingmarket.domain.store.exception.AlreadyFollowedException;
+import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.util.EntityUtils;
+import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,13 +20,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;
 
@@ -57,7 +65,7 @@ public class StoreServiceTest {
             User to = User.create("userId2", "password", "username", List.of(Role.USER));
             ReflectionTestUtils.setField(to, "id", toId);
 
-            given(userRepository.findById(toId)).willReturn(Optional.of(to));
+            given(userRepository.findByStoreId(toId)).willReturn(Optional.of(to));
 
             //when
             storeService.follow(toId);
@@ -73,14 +81,34 @@ public class StoreServiceTest {
         }
 
         @Test
-        @DisplayName("본인을 팔로우하면 실패")
+        @DisplayName("이미 팔로우한 사용자를 팔로우하려 하면 실패")
+        public void AlreadyFollowed_Fail() {
+
+            //given
+            Long toId = 2L;
+            User from = EntityUtils.userThrowable();
+            User to = User.create("userId2", "password", "username", List.of(Role.USER));
+            ReflectionTestUtils.setField(to, "id", toId);
+
+            Follower follower = Follower.create(from, to);
+
+            given(userRepository.findByStoreId(toId)).willReturn(Optional.of(to));
+            given(followerRepository.findByFromAndTo(from, to)).willReturn(Optional.of(follower));
+
+            //when & then
+            assertThrows(AlreadyFollowedException.class, () -> storeService.follow(toId));
+
+        }
+
+        @Test
+        @DisplayName("본인을 팔로우하려 하면 실패")
         public void FollowMyself_Fail() {
 
             //given
             User from = EntityUtils.userThrowable();
             Long sameUserId = from.getId();
 
-            given(userRepository.findById(sameUserId)).willReturn(Optional.of(from));
+            given(userRepository.findByStoreId(sameUserId)).willReturn(Optional.of(from));
 
             //when & then
             assertThrows(FollowMyselfException.class, () -> storeService.follow(sameUserId));
@@ -107,7 +135,7 @@ public class StoreServiceTest {
 
             Follower follower = Follower.create(from, to);
 
-            given(userRepository.findById(toId)).willReturn(Optional.of(to));
+            given(userRepository.findByStoreId(toId)).willReturn(Optional.of(to));
             given(followerRepository.findByFromAndTo(from, to)).willReturn(Optional.of(follower));
 
             // when
@@ -125,10 +153,36 @@ public class StoreServiceTest {
             Long toId = 2L;
             User to = User.create("userId2", "password", "username", List.of(Role.USER));
 
-            given(userRepository.findById(toId)).willReturn(Optional.of(to));
+            given(userRepository.findByStoreId(toId)).willReturn(Optional.of(to));
 
             // when & then
             assertThrows(FollowerNotFoundException.class, () -> storeService.unfollow(toId));
+        }
+    }
+
+    @Nested
+    @DisplayName("팔로워 조회")
+    @Transactional
+    @WithCustomMockUser
+    class FollowersTest {
+
+        @Test
+        @DisplayName("성공")
+        public void Success() {
+
+            // given
+            Long storeId = 1L;
+            Pageable pageable = Pageable.unpaged();
+            CommonCondition cond = new CommonCondition();
+            Page<FollowersResponse> page = new PageImpl<>(new ArrayList<>());
+
+            when(followerRepository.followers(pageable, storeId, cond)).thenReturn(page);
+
+            // when
+            Page<FollowersResponse> result = storeService.followers(pageable, storeId, cond);
+
+            // then
+            assertEquals(page, result); // 결과가 기대한 페이지와 일치하는지 확인
         }
     }
 

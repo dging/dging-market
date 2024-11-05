@@ -11,9 +11,11 @@ import com.dging.dgingmarket.web.api.dto.product.FavoriteProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
@@ -100,5 +102,15 @@ public class ResponseFixture {
             .id(Long.parseLong(EXAMPLE_ID))
             .url("http://www.example.com/" + EXAMPLE_ID + "/" + BasePaths.BASE_PATH_PRODUCT + "/" + "fileName" + 1)
             .build();
+
+    public static final List<FollowersResponse> FOLLOWERS = IntStream.rangeClosed(1, 20).mapToObj(i ->
+            FollowersResponse.builder()
+                    .storeId(1L)
+                    .storeName(EXAMPLE_STORE_NAME)
+                    .rating(Float.parseFloat(EXAMPLE_RATING))
+                    .salesCount(Integer.parseInt(EXAMPLE_SALES_COUNT))
+                    .followersCount(Integer.parseInt(EXAMPLE_FOLLOWERS_COUNT))
+                    .build()
+    ).toList();
 
 }

@@ -23,37 +23,37 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
 @Schema(description = "상점 상품 조회 응답 DTO")
 public class StoreProductsResponse {
 
-    @Schema(description = RESPONSE_ID)
+    @Schema(description = RESPONSE_ID, example = EXAMPLE_ID)
     private Long id;
 
-    @Schema(description = RESPONSE_STORE_ID)
+    @Schema(description = RESPONSE_STORE_ID, example = EXAMPLE_ID)
     private Long storeId;
 
-    @Schema(description = RESPONSE_STORE_NAME)
+    @Schema(description = RESPONSE_STORE_NAME, example = EXAMPLE_STORE_NAME)
     private String storeName;
 
-    @Schema(description = RESPONSE_TITLE)
+    @Schema(description = RESPONSE_TITLE, example = EXAMPLE_TITLE)
     private String title;
 
-    @Schema(description = RESPONSE_FAVORITE_COUNT)
+    @Schema(description = RESPONSE_FAVORITE_COUNT, example = EXAMPLE_FAVORITE_COUNT)
     private int favoriteCount;
 
-    @Schema(description = RESPONSE_RUNNING_STATUS)
+    @Schema(description = RESPONSE_RUNNING_STATUS, example = EXAMPLE_RUNNING_STATUS)
     private RunningStatus runningStatus;
 
-    @Schema(description = RESPONSE_IMAGES)
+    @Schema(description = RESPONSE_IMAGES, example = "[]")
     private List<ImagesResponse> images;
 
-    @Schema(description = RESPONSE_PRICE)
+    @Schema(description = RESPONSE_PRICE, example = EXAMPLE_PRICE)
     private int price;
 
-    @Schema(description = RESPONSE_TAGS)
+    @Schema(description = RESPONSE_TAGS, example = "[]")
     private List<TagsResponse> tags;
 
-    @Schema(description = RESPONSE_CREATED_AT)
+    @Schema(description = RESPONSE_CREATED_AT, example = EXAMPLE_CREATED_AT)
     private Date createdAt;
 
-    @Schema(description = RESPONSE_UPDATE_AT)
+    @Schema(description = RESPONSE_UPDATE_AT, example = EXAMPLE_UPDATED_AT)
     private Date updatedAt;
 
     public String getRunningStatus() {

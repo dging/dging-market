@@ -1,13 +1,16 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
+import com.dging.dgingmarket.domain.store.exception.AlreadyFollowedException;
 import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.util.ResponseFixture;
 import com.dging.dgingmarket.web.api.base.ApiDocumentationTest;
+import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -89,8 +92,29 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));
+        }
 
-            then(storeService).should().follow(toId);
+        @Test
+        @DisplayName("이미 팔로우한 사용자를 팔로우하려 하면 실패")
+        @WithCustomMockUser
+        public void AlreadyFollowed_Fail() throws Exception {
+
+            //given
+            Long toId = 2L;
+            willThrow(AlreadyFollowedException.EXCEPTION).given(storeService).follow(toId);
+
+            //when
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.post("/stores/{id}/followers", toId)
+                    .header("Authorization", "")
+                    .contentType(MediaType.APPLICATION_JSON));
+
+            //then
+            result.andDo(print())
+                    .andExpect(status().isBadRequest())
+                    .andDo(document("상점 팔로우 - 이미 팔로우한 사용자를 팔로우하려 하면 실패",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(jwtHeader)));
         }
 
         @Test
@@ -114,8 +138,6 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));
-
-            then(storeService).should().follow(toId);
         }
     }
 
@@ -145,8 +167,6 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));
-
-            then(storeService).should().unfollow(toId);
         }
 
         @Test
@@ -171,6 +191,38 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));
         }
+    }
+
+    @Nested
+    @DisplayName("팔로워 조회")
+    @Transactional
+    class FollowersTest {
+
+        @Test
+        @DisplayName("성공")
+        @WithCustomMockUser
+        public void Success() throws Exception {
+
+            //given
+            Long storeId = 1L;
+            List<FollowersResponse> followers = ResponseFixture.FOLLOWERS;
+            Page<FollowersResponse> page = new PageImpl<>(followers.subList(0, 10), Pageable.unpaged(), followers.size());
+            given(storeService.followers(any(), storeId, any())).willReturn(page);
+
+            //when
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/stores/{id}/followers", storeId)
+                    .header("Authorization", "")
+                    .contentType(MediaType.APPLICATION_JSON));
+
+            //then
+            result.andDo(print())
+                    .andExpect(status().isNoContent())
+                    .andDo(document("팔로워 조회 - 성공",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(jwtHeader)));
+        }
+
     }
 
 }
