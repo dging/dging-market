@@ -20,6 +20,7 @@ public class DocumentDescriptions {
     public static final String REQUEST_LOCATION = "거래 장소명입니다.";
     public static final String REQUEST_QUANTITY = "수량입니다.";
     public static final String REQUEST_IS_TEMPORARY_SAVE = "임시저장 여부입니다.";
+    public static final String REQUEST_STORE_INTRODUCTION = "상점 소개글입니다.";
     public static final String REQUEST_RUNNING_STATUS = "진행 상태입니다.";
     public static final String REQUEST_IMAGE_TYPE = "이미지 타입명입니다." + " " + ValidationMessages.IMAGE_TYPE;
     public static final String REQUEST_SOCIAL_ACCESS_TOKEN = "배급사로부터 발급받은 액세스 토큰입니다. 배급사별로 토큰의 형태가 다르며, 구글은 ID 토큰 값을 액세스 토큰에 포함시켜야 합니다.";

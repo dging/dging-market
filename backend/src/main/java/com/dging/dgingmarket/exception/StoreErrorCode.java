@@ -17,12 +17,14 @@ public enum StoreErrorCode implements BaseErrorCode {
     STORE_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-4001", "상점이 존재하지 않습니다."),
     FOLLOW_MYSELF_ERROR(HttpStatus.BAD_REQUEST.value(), "DGM-4100", "본인을 팔로우 할 수는 없습니다."),
     ALREADY_FOLLOWED(HttpStatus.BAD_REQUEST.value(), "DGM-4101", "이미 팔로우한 사용자입니다."),
+    USER_OWN_STORE_ERROR(HttpStatus.BAD_REQUEST.value(), "DGM-4102", "사용자 본인의 상점이 아닙니다."),
     ;
 
     public static final String _FOLLOWER_NOT_FOUND = "DGM-4000";
     public static final String _STORE_NOT_FOUND = "DGM-4001";
     public static final String _FOLLOW_MYSELF_ERROR = "DGM-4100";
     public static final String _ALREADY_FOLLOWED = "DGM-4101";
+    public static final String _USER_OWN_STORE_ERROR = "DGM-4102";
 
     private int status;
     private final String code;

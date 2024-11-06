@@ -2,17 +2,17 @@ package com.dging.dgingmarket.service;
 
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
-import com.dging.dgingmarket.domain.store.exception.AlreadyFollowedException;
-import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
-import com.dging.dgingmarket.domain.store.exception.StoreNotFoundException;
+import com.dging.dgingmarket.domain.store.Store;
+import com.dging.dgingmarket.domain.store.StoreRepository;
+import com.dging.dgingmarket.domain.store.exception.*;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
+import com.dging.dgingmarket.web.api.dto.store.StoreIntroductionChangeRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,6 +29,7 @@ import java.util.Objects;
 public class StoreService {
 
     private final UserRepository userRepository;
+    private final StoreRepository storeRepository;
     private final FollowerRepository followerRepository;
 
     @Transactional
@@ -67,5 +68,18 @@ public class StoreService {
 
     public Page<FollowingsResponse> followings(Pageable pageable, Long id, CommonCondition cond) {
         return followerRepository.followings(pageable, id, cond);
+    }
+
+    @Transactional
+    public void updateIntroduction(Long id, StoreIntroductionChangeRequest request) {
+
+        User user = EntityUtils.userThrowable();
+        Store foundStore = storeRepository.findById(id).orElseThrow(StoreNotFoundException::new);
+
+        if (!Objects.equals(foundStore.getId(), user.getStore().getId())) {
+            throw UserOwnStoreException.EXCEPTION;
+        }
+
+        foundStore.updateIntroduction(request.getIntroduction());
     }
 }

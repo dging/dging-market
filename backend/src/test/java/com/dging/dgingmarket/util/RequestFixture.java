@@ -4,6 +4,7 @@ import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductRunningStatusChangeRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;
+import com.dging.dgingmarket.web.api.dto.store.StoreIntroductionChangeRequest;
 
 import java.util.List;
 
@@ -52,4 +53,6 @@ public class RequestFixture {
     public static final ProductRunningStatusChangeRequest PRODUCT_RUNNING_STATUS_CHANGE = new ProductRunningStatusChangeRequest(
             RunningStatus.AVAILABLE.getValue()
     );
+
+    public static final StoreIntroductionChangeRequest STORE_INTRODUCTION_CHANGE = new StoreIntroductionChangeRequest(EXAMPLE_STORE_INTRODUCTION);
 }

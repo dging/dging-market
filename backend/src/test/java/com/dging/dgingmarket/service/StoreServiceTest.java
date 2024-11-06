@@ -4,6 +4,7 @@ import com.dging.dgingmarket.config.WithCustomMockUser;
 import com.dging.dgingmarket.domain.common.enums.Role;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
+import com.dging.dgingmarket.domain.store.StoreRepository;
 import com.dging.dgingmarket.domain.store.exception.AlreadyFollowedException;
 import com.dging.dgingmarket.domain.store.exception.FollowMyselfException;
 import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
@@ -45,6 +46,9 @@ public class StoreServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private StoreRepository storeRepository;
 
     @Mock
     private FollowerRepository followerRepository;
@@ -177,13 +181,13 @@ public class StoreServiceTest {
             CommonCondition cond = new CommonCondition();
             Page<FollowersResponse> page = new PageImpl<>(new ArrayList<>());
 
-            when(followerRepository.followers(pageable, storeId, cond)).thenReturn(page);
+            given(followerRepository.followers(pageable, storeId, cond)).willReturn(page);
 
             // when
             Page<FollowersResponse> result = storeService.followers(pageable, storeId, cond);
 
             // then
-            assertEquals(page, result); // 결과가 기대한 페이지와 일치하는지 확인
+            assertEquals(page, result);
         }
     }
 
@@ -203,13 +207,13 @@ public class StoreServiceTest {
             CommonCondition cond = new CommonCondition();
             Page<FollowingsResponse> page = new PageImpl<>(new ArrayList<>());
 
-            when(followerRepository.followings(pageable, storeId, cond)).thenReturn(page);
+            given(followerRepository.followings(pageable, storeId, cond)).willReturn(page);
 
             // when
             Page<FollowingsResponse> result = storeService.followings(pageable, storeId, cond);
 
             // then
-            assertEquals(page, result); // 결과가 기대한 페이지와 일치하는지 확인
+            assertEquals(page, result);
         }
     }
 
