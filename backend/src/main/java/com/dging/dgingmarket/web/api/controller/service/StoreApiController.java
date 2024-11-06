@@ -10,6 +10,7 @@ import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -99,6 +100,23 @@ public class StoreApiController {
     ) {
 
         Page<FollowersResponse> response = storeService.followers(pageable, id, cond);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/{id}/followings")
+    @CustomPageableParameter
+    @Operation(summary = "팔로잉 조회", description = "상점이 팔로우한 여러 사용자를 조회합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    ResponseEntity<Page<FollowingsResponse>> fetchFollowings(
+            @Parameter(description = DocumentDescriptions.REQUEST_ID)
+            @PathVariable Long id,
+            @ParameterObject Pageable pageable,
+            @Valid @Schema(implementation = CommonCondition.class)
+            @ParameterObject CommonCondition cond
+    ) {
+
+        Page<FollowingsResponse> response = storeService.followings(pageable, id, cond);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

@@ -47,7 +47,7 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(userPk);
         claims.put(ROLES, roles);
 
-        Date now = new Date();
+        java.util.Date now = new java.util.Date();
 
         String accessToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)

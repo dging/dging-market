@@ -21,7 +21,6 @@ public class DocumentDescriptions {
     public static final String REQUEST_QUANTITY = "수량입니다.";
     public static final String REQUEST_IS_TEMPORARY_SAVE = "임시저장 여부입니다.";
     public static final String REQUEST_RUNNING_STATUS = "진행 상태입니다.";
-    public static final String REQUEST_IMAGE = "이미지 파일입니다.";
     public static final String REQUEST_IMAGE_TYPE = "이미지 타입명입니다." + " " + ValidationMessages.IMAGE_TYPE;
     public static final String REQUEST_SOCIAL_ACCESS_TOKEN = "배급사로부터 발급받은 액세스 토큰입니다. 배급사별로 토큰의 형태가 다르며, 구글은 ID 토큰 값을 액세스 토큰에 포함시켜야 합니다.";
     public static final String REQUEST_SOCIAL_TYPE = "배급사명입니다." + " " + ValidationMessages.SOCIAL_TYPE;
@@ -32,6 +31,7 @@ public class DocumentDescriptions {
     public static final String RESPONSE_FAVORITE_COUNT = "찜 수입니다.";
     public static final String RESPONSE_LOCATION = "거래 장소명입니다.";
     public static final String RESPONSE_REGION = "거래 지역명입니다.";
+    public static final String RESPONSE_IMAGE = "이미지 파일입니다.";
     public static final String RESPONSE_QUALITY = "품질입니다." + " " + ValidationMessages.PRODUCT_QUALITY;
     public static final String RESPONSE_VIEW_COUNT = "조회수입니다.";
     public static final String RESPONSE_CONTENT = "내용입니다.";
@@ -44,8 +44,9 @@ public class DocumentDescriptions {
     public static final String RESPONSE_RATING = "펑점입니다. 5점 만점입니다.";
     public static final String RESPONSE_TITLE = "제목입니다.";
     public static final String RESPONSE_SALES_COUNT = "상품 갯수입니다.";
-    public static final String RESPONSE_RUNNING_STATUS = "진행 상태입니다..";
-    public static final String RESPONSE_FOLLOWERS_COUNT = "팔로워 수입니다..";
+    public static final String RESPONSE_RUNNING_STATUS = "진행 상태입니다.";
+    public static final String RESPONSE_FOLLOWERS_COUNT = "팔로워 수입니다.";
+    public static final String RESPONSE_RECENT_PRODUCTS = "최근 상품입니다.";
     public static final String RESPONSE_PRICE = "가격입니다.";
     public static final String RESPONSE_IMAGES = "이미지 배열입니다.";
     public static final String RESPONSE_FILE_NAME = "파일명입니다.";
@@ -84,7 +85,7 @@ public class DocumentDescriptions {
     public static final String EXAMPLE_LOCATION = "강남역 2번 출구";
     public static final String EXAMPLE_QUANTITY = "1";
     public static final String EXAMPLE_IS_TEMPORARY_SAVE = "false";
-    public static final String EXAMPLE_URL = "url";
+    public static final String EXAMPLE_IMAGE_URL = "url";
     public static final String EXAMPLE_TAG = "tag";
     public static final String EXAMPLE_GRANT_TYPE = "bearer";
     public static final String EXAMPLE_ACCESS_TOKEN_EXPIRES_IN = "86400000";

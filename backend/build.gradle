@@ -58,6 +58,9 @@ dependencies {
 
 	// QueryDSL 관련 의존성
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+	implementation 'com.blazebit:blaze-persistence-integration-querydsl-expressions-jakarta:1.6.11'
+	implementation "com.querydsl:querydsl-sql:${queryDslVersion}"  // querydsl-sql 모듈
+	compileOnly "com.querydsl:querydsl-sql-codegen:${queryDslVersion}"  // querydsl-sql-codegen 모듈 (provided로 설정)
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
 	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'

@@ -12,6 +12,7 @@ import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -180,6 +181,32 @@ public class StoreServiceTest {
 
             // when
             Page<FollowersResponse> result = storeService.followers(pageable, storeId, cond);
+
+            // then
+            assertEquals(page, result); // 결과가 기대한 페이지와 일치하는지 확인
+        }
+    }
+
+    @Nested
+    @DisplayName("팔로잉 조회")
+    @Transactional
+    @WithCustomMockUser
+    class FollowingsTest {
+
+        @Test
+        @DisplayName("성공")
+        public void Success() {
+
+            // given
+            Long storeId = 1L;
+            Pageable pageable = Pageable.unpaged();
+            CommonCondition cond = new CommonCondition();
+            Page<FollowingsResponse> page = new PageImpl<>(new ArrayList<>());
+
+            when(followerRepository.followings(pageable, storeId, cond)).thenReturn(page);
+
+            // when
+            Page<FollowingsResponse> result = storeService.followings(pageable, storeId, cond);
 
             // then
             assertEquals(page, result); // 결과가 기대한 페이지와 일치하는지 확인

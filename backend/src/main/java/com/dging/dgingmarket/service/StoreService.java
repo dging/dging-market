@@ -12,6 +12,7 @@ import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -62,5 +63,9 @@ public class StoreService {
 
     public Page<FollowersResponse> followers(Pageable pageable, Long id, CommonCondition cond) {
         return followerRepository.followers(pageable, id, cond);
+    }
+
+    public Page<FollowingsResponse> followings(Pageable pageable, Long id, CommonCondition cond) {
+        return followerRepository.followings(pageable, id, cond);
     }
 }

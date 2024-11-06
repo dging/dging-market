@@ -12,6 +12,7 @@ import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ResponseFixture {
             EXAMPLE_MIDDLE_CATEGORY,
             EXAMPLE_SUB_CATEGORY,
             RunningStatus.AVAILABLE,
-            List.of(new ImagesResponse(1L, EXAMPLE_URL), new ImagesResponse(2L, EXAMPLE_URL)),
+            List.of(new ImagesResponse(1L, EXAMPLE_IMAGE_URL), new ImagesResponse(2L, EXAMPLE_IMAGE_URL)),
             Integer.parseInt(EXAMPLE_PRICE),
             List.of(new TagsResponse(1L, EXAMPLE_TAG + 1), new TagsResponse(2L, EXAMPLE_TAG + 2)),
             new Date()
@@ -54,7 +55,7 @@ public class ResponseFixture {
                     .favoriteCount(Integer.parseInt(EXAMPLE_FAVORITE_COUNT))
                     .runningStatus(RunningStatus.AVAILABLE)
                     .tags(List.of(new TagsResponse(2 * i - 1, EXAMPLE_TAG + (2 * i - 1)), new TagsResponse(2 * i, EXAMPLE_TAG + 2 * i)))
-                    .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_URL), new ImagesResponse(2 * i, EXAMPLE_URL)))
+                    .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_IMAGE_URL), new ImagesResponse(2 * i, EXAMPLE_IMAGE_URL)))
                     .createdAt(new Date())
                     .updatedAt(new Date())
                     .build()
@@ -69,7 +70,7 @@ public class ResponseFixture {
                     .title(EXAMPLE_TITLE)
                     .runningStatus(RunningStatus.AVAILABLE)
                     .tags(List.of(new TagsResponse(2 * i - 1, EXAMPLE_TAG + (2 * i - 1)), new TagsResponse(2 * i, EXAMPLE_TAG + 2 * i)))
-                    .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_URL), new ImagesResponse(2 * i, EXAMPLE_URL)))
+                    .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_IMAGE_URL), new ImagesResponse(2 * i, EXAMPLE_IMAGE_URL)))
                     .createdAt(new Date())
                     .build()
     ).toList();
@@ -83,7 +84,7 @@ public class ResponseFixture {
                     .title(EXAMPLE_TITLE)
                     .runningStatus(RunningStatus.AVAILABLE)
                     .tags(List.of(new TagsResponse(2 * i - 1, EXAMPLE_TAG + (2 * i - 1)), new TagsResponse(2 * i, EXAMPLE_TAG + 2 * i)))
-                    .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_URL), new ImagesResponse(2 * i, EXAMPLE_URL)))
+                    .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_IMAGE_URL), new ImagesResponse(2 * i, EXAMPLE_IMAGE_URL)))
                     .createdAt(new Date())
                     .build()
     ).toList();
@@ -110,6 +111,15 @@ public class ResponseFixture {
                     .rating(Float.parseFloat(EXAMPLE_RATING))
                     .salesCount(Integer.parseInt(EXAMPLE_SALES_COUNT))
                     .followersCount(Integer.parseInt(EXAMPLE_FOLLOWERS_COUNT))
+                    .build()
+    ).toList();
+
+    public static final List<FollowingsResponse> FOLLOWINGS = IntStream.rangeClosed(1, 20).mapToObj(i ->
+            FollowingsResponse.builder()
+                    .storeId(1L)
+                    .storeName(EXAMPLE_STORE_NAME)
+                    .salesCount(Integer.parseInt(EXAMPLE_SALES_COUNT))
+                    .createdAt(new Date())
                     .build()
     ).toList();
 

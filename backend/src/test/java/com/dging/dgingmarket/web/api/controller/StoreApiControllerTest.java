@@ -11,6 +11,7 @@ import com.dging.dgingmarket.web.api.base.ApiDocumentationTest;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
+import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -118,7 +119,7 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
         }
 
         @Test
-        @DisplayName("본인을 팔로우하면 실패")
+        @DisplayName("본인을 팔로우하려 하면 실패")
         @WithCustomMockUser
         public void FollowMyself_Fail() throws Exception {
 
@@ -134,7 +135,7 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
             //then
             result.andDo(print())
                     .andExpect(status().isBadRequest())
-                    .andDo(document("상점 팔로우 - 본인을 팔로우하면 실패",
+                    .andDo(document("상점 팔로우 - 본인을 팔로우하려 하면 실패",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));
@@ -207,17 +208,49 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
             Long storeId = 1L;
             List<FollowersResponse> followers = ResponseFixture.FOLLOWERS;
             Page<FollowersResponse> page = new PageImpl<>(followers.subList(0, 10), Pageable.unpaged(), followers.size());
-            given(storeService.followers(any(), storeId, any())).willReturn(page);
+            given(storeService.followers(any(), eq(storeId), any())).willReturn(page);
 
             //when
-            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.delete("/stores/{id}/followers", storeId)
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/stores/{id}/followers", storeId)
                     .header("Authorization", "")
                     .contentType(MediaType.APPLICATION_JSON));
 
             //then
             result.andDo(print())
-                    .andExpect(status().isNoContent())
+                    .andExpect(status().isOk())
                     .andDo(document("팔로워 조회 - 성공",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(jwtHeader)));
+        }
+
+    }
+
+    @Nested
+    @DisplayName("팔로잉 조회")
+    @Transactional
+    class FollowingsTest {
+
+        @Test
+        @DisplayName("성공")
+        @WithCustomMockUser
+        public void Success() throws Exception {
+
+            //given
+            Long storeId = 1L;
+            List<FollowingsResponse> followings = ResponseFixture.FOLLOWINGS;
+            Page<FollowingsResponse> page = new PageImpl<>(followings.subList(0, 10), Pageable.unpaged(), followings.size());
+            given(storeService.followings(any(), eq(storeId), any())).willReturn(page);
+
+            //when
+            ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/stores/{id}/followings", storeId)
+                    .header("Authorization", "")
+                    .contentType(MediaType.APPLICATION_JSON));
+
+            //then
+            result.andDo(print())
+                    .andExpect(status().isOk())
+                    .andDo(document("팔로잉 조회 - 성공",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestHeaders(jwtHeader)));
