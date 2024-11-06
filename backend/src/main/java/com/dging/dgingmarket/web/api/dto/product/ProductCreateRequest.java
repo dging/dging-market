@@ -60,13 +60,13 @@ public class ProductCreateRequest {
     private int price;
 
     @Schema(description = REQUEST_ALLOWS_OFFERS, example = EXAMPLE_ALLOWS_OFFERS)
-    private boolean allowsOffers;
+    private Boolean allowsOffers = false;
 
     @Schema(description = REQUEST_IS_SHIPPING_FEE_INCLUDED, example = EXAMPLE_IS_SHIPPING_FEE_INCLUDED)
-    private boolean isShippingFeeIncluded;
+    private Boolean isShippingFeeIncluded = false;
 
     @Schema(description = REQUEST_IS_DIRECT_TRADE_AVAILABLE, example = EXAMPLE_IS_DIRECT_TRADE_AVAILABLE)
-    private boolean isDirectTradeAvailable;
+    private Boolean isDirectTradeAvailable = false;
 
     @Schema(description = REQUEST_REGION, example = EXAMPLE_REGION)
     private String region;
@@ -78,7 +78,7 @@ public class ProductCreateRequest {
     private int quantity;
 
     @Schema(description = REQUEST_IS_TEMPORARY_SAVE, example = EXAMPLE_IS_TEMPORARY_SAVE)
-    private boolean isTemporarySave;
+    private Boolean isTemporarySave = false;
 
     public ProductQuality getQuality() {
         return ProductQuality.find(quality);

@@ -27,7 +27,7 @@ public class RequestFixture {
         EXAMPLE_REGION,
         EXAMPLE_LOCATION,
         Integer.parseInt(EXAMPLE_QUANTITY),
-        Boolean.parseBoolean(EXAMPLE_TEMPORARY_SAVE)
+        Boolean.parseBoolean(EXAMPLE_IS_TEMPORARY_SAVE)
     );
 
     public static final ProductUpdateRequest PRODUCT_UPDATE = new ProductUpdateRequest(

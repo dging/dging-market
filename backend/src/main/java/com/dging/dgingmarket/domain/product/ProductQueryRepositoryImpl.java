@@ -166,7 +166,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         store.id,
                                         store.name,
                                         product.title,
-                                        favorite.count().castToNum(Integer.class),
+                                        favorite.countDistinct().castToNum(Integer.class),
                                         product.runningStatus,
                                         GroupBy.list(Projections.constructor(ImagesResponse.class,
                                                 image.id,
@@ -247,10 +247,10 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         store.name,
                                         product.title,
                                         product.runningStatus,
-                                        product.price,
                                         GroupBy.list(Projections.constructor(ImagesResponse.class,
                                                 image.id,
                                                 image.url).skipNulls()),
+                                        product.price,
                                         GroupBy.list(Projections.constructor(TagsResponse.class,
                                                 tag.id,
                                                 tag.name).skipNulls()),
@@ -292,15 +292,15 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
     @Override
     public Optional<ProductResponse> product(Long id) {
 
-        QProduct sqProduct = new QProduct("sqProduct");
-
         Optional<ProductResponse> optional = queryFactory.selectFrom(product)
                 .join(store).on(store.eq(product.store))
                 .leftJoin(productImage).on(productImage.product.eq(product))
                 .leftJoin(image).on(image.eq(productImage.image))
                 .leftJoin(productTag).on(productTag.product.eq(product))
                 .leftJoin(tag).on(tag.eq(productTag.tag))
+                .leftJoin(favorite).on(favorite.product.eq(product))
                 .where(product.id.eq(id), product.deleted.isFalse())
+                .groupBy(product.id, image.id, tag.id)
                 .transform(
                         GroupBy.groupBy(product.id).list(
                                 Projections.constructor(ProductResponse.class,
@@ -309,10 +309,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         store.name,
                                         product.title,
                                         product.content,
-                                        JPAExpressions.select(favorite.count().castToNum(Integer.class))
-                                                .from(sqProduct)
-                                                .leftJoin(favorite).on(favorite.product.eq(sqProduct))
-                                                .where(sqProduct.id.eq(id)),
+                                        favorite.countDistinct().castToNum(Integer.class),
                                         product.views,
                                         product.quality,
                                         product.quantity,
