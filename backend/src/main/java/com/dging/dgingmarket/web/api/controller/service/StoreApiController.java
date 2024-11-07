@@ -1,6 +1,8 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.docs.CustomDescriptionOverride;
+import com.dging.dgingmarket.domain.product.Product;
+import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.Review;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.exception.StoreErrorCode;
@@ -28,8 +30,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
-
 @Slf4j
 @RestController
 @RequestMapping("/stores")
@@ -41,7 +41,7 @@ public class StoreApiController {
     private final StoreService storeService;
 
     @GetMapping("/{id}/products")
-    @CustomPageableParameter
+    @CustomPageableParameter(sortCriteria = Product.class)
     @Operation(summary = "상점 상품 조회", description = "여러 상점 상품을 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Page<StoreProductsResponse>> fetchStoreProducts(
@@ -49,6 +49,7 @@ public class StoreApiController {
             @PathVariable Long id,
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
+            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_STORE_PRODUCTS_QUERY)
             @ParameterObject CommonCondition cond
     ) {
 
@@ -91,7 +92,7 @@ public class StoreApiController {
     }
 
     @GetMapping("/{id}/followers")
-    @CustomPageableParameter
+    @CustomPageableParameter(sortCriteria = Follower.class)
     @Operation(summary = "팔로워 조회", description = "상점을 팔로우한 여러 사용자를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Page<FollowersResponse>> fetchFollowers(
@@ -99,6 +100,7 @@ public class StoreApiController {
             @PathVariable Long id,
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
+            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_FOLLOWERS_QUERY)
             @ParameterObject CommonCondition cond
     ) {
 
@@ -108,7 +110,7 @@ public class StoreApiController {
     }
 
     @GetMapping("/{id}/followings")
-    @CustomPageableParameter
+    @CustomPageableParameter(sortCriteria = Follower.class)
     @Operation(summary = "팔로잉 조회", description = "상점이 팔로우한 여러 사용자를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Page<FollowingsResponse>> fetchFollowings(
@@ -116,6 +118,7 @@ public class StoreApiController {
             @PathVariable Long id,
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
+            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_FOLLOWINGS_QUERY)
             @ParameterObject CommonCondition cond
     ) {
 
@@ -167,7 +170,7 @@ public class StoreApiController {
             @PathVariable Long id,
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
-            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_STORE_PRODUCT_REVIEW_QUERY)
+            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_STORE_PRODUCT_REVIEWS_QUERY)
             @ParameterObject CommonCondition cond
     ) {
 

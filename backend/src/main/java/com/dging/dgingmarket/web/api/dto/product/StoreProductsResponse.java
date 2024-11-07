@@ -3,6 +3,7 @@ package com.dging.dgingmarket.web.api.dto.product;
 import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
+import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.util.ObjectUtils;
@@ -19,7 +20,6 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
 @Data
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Schema(description = "상점 상품 조회 응답 DTO")
 public class StoreProductsResponse {
 
@@ -50,11 +50,30 @@ public class StoreProductsResponse {
     @Schema(description = RESPONSE_TAGS, example = "[]")
     private List<TagsResponse> tags;
 
+    @Schema(description = RESPONSE_IS_TEMPORARY_SAVE, example = EXAMPLE_IS_TEMPORARY_SAVE)
+    private Boolean isTemporarySave;
+
     @Schema(description = RESPONSE_CREATED_AT, example = EXAMPLE_CREATED_AT)
     private Date createdAt;
 
     @Schema(description = RESPONSE_UPDATE_AT, example = EXAMPLE_UPDATED_AT)
     private Date updatedAt;
+
+    @QueryProjection
+    public StoreProductsResponse(Long id, Long storeId, String storeName, String title, int favoriteCount, RunningStatus runningStatus, List<ImagesResponse> images, int price, List<TagsResponse> tags, Boolean isTemporarySave, Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.storeId = storeId;
+        this.storeName = storeName;
+        this.title = title;
+        this.favoriteCount = favoriteCount;
+        this.runningStatus = runningStatus;
+        this.images = images;
+        this.price = price;
+        this.tags = tags;
+        this.isTemporarySave = isTemporarySave;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     public String getRunningStatus() {
         if(ObjectUtils.isEmpty(runningStatus)) {

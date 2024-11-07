@@ -10,6 +10,7 @@ import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
+import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,6 @@ import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
  */
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Schema(description = "상품 상세 조회 응답 DTO")
 public class ProductResponse {
 
@@ -85,8 +85,35 @@ public class ProductResponse {
     @Schema(description = RESPONSE_TAGS)
     private List<TagsResponse> tags;
 
+    @Schema(description = RESPONSE_IS_TEMPORARY_SAVE, example = EXAMPLE_IS_TEMPORARY_SAVE)
+    private Boolean isTemporarySave;
+
     @Schema(description = RESPONSE_CREATED_AT)
     private Date createdAt;
+
+    @QueryProjection
+    public ProductResponse(Long id, Long storeId, String storeName, String title, String content, int favoriteCount, int viewCount, ProductQuality quality, int quantity, String region, String location, String mainCategory, String middleCategory, String subCategory, RunningStatus runningStatus, List<ImagesResponse> images, int price, List<TagsResponse> tags, boolean isTemporarySave, Date createdAt) {
+        this.id = id;
+        this.storeId = storeId;
+        this.storeName = storeName;
+        this.title = title;
+        this.content = content;
+        this.favoriteCount = favoriteCount;
+        this.viewCount = viewCount;
+        this.quality = quality;
+        this.quantity = quantity;
+        this.region = region;
+        this.location = location;
+        this.mainCategory = mainCategory;
+        this.middleCategory = middleCategory;
+        this.subCategory = subCategory;
+        this.runningStatus = runningStatus;
+        this.images = images;
+        this.price = price;
+        this.tags = tags;
+        this.isTemporarySave = isTemporarySave;
+        this.createdAt = createdAt;
+    }
 
     public String getQuality() {
         if(ObjectUtils.isEmpty(quality)) {

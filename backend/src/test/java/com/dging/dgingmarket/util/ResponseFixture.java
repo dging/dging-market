@@ -42,6 +42,7 @@ public class ResponseFixture {
             List.of(new ImagesResponse(1L, EXAMPLE_IMAGE_URL), new ImagesResponse(2L, EXAMPLE_IMAGE_URL)),
             Integer.parseInt(EXAMPLE_PRICE),
             List.of(new TagsResponse(1L, EXAMPLE_TAG + 1), new TagsResponse(2L, EXAMPLE_TAG + 2)),
+            Boolean.parseBoolean(EXAMPLE_IS_TEMPORARY_SAVE),
             new Date()
     );
 

@@ -2,6 +2,7 @@ package com.dging.dgingmarket.config;
 
 import com.dging.dgingmarket.docs.CustomDescriptionOverride;
 import com.dging.dgingmarket.exception.*;
+import com.dging.dgingmarket.util.JsonUtils;
 import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.web.api.dto.common.ErrorResponse;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -19,11 +20,19 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import org.reflections.Reflections;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springdoc.core.customizers.OperationCustomizer;
+import org.springdoc.core.properties.SwaggerUiConfigParameters;
+import org.springdoc.core.properties.SwaggerUiConfigProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -39,7 +48,7 @@ import static java.util.stream.Collectors.groupingBy;
         scheme = "bearer"
 )
 @Configuration
-public class OpenApiConfiguration {
+public class OpenApiConfiguration implements WebMvcConfigurer {
 
     /*@Bean
     RouterFunction<ServerResponse> staticResourceRouter() {
@@ -107,35 +116,37 @@ public class OpenApiConfiguration {
 
                 Class<?> criteria = pageableParameter.sortCriteria();
 
-
                 StringBuilder sb = new StringBuilder();
                 sb.append("정렬 기준: 속성(,asc|desc) 형식입니다. 기본 정렬 순서는 오름차순이며, 여러 개의 정렬 기준을 지원합니다.<br>");
-                sb.append("속성: [");
+                sb.append("<details><summary>속성 보기</summary>");
+                sb.append("<table style=\"border-collapse: collapse; width: 100%;\">\n");
+                sb.append("<thead style=\"background-color: #f2f2f2;\">\n");
+                sb.append("<tr><th style=\"padding: 8px; text-align: left;\">필드 이름</th><th style=\"padding: 8px; text-align: left;\">타입</th></tr>\n");
+                sb.append("</thead>\n");
+                sb.append("<tbody>\n");  // tbody는 그대로 유지
 
-                // criteria 클래스 내부 필드들 확인
+// criteria 클래스 내부 필드들 확인
                 Field[] fields = criteria.getDeclaredFields();
 
-                // 필드마다 설명을 동적으로 설정
+// 필드마다 설명을 동적으로 설정
                 for (Field field : fields) {
-                    // 필드 타입에 따라 다르게 동작
-                    String fieldName = field.getName();
                     String description = getDescribableFieldName(field);
 
-                    if(description != null) {
-                        sb.append(description);
-                        sb.append(", ");
+                    if (description != null) {
+                        sb.append("<tr>\n")
+                                .append("<td style=\"padding: 8px; border: 1px solid #ddd;\">")
+                                .append(description)
+                                .append("</td>\n")
+                                .append("<td style=\"padding: 8px; border: 1px solid #ddd;\">")
+                                .append(JsonUtils.jsonTypeFrom(field.getType()))
+                                .append("</td>\n")
+                                .append("</tr>\n");
                     }
                 }
-                
-                if(sb.toString().endsWith("속성: [")) {
-                    sb.delete(sb.length() - 1, sb.length());
-                    sb.append("알 수 없음");
-                } else {
-                    sb.delete(sb.length() - 2, sb.length());
-                    sb.append("]");
-                }
 
-                sb.append("<br><br>");
+                sb.append("</tbody>\n");
+                sb.append("</table>\n");
+                sb.append("</details><br><br>");
 
                 for (Parameter parameter : operation.getParameters()) {
                     if("sort".equals(parameter.getName())) {

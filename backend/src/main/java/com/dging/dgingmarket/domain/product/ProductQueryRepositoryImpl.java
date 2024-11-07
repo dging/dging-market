@@ -1,18 +1,15 @@
 package com.dging.dgingmarket.domain.product;
 
+import com.dging.dgingmarket.domain.store.Follower;
+import com.dging.dgingmarket.domain.store.Store;
+import com.dging.dgingmarket.util.param.SearchParam;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
-import com.dging.dgingmarket.web.api.dto.product.FavoriteProductsResponse;
-import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
-import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
-import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
+import com.dging.dgingmarket.web.api.dto.product.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.group.GroupBy;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -22,6 +19,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.Collections;
 import java.util.Date;
@@ -35,6 +33,7 @@ import static com.dging.dgingmarket.domain.product.QFavorite.favorite;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
 import static com.dging.dgingmarket.domain.product.QProductImage.productImage;
 import static com.dging.dgingmarket.domain.product.QProductTag.productTag;
+import static com.dging.dgingmarket.domain.store.QFollower.follower;
 import static com.dging.dgingmarket.domain.store.QStore.store;
 import static com.dging.dgingmarket.domain.user.QUser.user;
 
@@ -61,9 +60,16 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .where(
                         product.deleted.isFalse(),
                         user.id.eq(userId),
-                        search(cond.getQuery()),
-                        dateGoe(cond.getDateFrom()),
-                        dateLt(cond.getDateTo())
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
                 )
                 .groupBy(product.id, tag.id, image.id);
 
@@ -141,11 +147,20 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .where(
                         product.deleted.isFalse(),
                         store.id.eq(storeId),
-                        search(cond.getQuery()),
-                        dateGoe(cond.getDateFrom()),
-                        dateLt(cond.getDateTo())
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
                 )
-                .groupBy(product.id, tag.id, image.id);
+                .groupBy(product.id, tag.id, image.id)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Product> pathBuilder = new PathBuilder<Product>(product.getType(), product.getMetadata());
@@ -153,14 +168,10 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                     pathBuilder.get(o.getProperty())));
         }
 
-        if(pageable.getSort().isEmpty()) {
-            query = query.orderBy(product.createdAt.desc());
-        }
-
-        List<StoreProductsResponse> queryResult = query
+        List<StoreProductsResponse> storeProducts = query
                 .transform(
                         GroupBy.groupBy(product.id).list(
-                                Projections.constructor(StoreProductsResponse.class,
+                                new QStoreProductsResponse(
                                         product.id,
                                         store.id,
                                         store.name,
@@ -174,13 +185,14 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         GroupBy.list(Projections.constructor(TagsResponse.class,
                                                 tag.id,
                                                 tag.name).skipNulls()),
+                                        product.uploaded.not(),
                                         product.createdAt,
                                         product.updatedAt
                                 ).skipNulls()
                         )
                 );
 
-        queryResult.forEach(productsResponse -> {
+        storeProducts.forEach(productsResponse -> {
 
             List<ImagesResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
@@ -193,21 +205,16 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
             productsResponse.setTags(distinctTags);
         });
 
-        int totalCount = queryResult.size();
+        JPAQuery<Long> count = queryFactory.select(product.count())
+                .from(product)
+                .join(store).on(product.store.eq(store))
+                .where(
+                        product.deleted.isFalse(),
+                        product.uploaded.isTrue(),
+                        store.id.eq(storeId)
+                );
 
-        long offset = pageable.getOffset();
-
-        if(offset > totalCount) {
-            return new PageImpl(Collections.EMPTY_LIST, pageable, totalCount);
-        }
-
-        int limit = pageable.getPageSize() * (pageable.getPageNumber() + 1);
-
-        if (limit > totalCount) {
-            limit = totalCount;
-        }
-
-        return new PageImpl(queryResult.subList((int) offset, limit), pageable, totalCount);
+        return PageableExecutionUtils.getPage(storeProducts, pageable, count::fetchOne);
     }
 
     @Override
@@ -221,9 +228,17 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .leftJoin(tag).on(tag.eq(productTag.tag))
                 .where(
                         product.deleted.isFalse(),
-                        search(cond.getQuery()),
-                        dateGoe(cond.getDateFrom()),
-                        dateLt(cond.getDateTo())
+                        product.uploaded.isTrue(),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
                 )
                 .groupBy(product.id, tag.id, image.id);
 
@@ -233,11 +248,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                     pathBuilder.get(o.getProperty())));
         }
 
-        if(pageable.getSort().isEmpty()) {
-            query = query.orderBy(product.createdAt.desc());
-        }
-
-        List<ProductsResponse> queryResult = query
+        List<ProductsResponse> products = query
                 .transform(
                         GroupBy.groupBy(product.id).list(
                                 Projections.constructor(ProductsResponse.class,
@@ -258,7 +269,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                         )
                 );
 
-        queryResult.forEach(productsResponse -> {
+        products.forEach(productsResponse -> {
 
             List<ImagesResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
@@ -271,21 +282,14 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
             productsResponse.setTags(distinctTags);
         });
 
-        int totalCount = queryResult.size();
+        JPAQuery<Long> count = queryFactory.select(product.count())
+                .from(product)
+                .where(
+                        product.deleted.isFalse(),
+                        product.uploaded.isTrue()
+                );
 
-        long offset = pageable.getOffset();
-
-        if(offset > totalCount) {
-            return new PageImpl(Collections.EMPTY_LIST, pageable, totalCount);
-        }
-
-        int limit = pageable.getPageSize() * (pageable.getPageNumber() + 1);
-
-        if (limit > totalCount) {
-            limit = totalCount;
-        }
-
-        return new PageImpl(queryResult.subList((int) offset, limit), pageable, totalCount);
+        return PageableExecutionUtils.getPage(products, pageable, count::fetchOne);
     }
 
     @Override
@@ -298,11 +302,14 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .leftJoin(productTag).on(productTag.product.eq(product))
                 .leftJoin(tag).on(tag.eq(productTag.tag))
                 .leftJoin(favorite).on(favorite.product.eq(product))
-                .where(product.id.eq(id), product.deleted.isFalse())
+                .where(
+                        product.id.eq(id),
+                        product.deleted.isFalse()
+                )
                 .groupBy(product.id, image.id, tag.id)
                 .transform(
                         GroupBy.groupBy(product.id).list(
-                                Projections.constructor(ProductResponse.class,
+                                new QProductResponse(
                                         product.id,
                                         store.id,
                                         store.name,
@@ -325,6 +332,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         GroupBy.list(Projections.constructor(TagsResponse.class,
                                                 tag.id,
                                                 tag.name).skipNulls()),
+                                        product.uploaded.not(),
                                         product.createdAt
                                 ).skipNulls()
                         )
@@ -345,17 +353,21 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
         return optional;
     }
 
-    private Predicate search(String query) {
+    private Predicate search(List<SearchParam> searchParams, String query) {
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(product.title.contains(query)).or(store.name.contains(query));
+
+        for (SearchParam searchParam : searchParams) {
+            builder.or(searchParam.getEntity().getString(searchParam.getMetadata().getName()).contains(query));
+        }
+
         return builder;
     }
 
-    private BooleanExpression dateLt(Date dateLt) {
-        return dateLt != null ? product.createdAt.lt(dateLt) : null;
+    private BooleanExpression dateLt(PathBuilder<?> entity, PathMetadata metadata, Date dateLt) {
+        return dateLt != null ? entity.getDate(metadata.getName(), Date.class).lt(dateLt) : null;
     }
 
-    private BooleanExpression dateGoe(Date dateGoe) {
-        return dateGoe != null ? product.createdAt.goe(dateGoe) : null;
+    private BooleanExpression dateGoe(PathBuilder<?> entity, PathMetadata metadata, Date dateGoe) {
+        return dateGoe != null ? entity.getDate(metadata.getName(), Date.class).goe(dateGoe) : null;
     }
 }

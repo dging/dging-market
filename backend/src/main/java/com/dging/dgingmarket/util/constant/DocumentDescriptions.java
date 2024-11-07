@@ -63,6 +63,7 @@ public class DocumentDescriptions {
     public static final String RESPONSE_TAGS = "태그 배열입니다.";
     public static final String RESPONSE_TAG_NAME = "태그명입니다.";
     public static final String RESPONSE_IMAGE_URL = "이미지 URL입니다.";
+    public static final String RESPONSE_IS_TEMPORARY_SAVE = "임시저장 여부입니다.";
     public static final String RESPONSE_CREATED_AT = "생성 일시입니다.";
     public static final String RESPONSE_UPDATE_AT = "수정 일시입니다.";
     public static final String RESPONSE_GRANT_TYPE = "승인 타입입니다.";
@@ -109,7 +110,12 @@ public class DocumentDescriptions {
     public static final String CONDITION_DATE_FROM = "조회 시작 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";
     public static final String CONDITION_DATE_TO = "조회 끝 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";
     public static final String CONDITION_QUERY = "검색어입니다.";
-    public static final String CONDITION_STORE_PRODUCT_REVIEW_QUERY = "검색어입니다. 후기 작성자명 혹은 후기 내용을 기준으로 검색합니다.";
+    public static final String CONDITION_STORE_PRODUCT_REVIEWS_QUERY = "검색어입니다. 후기 작성자명, 후기 내용을 기준으로 검색합니다.";
+    public static final String CONDITION_FOLLOWERS_QUERY = "검색어입니다. 팔로워 이름을 기준으로 검색합니다.";
+    public static final String CONDITION_FOLLOWINGS_QUERY = "검색어입니다. 팔로잉 이름을 기준으로 검색합니다.";
+    public static final String CONDITION_FAVORITE_PRODUCTS_QUERY = "검색어입니다. 상품명, 상품 내용, 작성자명을 기준으로 검색합니다.";
+    public static final String CONDITION_STORE_PRODUCTS_QUERY = "검색어입니다. 상품명, 상품 내용, 작성자명을 기준으로 검색합니다.";
+    public static final String CONDITION_PRODUCTS_QUERY = "검색어입니다. 상품명, 상품 내용, 작성자명을 기준으로 검색합니다.";
 
     public static final String REQUEST_RATING = "후기 평점입니다. 5점 만점입니다.";
     public static final String REQUEST_REVIEW_CONTENT = "후기 내용입니다.";

@@ -1,5 +1,8 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
+import com.dging.dgingmarket.docs.CustomDescriptionOverride;
+import com.dging.dgingmarket.domain.product.Product;
+import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
@@ -84,7 +87,7 @@ public class ProductApiController {
     }
 
     @GetMapping
-    @CustomPageableParameter
+    @CustomPageableParameter(sortCriteria = Product.class)
     @Operation(summary = "상품 조회", description = "여러 상품을 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     @ApiErrorCodeExample({
@@ -97,6 +100,7 @@ public class ProductApiController {
     ResponseEntity<Page<ProductsResponse>> fetchProducts(
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
+            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_PRODUCTS_QUERY)
             @ParameterObject CommonCondition cond
     ) {
 
@@ -196,7 +200,7 @@ public class ProductApiController {
     }
 
     @GetMapping("/favorite")
-    @CustomPageableParameter
+    @CustomPageableParameter(sortCriteria = Product.class)
     @Operation(summary = "찜한 상품 조회", description = "찜한 여러 상품을 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     @ApiErrorCodeExample({
@@ -205,6 +209,7 @@ public class ProductApiController {
     ResponseEntity<Page<FavoriteProductsResponse>> fetchFavoriteProducts(
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
+            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_FAVORITE_PRODUCTS_QUERY)
             @ParameterObject CommonCondition cond
     ) {
 
