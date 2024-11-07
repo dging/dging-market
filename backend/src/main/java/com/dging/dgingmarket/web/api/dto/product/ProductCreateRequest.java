@@ -31,7 +31,7 @@ public class ProductCreateRequest {
     List<Long> imageIds;
 
     @NotEmpty
-    @Schema(description = REQUEST_TITLE, example = EXAMPLE_TITLE)
+    @Schema(description = REQUEST_TITLE, example = EXAMPLE_PRODUCT_TITLE)
     private String title;
 
     @NotEmpty
@@ -50,7 +50,7 @@ public class ProductCreateRequest {
     @Schema(description = REQUEST_QUALITY, example = EXAMPLE_QUALITY)
     private String quality;
 
-    @Schema(description = REQUEST_CONTENT, example = EXAMPLE_CONTENT)
+    @Schema(description = REQUEST_CONTENT, example = EXAMPLE_PRODUCT_CONTENT)
     private String content;
 
     @Schema(description = REQUEST_TAGS, example = "[\"CD\", \"Rock\", \"Punk\"]")

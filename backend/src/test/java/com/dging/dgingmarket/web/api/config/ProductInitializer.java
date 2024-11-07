@@ -12,7 +12,6 @@ import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.util.enums.ProductQuality;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
@@ -58,8 +57,8 @@ public class ProductInitializer implements ApplicationRunner {
 
             return Product.create(
                     user.getStore(),
-                    DocumentDescriptions.EXAMPLE_TITLE,
-                    DocumentDescriptions.EXAMPLE_CONTENT,
+                    DocumentDescriptions.EXAMPLE_PRODUCT_TITLE,
+                    DocumentDescriptions.EXAMPLE_PRODUCT_CONTENT,
                     DocumentDescriptions.EXAMPLE_MAIN_CATEGORY,
                     DocumentDescriptions.EXAMPLE_MIDDLE_CATEGORY,
                     DocumentDescriptions.EXAMPLE_SUB_CATEGORY,

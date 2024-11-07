@@ -2,6 +2,7 @@ package com.dging.dgingmarket.domain.store;
 
 import com.dging.dgingmarket.domain.product.QProduct;
 import com.dging.dgingmarket.domain.user.QUser;
+import com.dging.dgingmarket.util.param.SearchParam;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.QRecentProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.RecentProductsResponse;
@@ -9,10 +10,7 @@ import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import com.dging.dgingmarket.web.api.dto.store.QFollowingsResponse;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
@@ -84,9 +82,14 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
                 .leftJoin(fromFrom).on(fromFollower.from.eq(fromFrom))
                 .where(
                         toStore.id.eq(storeId),
-                        search(cond.getQuery()),
-                        dateGoe(new PathBuilder<>(Follower.class, "follower"), "createdAt", cond.getDateFrom()),
-                        dateLt(new PathBuilder<>(Follower.class, "follower"), "createdAt", cond.getDateTo())
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Store.class, fromStore.getMetadata()), fromStore.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateTo())
                 )
                 .groupBy(fromStore.id);
 
@@ -135,7 +138,17 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
                 ))
                 .from(toStore)
                 .join(follower).on(follower.to.eq(toStore.user))
-                .where(follower.from.id.eq(storeId))
+                .where(
+                        follower.from.id.eq(storeId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Store.class, toStore.getMetadata()), toStore.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateTo())
+                )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
 
@@ -201,19 +214,22 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
         return PageableExecutionUtils.getPage(followings, pageable, count::fetchOne);
     }
 
-    private Predicate search(String query) {
-        QStore fromStore = new QStore("fromStore");
+    private Predicate search(List<SearchParam> searchParams, String query) {
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(fromStore.name.contains(query));
+
+        for (SearchParam searchParam : searchParams) {
+            builder.or(searchParam.getEntity().getString(searchParam.getMetadata().getName()).contains(query));
+        }
+
         return builder;
     }
 
-    private BooleanExpression dateLt(PathBuilder<?> entity, String fieldName, Date dateLt) {
-        return dateLt != null ? entity.getDate(fieldName, Date.class).lt(dateLt) : null;
+    private BooleanExpression dateLt(PathBuilder<?> entity, PathMetadata metadata, Date dateLt) {
+        return dateLt != null ? entity.getDate(metadata.getName(), Date.class).lt(dateLt) : null;
     }
 
-    private BooleanExpression dateGoe(PathBuilder<?> entity, String fieldName, Date dateGoe) {
-        return dateGoe != null ? entity.getDate(fieldName, Date.class).goe(dateGoe) : null;
+    private BooleanExpression dateGoe(PathBuilder<?> entity, PathMetadata metadata, Date dateGoe) {
+        return dateGoe != null ? entity.getDate(metadata.getName(), Date.class).goe(dateGoe) : null;
     }
 
 }

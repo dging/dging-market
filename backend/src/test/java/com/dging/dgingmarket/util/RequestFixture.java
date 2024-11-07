@@ -14,12 +14,12 @@ public class RequestFixture {
 
     public static final ProductCreateRequest PRODUCT_CREATE = new ProductCreateRequest(
         List.of(1L, 2L),
-        EXAMPLE_TITLE,
+            EXAMPLE_PRODUCT_TITLE,
         EXAMPLE_MAIN_CATEGORY,
         EXAMPLE_MIDDLE_CATEGORY,
         EXAMPLE_SUB_CATEGORY,
         EXAMPLE_QUALITY,
-        EXAMPLE_CONTENT,
+            EXAMPLE_PRODUCT_CONTENT,
         List.of(EXAMPLE_TAG + 1, EXAMPLE_TAG + 2),
         Integer.parseInt(EXAMPLE_PRICE),
         Boolean.parseBoolean(EXAMPLE_ALLOWS_OFFERS),

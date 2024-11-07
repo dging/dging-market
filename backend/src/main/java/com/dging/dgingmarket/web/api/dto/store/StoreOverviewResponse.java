@@ -19,5 +19,5 @@ public class StoreOverviewResponse {
     private String name;
     private int salesCount;
     private int followersCount;
-    List<StoreReviewsResponse> reviews;
+    List<StoreProductReviewsResponse> reviews;
 }

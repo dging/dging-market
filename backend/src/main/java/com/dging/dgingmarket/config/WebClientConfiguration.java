@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.config;
 
-import com.dging.dgingmarket.util.ThrowingConsumer;
+import com.dging.dgingmarket.util.annotation.ThrowingConsumer;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;

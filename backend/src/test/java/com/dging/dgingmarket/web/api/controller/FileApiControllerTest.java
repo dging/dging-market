@@ -1,35 +1,27 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
-import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.util.ResponseFixture;
-import com.dging.dgingmarket.util.constant.BasePaths;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.web.api.base.ApiDocumentationTest;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.mock.web.MockPart;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 
 import java.io.FileInputStream;
-import java.util.Optional;
 
-import static com.dging.dgingmarket.util.constant.DocumentDescriptions.EXAMPLE_ID;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;

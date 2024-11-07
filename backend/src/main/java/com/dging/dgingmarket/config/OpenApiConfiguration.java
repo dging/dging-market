@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.config;
 
+import com.dging.dgingmarket.docs.CustomDescriptionOverride;
 import com.dging.dgingmarket.exception.*;
 import com.dging.dgingmarket.web.api.dto.common.ErrorResponse;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
@@ -19,8 +21,10 @@ import org.reflections.Reflections;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.MethodParameter;
 import org.springframework.web.method.HandlerMethod;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -60,6 +64,9 @@ public class OpenApiConfiguration {
     public OperationCustomizer customize() {
         return (Operation operation, HandlerMethod handlerMethod) -> {
 
+            //메서드 커스터마이징
+
+            //ApiErrorCodeClassExample - 에러코드 기본값을 클래스 레벨에서 문서화
             ApiErrorCodeClassExample apiErrorCodeClassExample = handlerMethod.getMethodAnnotation(ApiErrorCodeClassExample.class);
 
             if (apiErrorCodeClassExample != null) {
@@ -68,6 +75,7 @@ public class OpenApiConfiguration {
                 generateErrorCodeResponseExample(operation.getResponses(), errorCodes);
             }
 
+            //ApiErrorCodeExample - 에러코드 기본값을 코드 배열을 기준으로 문서화
             ApiErrorCodeExample apiErrorCodeExample = handlerMethod.getMethodAnnotation(ApiErrorCodeExample.class);
 
             if (apiErrorCodeExample != null) {
@@ -92,8 +100,48 @@ public class OpenApiConfiguration {
                 generateErrorCodeResponseExample(operation.getResponses(), errorCodes);
             }
 
+            //메서드 파라미터 커스터마이징
+            MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
+
+            for (MethodParameter methodParameter : methodParameters) {
+
+                //CustomDescriptionOverride - 파라미터 DTO 클래스 내 특정 필드의 설명을 재정의
+                CustomDescriptionOverride customDescriptionOverride = methodParameter.getParameterAnnotation(CustomDescriptionOverride.class);
+
+                if (customDescriptionOverride != null) {
+                    String fieldName = customDescriptionOverride.fieldName();
+                    String description = customDescriptionOverride.description();
+
+                    Class<?> dtoClass = methodParameter.getParameterType();
+                    Optional<Field> fieldOpt = findFieldByName(dtoClass, fieldName);
+
+                    if (fieldOpt.isPresent()) {
+                        Field field = fieldOpt.get();
+                        io.swagger.v3.oas.annotations.media.Schema schemaAnnotation = field.getAnnotation(io.swagger.v3.oas.annotations.media.Schema.class);
+
+                        // `@Schema`에 description 업데이트
+                        if (schemaAnnotation != null) {
+                            // 스키마 객체에 description을 업데이트
+                            for (Parameter param : operation.getParameters()) {
+                                if (param.getName().equals(fieldName)) {
+                                    param.setDescription(description);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             return operation;
         };
+    }
+
+    private Optional<Field> findFieldByName(Class<?> dtoClass, String fieldName) {
+        try {
+            return Optional.of(dtoClass.getDeclaredField(fieldName));
+        } catch (NoSuchFieldException e) {
+            return Optional.empty();
+        }
     }
 
     private void generateErrorCodeResponseExample(ApiResponses responses, BaseErrorCode[] errorCodes) {

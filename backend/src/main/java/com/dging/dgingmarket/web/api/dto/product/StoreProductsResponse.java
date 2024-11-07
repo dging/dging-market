@@ -32,7 +32,7 @@ public class StoreProductsResponse {
     @Schema(description = RESPONSE_STORE_NAME, example = EXAMPLE_STORE_NAME)
     private String storeName;
 
-    @Schema(description = RESPONSE_TITLE, example = EXAMPLE_TITLE)
+    @Schema(description = RESPONSE_TITLE, example = EXAMPLE_PRODUCT_TITLE)
     private String title;
 
     @Schema(description = RESPONSE_FAVORITE_COUNT, example = EXAMPLE_FAVORITE_COUNT)

@@ -1,18 +1,16 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
+import com.dging.dgingmarket.docs.CustomDescriptionOverride;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.exception.StoreErrorCode;
 import com.dging.dgingmarket.exception.UserErrorCode;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
-import com.dging.dgingmarket.util.CustomPageableParameter;
+import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
-import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
-import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
-import com.dging.dgingmarket.web.api.dto.store.StoreIntroductionChangeRequest;
-import com.dging.dgingmarket.web.api.dto.store.StoreNameChangeRequest;
+import com.dging.dgingmarket.web.api.dto.store.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,6 +26,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 
 @Slf4j
 @RestController
@@ -155,6 +155,24 @@ public class StoreApiController {
         storeService.updateName(id, request);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/{id}/products/reviews")
+    @CustomPageableParameter
+    @Operation(summary = "상점 상품 후기 조회", description = "상점의 여러 상품 후기를 조회합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    ResponseEntity<Page<StoreProductReviewsResponse>> fetchProductReviews(
+            @Parameter(description = DocumentDescriptions.REQUEST_STORE_ID)
+            @PathVariable Long id,
+            @ParameterObject Pageable pageable,
+            @Valid @Schema(implementation = CommonCondition.class)
+            @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_STORE_PRODUCT_REVIEW_QUERY)
+            @ParameterObject CommonCondition cond
+    ) {
+
+        Page<StoreProductReviewsResponse> response = storeService.productReviews(id, pageable, cond);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }

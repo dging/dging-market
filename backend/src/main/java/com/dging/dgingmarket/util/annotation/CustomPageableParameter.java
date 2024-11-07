@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.util;
+package com.dging.dgingmarket.util.annotation;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

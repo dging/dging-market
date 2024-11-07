@@ -43,7 +43,7 @@ public class ProductResponse {
     @Schema(description = RESPONSE_TITLE)
     private String title;
 
-    @Schema(description = RESPONSE_CONTENT)
+    @Schema(description = RESPONSE_PRODUCT_CONTENT)
     private String content;
 
     @Schema(description = RESPONSE_FAVORITE_COUNT)

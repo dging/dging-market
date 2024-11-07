@@ -27,8 +27,8 @@ public class ResponseFixture {
             Long.parseLong(EXAMPLE_ID),
             Long.parseLong(EXAMPLE_ID),
             EXAMPLE_STORE_NAME,
-            EXAMPLE_TITLE,
-            EXAMPLE_CONTENT,
+            EXAMPLE_PRODUCT_TITLE,
+            EXAMPLE_PRODUCT_CONTENT,
             Integer.parseInt(EXAMPLE_FAVORITE_COUNT),
             Integer.parseInt(EXAMPLE_VIEW_COUNT),
             ProductQuality.find(EXAMPLE_QUALITY),
@@ -51,7 +51,7 @@ public class ResponseFixture {
                     .storeId(1L)
                     .storeName(EXAMPLE_STORE_NAME)
                     .price(Integer.parseInt(EXAMPLE_PRICE))
-                    .title(EXAMPLE_TITLE)
+                    .title(EXAMPLE_PRODUCT_TITLE)
                     .favoriteCount(Integer.parseInt(EXAMPLE_FAVORITE_COUNT))
                     .runningStatus(RunningStatus.AVAILABLE)
                     .tags(List.of(new TagsResponse(2 * i - 1, EXAMPLE_TAG + (2 * i - 1)), new TagsResponse(2 * i, EXAMPLE_TAG + 2 * i)))
@@ -67,7 +67,7 @@ public class ResponseFixture {
                     .storeId(i)
                     .storeName(EXAMPLE_STORE_NAME)
                     .price(Integer.parseInt(EXAMPLE_PRICE))
-                    .title(EXAMPLE_TITLE)
+                    .title(EXAMPLE_PRODUCT_TITLE)
                     .runningStatus(RunningStatus.AVAILABLE)
                     .tags(List.of(new TagsResponse(2 * i - 1, EXAMPLE_TAG + (2 * i - 1)), new TagsResponse(2 * i, EXAMPLE_TAG + 2 * i)))
                     .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_IMAGE_URL), new ImagesResponse(2 * i, EXAMPLE_IMAGE_URL)))
@@ -81,7 +81,7 @@ public class ResponseFixture {
                     .storeId(i)
                     .storeName(EXAMPLE_STORE_NAME)
                     .price(Integer.parseInt(EXAMPLE_PRICE))
-                    .title(EXAMPLE_TITLE)
+                    .title(EXAMPLE_PRODUCT_TITLE)
                     .runningStatus(RunningStatus.AVAILABLE)
                     .tags(List.of(new TagsResponse(2 * i - 1, EXAMPLE_TAG + (2 * i - 1)), new TagsResponse(2 * i, EXAMPLE_TAG + 2 * i)))
                     .images(List.of(new ImagesResponse(2 * i - 1, EXAMPLE_IMAGE_URL), new ImagesResponse(2 * i, EXAMPLE_IMAGE_URL)))

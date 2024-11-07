@@ -3,7 +3,7 @@ package com.dging.dgingmarket.web.api.controller.service;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
-import com.dging.dgingmarket.util.CustomPageableParameter;
+import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.*;
@@ -229,7 +229,7 @@ public class ProductApiController {
             StoreReviewCreateRequest request
     ) {
 
-        storeService.createReview(id, request);
+        storeService.createProductReview(id, request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -10,6 +10,7 @@ import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -101,7 +102,7 @@ public class StoreService {
     }
 
     @Transactional
-    public void createReview(Long id, StoreReviewCreateRequest request) {
+    public void createProductReview(Long id, StoreReviewCreateRequest request) {
 
         User user = EntityUtils.userThrowable();
         Product foundProduct = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
@@ -115,5 +116,9 @@ public class StoreService {
         //TODO: 거래가 완료된 사용자에 한해서만 리뷰 작성 가능하도록 예외 처리
 
         reviewRepository.save(reviewToCreate);
+    }
+
+    public Page<StoreProductReviewsResponse> productReviews(Long id, Pageable pageable, @Valid CommonCondition cond) {
+        return reviewRepository.storeProductReviews(id, pageable, cond);
     }
 }

@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.util;
+package com.dging.dgingmarket.util.annotation;
 
 import java.util.function.Consumer;
 
