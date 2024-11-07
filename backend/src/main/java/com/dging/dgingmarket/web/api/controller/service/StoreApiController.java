@@ -179,4 +179,17 @@ public class StoreApiController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/{id}/overview")
+    @Operation(summary = "상점 정보 조회", description = "상점의 간략한 정보를 조회합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({StoreErrorCode._STORE_NOT_FOUND})
+    ResponseEntity<StoreOverviewResponse> fetchOverview(
+            @Parameter(description = DocumentDescriptions.REQUEST_STORE_ID)
+            @PathVariable Long id
+    ) {
+
+        StoreOverviewResponse response = storeService.overview(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

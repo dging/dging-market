@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -120,5 +121,9 @@ public class StoreService {
 
     public Page<StoreProductReviewsResponse> productReviews(Long id, Pageable pageable, @Valid CommonCondition cond) {
         return reviewRepository.storeProductReviews(id, pageable, cond);
+    }
+
+    public StoreOverviewResponse overview(Long id) {
+        return storeRepository.overview(id).orElseThrow(StoreNotFoundException::new);
     }
 }

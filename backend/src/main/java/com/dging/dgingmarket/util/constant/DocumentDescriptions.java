@@ -54,6 +54,7 @@ public class DocumentDescriptions {
     public static final String RESPONSE_RUNNING_STATUS = "진행 상태입니다.";
     public static final String RESPONSE_FOLLOWERS_COUNT = "팔로워 수입니다.";
     public static final String RESPONSE_RECENT_PRODUCTS = "최근 상품입니다.";
+    public static final String RESPONSE_STORE_PRODUCT_REVIEWS = "상점 상품 후기 배열입니다.";
     public static final String RESPONSE_PRICE = "가격입니다.";
     public static final String RESPONSE_IMAGES = "이미지 배열입니다.";
     public static final String RESPONSE_FILE_NAME = "파일명입니다.";
