@@ -47,6 +47,7 @@ export interface ArrangeType {
 }
 
 export interface IncludeImgBtnType {
+  as?: string;
   width?: string;
   height?: string;
   $textwidth?: string;

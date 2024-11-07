@@ -6,6 +6,7 @@ import Declaration from '../../assets/images/Declaration.png';
 
 const DeclarationButton = styled.button`
   display: flex;
+  height: 18px;
   border: 0;
   background-color: white;
   padding: 0;
@@ -13,11 +14,14 @@ const DeclarationButton = styled.button`
   gap: 2px;
   color: ${({ theme }) => theme.color.black2};
   ${({ theme }) => theme.color.black2}
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-function DeclarationBtn() {
+export default function DeclarationBtn() {
   return (
-    <DeclarationButton>
+    <DeclarationButton onClick={() => console.log('신고')}>
       <ImgBtn
         as='div'
         width='18px'
@@ -28,5 +32,3 @@ function DeclarationBtn() {
     </DeclarationButton>
   );
 }
-
-export default DeclarationBtn;

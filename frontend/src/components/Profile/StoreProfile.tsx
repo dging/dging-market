@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import ReactStars from 'react-stars';
 import { Arrange, SpanBold } from '../Base';
-import { ImgBtn, SmallBtn } from '../Button';
-
+import { ImgBtn, SmallBtn, DeclarationBtn } from '../Button';
 import Test from '../../assets/images/Test.png';
 import UserPlusWhite from '../../assets/images/UserPlusWhite.png';
 import Verification from '../../assets/images/Verification.png';
-import Declaration from '../../assets/images/Declaration.png';
 
 const WrapStoreProfile = styled(Arrange)`
   position: relative;
@@ -114,20 +112,9 @@ const CountWord = styled(Arrange)`
   color: ${({ theme }) => theme.color.black0};
 `;
 
-const DeclarationBtn = styled.button`
-  display: flex;
-  border: 0;
-  background-color: white;
-  padding: 0;
-  align-items: center;
-  gap: 2px;
-  color: ${({ theme }) => theme.color.black2};
-  ${({ theme }) => theme.color.black2}
-`;
-
 export default function StoreProfile() {
   const theme = useTheme();
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setIsOwner] = useState(false);
   const [isAuth, setIsAuth] = useState(true);
   const [titleEdit, setTitleEdit] = useState(true);
   const [titleValue, setTitleValue] = useState('TEST');
@@ -300,15 +287,7 @@ export default function StoreProfile() {
               )}
             </>
           ) : (
-            <DeclarationBtn>
-              <ImgBtn
-                as='div'
-                width='18px'
-                height='18px'
-                $backgroundimage={Declaration}
-              />
-              <Arrange padding='2px 0 0 0'>신고하기</Arrange>
-            </DeclarationBtn>
+            <DeclarationBtn />
           )}
         </Arrange>
       </Arrange>

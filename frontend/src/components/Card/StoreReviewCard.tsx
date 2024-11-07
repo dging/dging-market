@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import ReactStars from 'react-stars';
 import { Arrange } from '../Base';
-import { ImgBtn } from '../Button';
+import { ImgBtn, DeclarationBtn, NavigateBtn } from '../Button';
 import DefaultProfile from '../../assets/images/DefaultProfile.png';
 import Declaration from '../../assets/images/Declaration.png';
 
@@ -25,19 +25,6 @@ const TitleH3 = styled.div`
   color: ${({ theme }) => theme.color.black0};
 `;
 
-const DeclarationBtn = styled.button`
-  display: flex;
-  height: fit-content;
-  border: 0;
-  background-color: white;
-  padding: 0;
-  align-items: center;
-  gap: 2px;
-  color: ${({ theme }) => theme.color.black2};
-  ${({ theme }) => theme.color.black2}
-  cursor: pointer;
-`;
-
 const ReviewTitle = styled(Arrange)`
   ${({ theme }) => theme.font.r18};
   color: ${({ theme }) => theme.color.black2};
@@ -47,25 +34,23 @@ export default function StoreReviewCard() {
   const theme = useTheme();
   const [starScore, setStarScore] = useState(5);
   return (
-    <Arrange display='flex' justifycontent='space-between'>
+    <Arrange width='100%' display='flex' justifycontent='space-between'>
       <Arrange display='flex' gap='20px'>
         <Profile $bgimg={DefaultProfile} />
-        <Arrange gap='20px' padding={`${theme.size.xxxs} 0`}>
-          <Arrange>
+        <Arrange
+          display='flex'
+          flexdirection='column'
+          gap='20px'
+          padding={`${theme.size.xxxs} 0`}
+        >
+          <Arrange display='flex' flexdirection='column' gap='8px'>
             <TitleH3>상점 1020938호</TitleH3>
             <ReactStars value={starScore} size={20} edit={false} />
+            <NavigateBtn />
           </Arrange>
-          <TitleH3>상점 1020938호</TitleH3>
+          <TitleH3>친절하시고 우체국택배까지^^</TitleH3>
+          <DeclarationBtn />
         </Arrange>
-        <DeclarationBtn>
-          <ImgBtn
-            as='div'
-            width='18px'
-            height='18px'
-            $backgroundimage={Declaration}
-          />
-          <Arrange padding='2px 0 0 0'>신고하기</Arrange>
-        </DeclarationBtn>
       </Arrange>
     </Arrange>
   );
