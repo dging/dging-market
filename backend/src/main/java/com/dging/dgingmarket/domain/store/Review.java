@@ -37,6 +37,9 @@ public class Review {
     @JoinColumn(name = "product_id", nullable = false, updatable = false)
     private Product product;
 
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private Long userId;
+
     @Column(length = 500)
     private String content;
 

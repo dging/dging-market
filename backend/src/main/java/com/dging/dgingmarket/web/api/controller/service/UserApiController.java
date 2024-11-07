@@ -29,7 +29,7 @@ import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 @Slf4j
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@Tag(name = "1. 사용자 서비스", description = "사용자 관리 API 엔드포인트")
+@Tag(name = "1. 사용자", description = "사용자 API 엔드포인트")
 @RestController
 public class UserApiController {
 

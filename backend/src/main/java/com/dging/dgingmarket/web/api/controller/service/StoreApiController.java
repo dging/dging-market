@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/stores")
-@Tag(name = "3. 상점 서비스", description = "상점 관리 API 엔드포인트")
+@Tag(name = "3. 상점", description = "상점 API 엔드포인트")
 @RequiredArgsConstructor
 public class StoreApiController {
 

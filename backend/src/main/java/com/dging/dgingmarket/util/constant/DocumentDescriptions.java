@@ -2,6 +2,7 @@ package com.dging.dgingmarket.util.constant;
 
 public class DocumentDescriptions {
 
+    public static final String REQUEST_REVIEW_ID = "후기의 고유 식별자인 id입니다.";
     public static final String REQUEST_PRODUCT_ID = "상품의 고유 식별자인 id입니다.";
     public static final String REQUEST_STORE_ID = "상점의 고유 식별자인 id입니다.";
     public static final String REQUEST_ID = "고유 식별자인 id입니다.";

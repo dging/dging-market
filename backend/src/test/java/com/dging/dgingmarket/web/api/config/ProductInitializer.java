@@ -2,6 +2,7 @@ package com.dging.dgingmarket.web.api.config;
 
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.user.User;
@@ -59,7 +60,7 @@ public class ProductInitializer implements ApplicationRunner {
                     user.getStore(),
                     DocumentDescriptions.EXAMPLE_PRODUCT_TITLE,
                     DocumentDescriptions.EXAMPLE_PRODUCT_CONTENT,
-                    DocumentDescriptions.EXAMPLE_MAIN_CATEGORY,
+                    MainCategory.find(DocumentDescriptions.EXAMPLE_MAIN_CATEGORY),
                     DocumentDescriptions.EXAMPLE_MIDDLE_CATEGORY,
                     DocumentDescriptions.EXAMPLE_SUB_CATEGORY,
                     List.of(

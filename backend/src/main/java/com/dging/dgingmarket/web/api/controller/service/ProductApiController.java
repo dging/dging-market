@@ -3,12 +3,14 @@ package com.dging.dgingmarket.web.api.controller.service;
 import com.dging.dgingmarket.docs.CustomDescriptionOverride;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
+import com.dging.dgingmarket.exception.StoreErrorCode;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.*;
+import com.dging.dgingmarket.web.api.dto.store.StoreResponse;
 import com.dging.dgingmarket.web.api.dto.store.StoreReviewCreateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,7 +38,7 @@ import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 @Slf4j
 @RequestMapping("/products")
 @RequiredArgsConstructor
-@Tag(name = "2. 상품 서비스", description = "상품 관리 API 엔드포인트")
+@Tag(name = "2. 상품", description = "상품 API 엔드포인트")
 @RestController
 public class ProductApiController {
 

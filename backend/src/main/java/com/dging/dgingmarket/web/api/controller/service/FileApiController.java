@@ -28,7 +28,7 @@ import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 @RestController
 @RequestMapping("/files")
 @RequiredArgsConstructor
-@Tag(name = "0. 파일 서비스", description = "파일 관리 API 엔드포인트")
+@Tag(name = "0. 파일", description = "파일 API 엔드포인트")
 public class FileApiController {
 
     private final FileUploadService fileUploadService;

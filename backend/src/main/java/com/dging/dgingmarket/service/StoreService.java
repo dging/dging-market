@@ -108,14 +108,30 @@ public class StoreService {
         Product foundProduct = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
         Review reviewToCreate = Review.create(user, foundProduct, request.getContent(), request.getRating());
 
-        //사용자 본인의 상품에 리뷰 불가능
+        //사용자 본인의 상품에 후기 불가능
         if(Objects.equals(user.getStore().getId(), foundProduct.getStore().getId())) {
             throw ReviewMyselfException.EXCEPTION;
         }
 
-        //TODO: 거래가 완료된 사용자에 한해서만 리뷰 작성 가능하도록 예외 처리
+        //TODO: 후기는 하나의 상품에 한 번만 작성 가능하므로 이미 남긴 후기에 대해 예외 처리
+
+        //TODO: 거래가 완료된 사용자에 한해서만 후기 작성 가능하도록 예외 처리
 
         reviewRepository.save(reviewToCreate);
+    }
+
+    @Transactional
+    public void deleteProductReview(Long id) {
+
+        User user = EntityUtils.userThrowable();
+        Review foundReview = reviewRepository.findById(id).orElseThrow(ReviewNotFoundException::new);
+
+        //사용자 본인이 작성한 후기가 아니면 삭제 불가능
+        if(!Objects.equals(user.getId(), foundReview.getUserId())) {
+            throw UserOwnReviewException.EXCEPTION;
+        }
+
+        reviewRepository.delete(foundReview);
     }
 
     public Page<StoreProductReviewsResponse> productReviews(Long id, Pageable pageable, @Valid CommonCondition cond) {
