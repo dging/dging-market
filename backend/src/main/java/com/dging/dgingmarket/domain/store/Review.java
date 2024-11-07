@@ -54,7 +54,7 @@ public class Review {
     public static Review create(User user, Product product, String content, int rate) {
         Review review = new Review();
         review.setUser(user);
-        review.setStore(user.getStore());
+        review.setStore(product.getStore());
         review.setProduct(product);
         review.setContent(content);
         review.setRate(rate);

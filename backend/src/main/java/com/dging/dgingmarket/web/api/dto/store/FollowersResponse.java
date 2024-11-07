@@ -21,7 +21,7 @@ public class FollowersResponse {
     @Schema(description = RESPONSE_STORE_NAME, example = EXAMPLE_STORE_NAME)
     private String storeName;
 
-    @Schema(description = RESPONSE_RATING, example = EXAMPLE_RATING)
+    @Schema(description = RESPONSE_RATING, example = EXAMPLE_RATING_AVERAGE)
     private float rating;
 
     @Schema(description = RESPONSE_SALES_COUNT, example = EXAMPLE_SALES_COUNT)

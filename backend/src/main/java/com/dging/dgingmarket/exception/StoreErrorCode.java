@@ -19,6 +19,7 @@ public enum StoreErrorCode implements BaseErrorCode {
     ALREADY_FOLLOWED(HttpStatus.BAD_REQUEST.value(), "DGM-4101", "이미 팔로우한 사용자입니다."),
     USER_OWN_STORE_ERROR(HttpStatus.BAD_REQUEST.value(), "DGM-4102", "사용자 본인의 상점이 아닙니다."),
     STORE_NAME_DUPLICATED(HttpStatus.BAD_REQUEST.value(), "DGM-4103", "상점명은 중복될 수 없습니다."),
+    REVIEW_MYSELF_ERROR(HttpStatus.BAD_REQUEST.value(), "DGM-4104", "사용자 본인의 상품은 리뷰할 수 없습니다."),
     ;
 
     public static final String _FOLLOWER_NOT_FOUND = "DGM-4000";
@@ -27,6 +28,7 @@ public enum StoreErrorCode implements BaseErrorCode {
     public static final String _ALREADY_FOLLOWED = "DGM-4101";
     public static final String _USER_OWN_STORE_ERROR = "DGM-4102";
     public static final String _STORE_NAME_DUPLICATED = "DGM-4103";
+    public static final String _REVIEW_MYSELF_ERROR = "DGM-4104";
 
     private int status;
     private final String code;

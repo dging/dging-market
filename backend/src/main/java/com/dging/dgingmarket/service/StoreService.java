@@ -1,18 +1,15 @@
 package com.dging.dgingmarket.service;
 
-import com.dging.dgingmarket.domain.store.Follower;
-import com.dging.dgingmarket.domain.store.FollowerRepository;
-import com.dging.dgingmarket.domain.store.Store;
-import com.dging.dgingmarket.domain.store.StoreRepository;
+import com.dging.dgingmarket.domain.product.Product;
+import com.dging.dgingmarket.domain.product.ProductRepository;
+import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
+import com.dging.dgingmarket.domain.store.*;
 import com.dging.dgingmarket.domain.store.exception.*;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
-import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
-import com.dging.dgingmarket.web.api.dto.store.StoreIntroductionChangeRequest;
-import com.dging.dgingmarket.web.api.dto.store.StoreNameChangeRequest;
+import com.dging.dgingmarket.web.api.dto.store.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,6 +28,8 @@ public class StoreService {
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
     private final FollowerRepository followerRepository;
+    private final ReviewRepository reviewRepository;
+    private final ProductRepository productRepository;
 
     @Transactional
     public void follow(Long id) {
@@ -99,5 +98,22 @@ public class StoreService {
         }
 
         foundStore.updateName(request.getName());
+    }
+
+    @Transactional
+    public void createReview(Long id, StoreReviewCreateRequest request) {
+
+        User user = EntityUtils.userThrowable();
+        Product foundProduct = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
+        Review reviewToCreate = Review.create(user, foundProduct, request.getContent(), request.getRating());
+
+        //사용자 본인의 상품에 리뷰 불가능
+        if(Objects.equals(user.getStore().getId(), foundProduct.getStore().getId())) {
+            throw ReviewMyselfException.EXCEPTION;
+        }
+
+        //TODO: 거래가 완료된 사용자에 한해서만 리뷰 작성 가능하도록 예외 처리
+
+        reviewRepository.save(reviewToCreate);
     }
 }

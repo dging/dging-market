@@ -2,10 +2,12 @@ package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.ProductService;
+import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.*;
+import com.dging.dgingmarket.web.api.dto.store.StoreReviewCreateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,6 +28,7 @@ import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_UPL
 import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_YOURS;
 import static com.dging.dgingmarket.exception.ProductErrorCode._PRODUCT_NOT_FOUND;
 import static com.dging.dgingmarket.exception.ProductErrorCode._USER_OWN_PRODUCT;
+import static com.dging.dgingmarket.exception.StoreErrorCode.*;
 import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 
 @Slf4j
@@ -36,6 +39,7 @@ import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 public class ProductApiController {
 
     private final ProductService productService;
+    private final StoreService storeService;
 
     @PostMapping
     @Operation(summary = "상품 등록", description = "단일 상품을 등록합니다.")
@@ -174,7 +178,7 @@ public class ProductApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
-    @DeleteMapping("/{productId}/favorite")
+    @DeleteMapping("/{id}/favorite")
     @Operation(summary = "상품 찜 해제하기 ", description = "단일 상품을 찜 해제합니다.")
     @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
     @ApiErrorCodeExample({
@@ -183,10 +187,10 @@ public class ProductApiController {
     })
     ResponseEntity<Void> deleteFavorite(
             @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
-            @PathVariable Long productId
+            @PathVariable Long id
     ) {
 
-        productService.deleteFavorite(productId);
+        productService.deleteFavorite(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -207,5 +211,26 @@ public class ProductApiController {
         Page<FavoriteProductsResponse> response = productService.favoriteProducts(pageable, cond);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/{id}/reviews")
+    @Operation(summary = "상품 후기 작성", description = "거래가 완료된 상품에 대해 후기를 작성합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    @ApiErrorCodeExample({
+            _USER_NOT_FOUND,
+            _PRODUCT_NOT_FOUND,
+            _REVIEW_MYSELF_ERROR,
+    })
+    ResponseEntity<Void> createReview(
+            @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
+            @PathVariable Long id,
+            @Valid @RequestBody
+            @Schema(implementation = StoreReviewCreateRequest.class)
+            StoreReviewCreateRequest request
+    ) {
+
+        storeService.createReview(id, request);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

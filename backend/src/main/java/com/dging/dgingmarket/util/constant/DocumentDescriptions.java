@@ -94,12 +94,16 @@ public class DocumentDescriptions {
     public static final String EXAMPLE_ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTczMDc4OTU0MCwiZXhwIjoxNzMwODc1OTQwfQ.HU8AXkTUHYG4h4QqcemZK2Wu7QIhsiHiNmjhas6sT9A";
     public static final String EXAMPLE_REFRESH_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3Mzg1NjU1NDB9.azNCscUt81h1m1OIHy5BEGJ2cKUoyJvbaYqfsawGJIw";
     public static final String EXAMPLE_SOCIAL_ACCESS_TOKEN = "4mDn_8tw6kKL7ukIYr7vqTWMArAirLX8AAAAAQorDR4AAAGS-xVm1sLen3w93lOl";
-    public static final String EXAMPLE_RATING = "4.7";
+    public static final String EXAMPLE_RATING_AVERAGE = "4.7";
     public static final String EXAMPLE_SALES_COUNT = "162";
     public static final String EXAMPLE_FOLLOWERS_COUNT = "45";
+    public static final String EXAMPLE_RATING = "5";
+    public static final String EXAMPLE_REVIEW_CONTENT = "친절하시고 우체국택배까지^^";
 
     public static final String CONDITION_DATE_FROM = "조회 시작 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";
     public static final String CONDITION_DATE_TO = "조회 끝 날짜입니다. yyyy-MM-dd'T'HH:mm:ss'Z' 형식이어야 합니다.";
     public static final String CONDITION_QUERY = "검색어입니다.";
 
+    public static final String REQUEST_RATING = "후기 평점입니다. 5점 만점입니다.";
+    public static final String REQUEST_REVIEW_CONTENT = "후기 내용입니다.";
 }

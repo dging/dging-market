@@ -108,7 +108,7 @@ public class ResponseFixture {
             FollowersResponse.builder()
                     .storeId(1L)
                     .storeName(EXAMPLE_STORE_NAME)
-                    .rating(Float.parseFloat(EXAMPLE_RATING))
+                    .rating(Float.parseFloat(EXAMPLE_RATING_AVERAGE))
                     .salesCount(Integer.parseInt(EXAMPLE_SALES_COUNT))
                     .followersCount(Integer.parseInt(EXAMPLE_FOLLOWERS_COUNT))
                     .build()
