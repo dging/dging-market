@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.domain.common.enums.RunningStatus;
+import com.dging.dgingmarket.enums.RunningStatus;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.validation.Enum;

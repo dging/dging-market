@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.client.dto;
+package com.dging.dgingmarket.dto;
 
 import lombok.Getter;
 import lombok.ToString;

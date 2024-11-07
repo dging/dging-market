@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.domain.user;
 
-import com.dging.dgingmarket.domain.common.enums.Role;
+import com.dging.dgingmarket.enums.Role;
 import com.dging.dgingmarket.domain.product.Favorite;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Follower;

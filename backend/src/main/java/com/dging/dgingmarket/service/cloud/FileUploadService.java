@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.dging.dgingmarket.client.UploadClient;
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
-import com.dging.dgingmarket.domain.common.enums.ImageType;
+import com.dging.dgingmarket.enums.ImageType;
 import com.dging.dgingmarket.domain.common.exception.CloudCommunicationException;
 import com.dging.dgingmarket.domain.common.exception.FileConvertFailedException;
 import com.dging.dgingmarket.domain.common.exception.ImageNotFoundException;

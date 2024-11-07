@@ -4,7 +4,7 @@ import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.common.TagRepository;
-import com.dging.dgingmarket.domain.common.enums.RunningStatus;
+import com.dging.dgingmarket.enums.RunningStatus;
 import com.dging.dgingmarket.domain.common.exception.SomeFileNotUploadedException;
 import com.dging.dgingmarket.domain.common.exception.SomeFileNotYoursException;
 import com.dging.dgingmarket.domain.product.Product;

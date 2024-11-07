@@ -1,8 +1,8 @@
 package com.dging.dgingmarket.client;
 
-import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
-import com.dging.dgingmarket.client.dto.SocialProfile;
-import com.dging.dgingmarket.domain.common.enums.SocialType;
+import com.dging.dgingmarket.dto.OAuthTokenResponse;
+import com.dging.dgingmarket.dto.SocialProfile;
+import com.dging.dgingmarket.enums.SocialType;
 
 public interface OAuthClient {
 

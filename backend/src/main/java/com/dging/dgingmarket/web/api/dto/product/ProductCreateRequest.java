@@ -2,8 +2,8 @@ package com.dging.dgingmarket.web.api.dto.product;
 
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
-import com.dging.dgingmarket.domain.common.enums.MainCategory;
-import com.dging.dgingmarket.domain.common.enums.ProductQuality;
+import com.dging.dgingmarket.enums.MainCategory;
+import com.dging.dgingmarket.enums.ProductQuality;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.constant.ValidationMessages;

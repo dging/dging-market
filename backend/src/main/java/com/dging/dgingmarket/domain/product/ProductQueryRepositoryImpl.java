@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.domain.common.enums.MainCategory;
+import com.dging.dgingmarket.enums.MainCategory;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.param.SearchParam;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;

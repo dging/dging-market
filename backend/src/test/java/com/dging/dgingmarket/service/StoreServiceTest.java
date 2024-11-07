@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.service;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
-import com.dging.dgingmarket.domain.common.enums.Role;
+import com.dging.dgingmarket.enums.Role;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
 import com.dging.dgingmarket.domain.store.StoreRepository;

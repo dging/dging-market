@@ -1,8 +1,8 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.domain.common.enums.MainCategory;
-import com.dging.dgingmarket.domain.common.enums.ProductQuality;
-import com.dging.dgingmarket.domain.common.enums.RunningStatus;
+import com.dging.dgingmarket.enums.MainCategory;
+import com.dging.dgingmarket.enums.ProductQuality;
+import com.dging.dgingmarket.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import com.querydsl.core.annotations.QueryProjection;

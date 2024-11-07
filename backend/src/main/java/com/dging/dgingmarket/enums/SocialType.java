@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.domain.common.enums;
+package com.dging.dgingmarket.enums;
 
 public enum SocialType {
     GOOGLE,

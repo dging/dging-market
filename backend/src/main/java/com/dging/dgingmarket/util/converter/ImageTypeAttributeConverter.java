@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.util.converter;
 
-import com.dging.dgingmarket.domain.common.enums.ImageType;
+import com.dging.dgingmarket.enums.ImageType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.springframework.util.ObjectUtils;

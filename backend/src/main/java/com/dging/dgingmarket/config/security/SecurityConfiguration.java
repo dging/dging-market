@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                 // 상태를 저장하지 않도록 세션 관리를 Stateless로 설정
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/ws/**").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/exception/**",
                                 "/users",

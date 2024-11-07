@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
-import com.dging.dgingmarket.domain.common.enums.ImageType;
+import com.dging.dgingmarket.enums.ImageType;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.validation.Enum;

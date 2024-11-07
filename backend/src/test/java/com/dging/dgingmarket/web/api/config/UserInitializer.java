@@ -1,12 +1,9 @@
 package com.dging.dgingmarket.web.api.config;
 
-import com.dging.dgingmarket.domain.common.enums.Role;
-import com.dging.dgingmarket.domain.store.Store;
+import com.dging.dgingmarket.enums.Role;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Order;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
