@@ -76,7 +76,6 @@ public class ReviewQueryRepositoryImpl extends QuerydslRepositorySupport impleme
                         dateGoe(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateFrom()),
                         dateLt(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateTo())
                 )
-                .orderBy(review.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize());
 

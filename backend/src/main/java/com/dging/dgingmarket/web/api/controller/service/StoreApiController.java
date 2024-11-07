@@ -1,6 +1,7 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.docs.CustomDescriptionOverride;
+import com.dging.dgingmarket.domain.store.Review;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.exception.StoreErrorCode;
 import com.dging.dgingmarket.exception.UserErrorCode;
@@ -158,7 +159,7 @@ public class StoreApiController {
     }
 
     @GetMapping("/{id}/products/reviews")
-    @CustomPageableParameter
+    @CustomPageableParameter(sortCriteria = Review.class)
     @Operation(summary = "상점 상품 후기 조회", description = "상점의 여러 상품 후기를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     ResponseEntity<Page<StoreProductReviewsResponse>> fetchProductReviews(

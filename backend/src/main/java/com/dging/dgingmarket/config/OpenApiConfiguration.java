@@ -2,6 +2,7 @@ package com.dging.dgingmarket.config;
 
 import com.dging.dgingmarket.docs.CustomDescriptionOverride;
 import com.dging.dgingmarket.exception.*;
+import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.web.api.dto.common.ErrorResponse;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -100,6 +101,49 @@ public class OpenApiConfiguration {
                 generateErrorCodeResponseExample(operation.getResponses(), errorCodes);
             }
 
+            CustomPageableParameter pageableParameter = handlerMethod.getMethodAnnotation(CustomPageableParameter.class);
+
+            if (pageableParameter != null) {
+
+                Class<?> criteria = pageableParameter.sortCriteria();
+
+
+                StringBuilder sb = new StringBuilder();
+                sb.append("정렬 기준: 속성(,asc|desc) 형식입니다. 기본 정렬 순서는 오름차순이며, 여러 개의 정렬 기준을 지원합니다.<br>");
+                sb.append("속성: [");
+
+                // criteria 클래스 내부 필드들 확인
+                Field[] fields = criteria.getDeclaredFields();
+
+                // 필드마다 설명을 동적으로 설정
+                for (Field field : fields) {
+                    // 필드 타입에 따라 다르게 동작
+                    String fieldName = field.getName();
+                    String description = getDescribableFieldName(field);
+
+                    if(description != null) {
+                        sb.append(description);
+                        sb.append(", ");
+                    }
+                }
+                
+                if(sb.toString().endsWith("속성: [")) {
+                    sb.delete(sb.length() - 1, sb.length());
+                    sb.append("알 수 없음");
+                } else {
+                    sb.delete(sb.length() - 2, sb.length());
+                    sb.append("]");
+                }
+
+                sb.append("<br><br>");
+
+                for (Parameter parameter : operation.getParameters()) {
+                    if("sort".equals(parameter.getName())) {
+                        parameter.setDescription(sb.toString());
+                    }
+                }
+            }
+
             //메서드 파라미터 커스터마이징
             MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
 
@@ -134,6 +178,22 @@ public class OpenApiConfiguration {
 
             return operation;
         };
+    }
+
+    private String getDescribableFieldName(Field field) {
+        Class<?> fieldType = field.getType();
+        if (
+                fieldType == String.class ||
+                        fieldType == Boolean.class || fieldType == boolean.class ||
+                        fieldType == Integer.class || fieldType == int.class ||
+                        fieldType == Long.class || fieldType == long.class ||
+                        fieldType == Float.class || fieldType == float.class ||
+                        fieldType == Double.class || fieldType == double.class ||
+                        fieldType == Date.class
+        ) {
+            return field.getName();
+        }
+        return null;
     }
 
     private Optional<Field> findFieldByName(Class<?> dtoClass, String fieldName) {
