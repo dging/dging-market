@@ -25,8 +25,8 @@ const TitleH3 = styled.div`
   color: ${({ theme }) => theme.color.black0};
 `;
 
-const ReviewTitle = styled(Arrange)`
-  ${({ theme }) => theme.font.r18};
+const Date = styled(Arrange)`
+  ${({ theme }) => theme.font.date14};
   color: ${({ theme }) => theme.color.black2};
 `;
 
@@ -34,24 +34,26 @@ export default function StoreReviewCard() {
   const theme = useTheme();
   const [starScore, setStarScore] = useState(5);
   return (
-    <Arrange width='100%' display='flex' justifycontent='space-between'>
-      <Arrange display='flex' gap='20px'>
-        <Profile $bgimg={DefaultProfile} />
-        <Arrange
-          display='flex'
-          flexdirection='column'
-          gap='20px'
-          padding={`${theme.size.xxxs} 0`}
-        >
-          <Arrange display='flex' flexdirection='column' gap='8px'>
-            <TitleH3>상점 1020938호</TitleH3>
-            <ReactStars value={starScore} size={20} edit={false} />
-            <NavigateBtn />
-          </Arrange>
-          <TitleH3>친절하시고 우체국택배까지^^</TitleH3>
-          <DeclarationBtn />
+    <Arrange width='100%' display='flex' gap='20px'>
+      <Profile $bgimg={DefaultProfile} />
+      <Arrange
+        width='100%'
+        display='flex'
+        flexdirection='column'
+        gap='20px'
+        padding={`${theme.size.xxxs} 0`}
+      >
+        <Arrange width='100%' display='flex' flexdirection='column' gap='8px'>
+          <TitleH3>상점 1020938호</TitleH3>
+          <ReactStars value={starScore} size={20} edit={false} />
+          <NavigateBtn />
         </Arrange>
+        <TitleH3>친절하시고 우체국택배까지^^</TitleH3>
+        <DeclarationBtn />
       </Arrange>
+      <Date width='100px' textalign='right'>
+        1년 전
+      </Date>
     </Arrange>
   );
 }

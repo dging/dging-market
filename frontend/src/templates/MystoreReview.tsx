@@ -30,7 +30,22 @@ export default function MystoreReview() {
       padding='0 0 100px 0'
     >
       <StoreReviewScoreCard />
-      <StoreReviewCard />
+      <Arrange
+        display='flex'
+        flexdirection='column'
+        width='100%'
+        padding={`${theme.size.xxxxl} 0 ${theme.size.xl} 0`}
+        gap='40px'
+      >
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+      </Arrange>
     </Arrange>
   );
 }

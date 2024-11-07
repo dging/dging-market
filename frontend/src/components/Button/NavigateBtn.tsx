@@ -5,7 +5,11 @@ import IncludeImgBtn from './IncludeImgBtn';
 import RightArrowBlack from '../../assets/images/RightArrowBlack.png';
 
 const NavigateButton = styled.button`
-  padding: ${({ theme }) => `9px ${theme.size.xxxs} 7px ${theme.size.xxxs}`};
+  width: fit-content;
+  height: fit-content;
+  /* padding: ${({ theme }) =>
+    `9px ${theme.size.xxxs} 7px ${theme.size.xxxs}`}; */
+  padding: ${({ theme }) => `${theme.size.xxxs}`};
   background-color: white;
   border: 1px solid ${({ theme }) => theme.color.black1};
   border-radius: ${({ theme }) => theme.size.xxxxxs};
