@@ -110,7 +110,7 @@ public class ProductApiController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "상품 상세 조회", description = "단일 상품 상세를 조회합니다.")
+    @Operation(summary = "상품 상세 조회", description = "단일 상품 상세를 조회합니다. 조회수가 1 증가합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     @ApiErrorCodeExample({
             _PRODUCT_NOT_FOUND,

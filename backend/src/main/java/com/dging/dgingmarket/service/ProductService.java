@@ -86,7 +86,12 @@ public class ProductService {
         return productRepository.products(pageable, cond);
     }
 
+    @Transactional
     public ProductResponse product(Long id) {
+
+        Product product = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
+        product.countView();
+
         return productRepository.product(id).orElseThrow(ProductNotFoundException::new);
     }
 
