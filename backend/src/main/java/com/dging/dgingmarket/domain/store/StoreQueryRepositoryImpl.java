@@ -1,10 +1,10 @@
 
 package com.dging.dgingmarket.domain.store;
 
-import com.dging.dgingmarket.web.api.dto.store.QStoreOverviewResponse;
-import com.dging.dgingmarket.web.api.dto.store.QStoreProductReviewsResponse;
-import com.dging.dgingmarket.web.api.dto.store.StoreOverviewResponse;
-import com.dging.dgingmarket.web.api.dto.store.StoreProductReviewsResponse;
+import com.dging.dgingmarket.domain.product.QFavorite;
+import com.dging.dgingmarket.web.api.dto.store.*;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -12,10 +12,11 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.util.List;
 import java.util.Optional;
 
+import static com.dging.dgingmarket.domain.product.QFavorite.*;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
-import static com.dging.dgingmarket.domain.store.QFollower.*;
+import static com.dging.dgingmarket.domain.store.QFollower.follower;
 import static com.dging.dgingmarket.domain.store.QReview.review;
-import static com.dging.dgingmarket.domain.store.QStore.*;
+import static com.dging.dgingmarket.domain.store.QStore.store;
 import static com.dging.dgingmarket.domain.user.QUser.user;
 
 public class StoreQueryRepositoryImpl extends QuerydslRepositorySupport implements StoreQueryRepository {
@@ -67,10 +68,50 @@ public class StoreQueryRepositoryImpl extends QuerydslRepositorySupport implemen
                 .limit(2)
                 .fetch();
 
-        if(overview != null) {
+        if (overview != null) {
             overview.setReviews(reviews);
         }
 
         return Optional.ofNullable(overview);
+    }
+
+    @Override
+    public Optional<StoreResponse> store(Long id) {
+
+        return queryFactory.select(new QStoreResponse(
+                        store.id,
+                        user.id,
+                        store.name,
+                        store.introduction,
+                        user.thumbnailUrl,
+                        JPAExpressions.select(
+                                        new CaseBuilder().when(review.isNotNull())
+                                                .then(review.rate.avg().castToNum(Float.class))
+                                                .otherwise(Expressions.nullExpression())
+                                )
+                                .from(review)
+                                .where(review.store.eq(store)),
+                        JPAExpressions.select(product.count().castToNum(Integer.class))
+                                .from(product)
+                                .where(product.store.eq(store)),
+                        user.isAuthenticated,
+                        JPAExpressions.select(review.count().castToNum(Integer.class))
+                                .from(review)
+                                .where(review.store.eq(store)),
+                        JPAExpressions.select(favorite.count().castToNum(Integer.class))
+                                .from(favorite)
+                                .where(favorite.user.eq(user)),
+                        JPAExpressions.select(follower.count().castToNum(Integer.class))
+                                .from(follower)
+                                .where(follower.from.eq(user)),
+                        JPAExpressions.select(follower.count().castToNum(Integer.class))
+                                .from(follower)
+                                .where(follower.to.eq(user)),
+                        store.createdAt
+                ))
+                .from(store)
+                .join(user).on(store.user.eq(user))
+                .where(store.id.eq(id))
+                .stream().findAny();
     }
 }

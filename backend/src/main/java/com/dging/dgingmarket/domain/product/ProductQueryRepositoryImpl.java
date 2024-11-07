@@ -1,6 +1,5 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.param.SearchParam;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
@@ -33,7 +32,6 @@ import static com.dging.dgingmarket.domain.product.QFavorite.favorite;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
 import static com.dging.dgingmarket.domain.product.QProductImage.productImage;
 import static com.dging.dgingmarket.domain.product.QProductTag.productTag;
-import static com.dging.dgingmarket.domain.store.QFollower.follower;
 import static com.dging.dgingmarket.domain.store.QStore.store;
 import static com.dging.dgingmarket.domain.user.QUser.user;
 

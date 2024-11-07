@@ -180,7 +180,7 @@ public class StoreApiController {
     }
 
     @GetMapping("/{id}/overview")
-    @Operation(summary = "상점 정보 조회", description = "상점의 간략한 정보를 조회합니다.")
+    @Operation(summary = "상점 정보 조회", description = "단일 상점의 간략한 정보를 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     @ApiErrorCodeExample({StoreErrorCode._STORE_NOT_FOUND})
     ResponseEntity<StoreOverviewResponse> fetchOverview(
@@ -189,6 +189,20 @@ public class StoreApiController {
     ) {
 
         StoreOverviewResponse response = storeService.overview(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "상점 상세 조회", description = "단일 상점 상세를 조회합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({StoreErrorCode._STORE_NOT_FOUND})
+    ResponseEntity<StoreResponse> fetchStore(
+            @Parameter(description = DocumentDescriptions.REQUEST_STORE_ID)
+            @PathVariable Long id
+    ) {
+
+        StoreResponse response = storeService.store(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

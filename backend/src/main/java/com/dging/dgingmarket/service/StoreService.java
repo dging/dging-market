@@ -126,4 +126,9 @@ public class StoreService {
     public StoreOverviewResponse overview(Long id) {
         return storeRepository.overview(id).orElseThrow(StoreNotFoundException::new);
     }
+
+    public StoreResponse store(Long id) {
+
+        return storeRepository.store(id).orElseThrow(StoreNotFoundException::new);
+    }
 }

@@ -8,6 +8,7 @@ import com.dging.dgingmarket.web.api.dto.product.QRecentProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.RecentProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
+import com.dging.dgingmarket.web.api.dto.store.QFollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.QFollowingsResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.*;
@@ -58,13 +59,16 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
         QStore toStore = new QStore("toStore");
 
         JPAQuery<FollowersResponse> query = queryFactory
-                .select(Projections.constructor(FollowersResponse.class,
+                .select(new QFollowersResponse(
                         fromStore.id,
                         fromStore.name,
-                        JPAExpressions.select(review.rate.avg().castToNum(Float.class))
+                        JPAExpressions.select(
+                                        new CaseBuilder().when(review.isNotNull())
+                                                .then(review.rate.avg().castToNum(Float.class))
+                                                .otherwise(Expressions.nullExpression())
+                                )
                                 .from(review)
-                                .where(review.store.eq(fromStore))
-                                .groupBy(review.id),
+                                .where(review.store.eq(fromStore)),
                         new CaseBuilder()
                                 .when(product.deleted.isFalse().and(product.uploaded.isTrue()))
                                 .then(product.id)
