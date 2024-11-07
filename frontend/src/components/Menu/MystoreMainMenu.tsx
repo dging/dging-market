@@ -33,10 +33,10 @@ const MenuButton = styled.button<{ $status?: boolean }>`
     props.$status ? 'white' : props.theme.color.black4};
   ${({ theme }) => theme.font.r18}
   cursor: pointer;
+`;
 
-  & > button:last-child {
-    border-right: none;
-  }
+const LastButton = styled(MenuButton)`
+  border-right: none;
 `;
 
 export default function MystoreMainMenu() {
@@ -73,12 +73,12 @@ export default function MystoreMainMenu() {
       >
         팔로잉 5
       </MenuButton>
-      <MenuButton
+      <LastButton
         $status={address === '/mystore/follower'}
         onClick={() => navigate('/mystore/follower')}
       >
         팔로워 2
-      </MenuButton>
+      </LastButton>
     </WrapMenu>
   );
 }

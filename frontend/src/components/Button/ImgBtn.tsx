@@ -16,12 +16,13 @@ const ImageButton = styled.button<BtnType>`
   margin: 0;
   background-image: url(${(props) => props.$backgroundimage || null});
   background-position: ${(props) => props.$backgroundposition || '100%'};
+  background-color: ${(props) => props.$backgroundcolor || 'transparent'};
   background-size: contain;
   background-repeat: no-repeat;
   border: ${(props) =>
     props.$status ? `1px solid ${props.theme.color.black1}` : 'none'};
   border-radius: ${(props) => props.borderradius || '0px'};
-  background-color: transparent;
+
   ${(props) => (props.as === 'div' ? '' : 'cursor: pointer')}
 `;
 

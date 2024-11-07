@@ -8,6 +8,7 @@ export interface BtnType {
   borderradius?: string;
   $status?: boolean;
   $backgroundimage?: string;
+  $backgroundcolor?: any;
   $backgroundposition?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }

@@ -47,7 +47,7 @@ export default function MainHeaderMenu() {
           $leftbgimg={Store}
           $textheight='16px'
           text='내상점'
-          onClick={() => navigate('/mystore')}
+          onClick={() => navigate('/mystore/goods')}
         />
         <ImgBtn
           width='16px'

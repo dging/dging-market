@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../components/Base';
 import RoundButton from '../components/Button//RoundBtn';
-import { StoreReviewScoreCard } from '../components/Card';
+import { StoreReviewScoreCard, StoreReviewCard } from '../components/Card';
 import StoreProfile from '../components/Profile/StoreProfile';
 import { MystoreMainMenu } from '../components/Menu';
 
@@ -29,7 +29,8 @@ export default function MystoreReview() {
       margin='0 auto'
       padding='0 0 100px 0'
     >
-      <StoreReviewScoreCard></StoreReviewScoreCard>
+      <StoreReviewScoreCard />
+      <StoreReviewCard />
     </Arrange>
   );
 }
