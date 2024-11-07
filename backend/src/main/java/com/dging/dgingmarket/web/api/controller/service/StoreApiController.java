@@ -12,6 +12,7 @@ import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import com.dging.dgingmarket.web.api.dto.store.StoreIntroductionChangeRequest;
+import com.dging.dgingmarket.web.api.dto.store.StoreNameChangeRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -122,7 +123,7 @@ public class StoreApiController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PutMapping("/{id}/introduction")
+    @PatchMapping("/{id}/introduction")
     @Operation(summary = "상점 소개글 변경", description = "상점의 소개글을 변경합니다.")
     @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
     @ApiErrorCodeExample({StoreErrorCode._STORE_NOT_FOUND, StoreErrorCode._USER_OWN_STORE_ERROR})
@@ -135,6 +136,23 @@ public class StoreApiController {
     ) {
 
         storeService.updateIntroduction(id, request);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/{id}/name")
+    @Operation(summary = "상점명 변경", description = "상점의 이름을 변경합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "204", description = "성공"))
+    @ApiErrorCodeExample({StoreErrorCode._STORE_NOT_FOUND, StoreErrorCode._USER_OWN_STORE_ERROR, StoreErrorCode._STORE_NAME_DUPLICATED})
+    ResponseEntity<Void> updateName(
+            @Parameter(description = DocumentDescriptions.REQUEST_ID)
+            @PathVariable Long id,
+            @Valid @RequestBody
+            @Schema(implementation = StoreNameChangeRequest.class)
+            StoreNameChangeRequest request
+    ) {
+
+        storeService.updateName(id, request);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -13,7 +13,10 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.*;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -24,13 +27,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.support.PageableExecutionUtils;
 
-import java.time.ZoneId;
-import java.util.Date;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.time.ZoneId;
+import java.util.*;
 
 import static com.dging.dgingmarket.domain.common.QImage.image;
 import static com.dging.dgingmarket.domain.product.QProduct.product;

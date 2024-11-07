@@ -2,7 +2,6 @@ package com.dging.dgingmarket.web.api.dto.common;
 
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 

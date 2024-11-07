@@ -7,12 +7,12 @@ import com.dging.dgingmarket.domain.store.StoreRepository;
 import com.dging.dgingmarket.domain.store.exception.*;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import com.dging.dgingmarket.web.api.dto.store.StoreIntroductionChangeRequest;
+import com.dging.dgingmarket.web.api.dto.store.StoreNameChangeRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -81,5 +81,23 @@ public class StoreService {
         }
 
         foundStore.updateIntroduction(request.getIntroduction());
+    }
+
+    @Transactional
+    public void updateName(Long id, StoreNameChangeRequest request) {
+
+        User user = EntityUtils.userThrowable();
+        Store foundStore = storeRepository.findById(id).orElseThrow(StoreNotFoundException::new);
+
+        storeRepository.findByName(request.getName()).ifPresent(store -> {
+            if(!Objects.equals(store.getId(), user.getStore().getId()) || Objects.equals(store.getName(), request.getName()))
+                throw StoreNameDuplicatedException.EXCEPTION;
+        });
+
+        if (!Objects.equals(foundStore.getId(), user.getStore().getId())) {
+            throw UserOwnStoreException.EXCEPTION;
+        }
+
+        foundStore.updateName(request.getName());
     }
 }

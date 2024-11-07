@@ -1,11 +1,14 @@
 package com.dging.dgingmarket.web.api.dto.store;
 
-import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import static com.dging.dgingmarket.util.constant.DocumentDescriptions.*;
+import static com.dging.dgingmarket.util.constant.DocumentDescriptions.EXAMPLE_STORE_INTRODUCTION;
+import static com.dging.dgingmarket.util.constant.DocumentDescriptions.REQUEST_STORE_INTRODUCTION;
 
 /**
  * 상점 소개글 변경 요청 DTO

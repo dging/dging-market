@@ -3,19 +3,11 @@ package com.dging.dgingmarket.web.api.controller.service;
 import com.dging.dgingmarket.client.dto.SocialProfile;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
-import com.dging.dgingmarket.exception.CommonErrorCode;
-import com.dging.dgingmarket.exception.StoreErrorCode;
-import com.dging.dgingmarket.exception.UserErrorCode;
 import com.dging.dgingmarket.service.AuthService;
 import com.dging.dgingmarket.service.social.OAuthService;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.util.enums.SocialType;
-import com.dging.dgingmarket.web.api.dto.user.SocialLoginRequest;
-import com.dging.dgingmarket.web.api.dto.user.TokenRequest;
-import com.dging.dgingmarket.web.api.dto.user.TokenResponse;
-import com.dging.dgingmarket.web.api.dto.user.LoginRequest;
-import com.dging.dgingmarket.web.api.dto.user.SocialSignupRequest;
-import com.dging.dgingmarket.web.api.dto.user.UserDetailsResponse;
+import com.dging.dgingmarket.web.api.dto.user.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,7 +23,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static com.dging.dgingmarket.exception.CommonErrorCode.*;
-import static com.dging.dgingmarket.exception.UserErrorCode.*;
+import static com.dging.dgingmarket.exception.UserErrorCode._ALREADY_SIGNEDUP;
+import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 
 @Slf4j
 @RequestMapping("/users")

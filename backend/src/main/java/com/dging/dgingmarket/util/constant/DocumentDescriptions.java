@@ -13,6 +13,7 @@ public class DocumentDescriptions {
     public static final String REQUEST_CONTENT = "내용입니다.";
     public static final String REQUEST_TAGS = "태그명 배열입니다.";
     public static final String REQUEST_PRICE = "가격입니다.";
+    public static final String REQUEST_STORE_NAME = "상점명입니다.";
     public static final String REQUEST_ALLOWS_OFFERS = "가격 제안 허용 여부입니다.";
     public static final String REQUEST_IS_SHIPPING_FEE_INCLUDED = "배송비 포함 여부입니다.";
     public static final String REQUEST_IS_DIRECT_TRADE_AVAILABLE = "직거래 여부입니다.";
