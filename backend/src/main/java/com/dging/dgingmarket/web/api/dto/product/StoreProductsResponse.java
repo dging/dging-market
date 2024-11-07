@@ -1,11 +1,14 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.util.enums.RunningStatus;
+import com.dging.dgingmarket.domain.common.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Date;

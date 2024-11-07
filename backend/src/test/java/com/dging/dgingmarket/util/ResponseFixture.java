@@ -1,9 +1,10 @@
 package com.dging.dgingmarket.util;
 
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
 import com.dging.dgingmarket.util.constant.BasePaths;
-import com.dging.dgingmarket.util.enums.ImageType;
-import com.dging.dgingmarket.util.enums.ProductQuality;
-import com.dging.dgingmarket.util.enums.RunningStatus;
+import com.dging.dgingmarket.domain.common.enums.ImageType;
+import com.dging.dgingmarket.domain.common.enums.ProductQuality;
+import com.dging.dgingmarket.domain.common.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
@@ -35,7 +36,7 @@ public class ResponseFixture {
             Integer.parseInt(EXAMPLE_QUANTITY),
             EXAMPLE_REGION,
             EXAMPLE_LOCATION,
-            EXAMPLE_MAIN_CATEGORY,
+            MainCategory.find(EXAMPLE_MAIN_CATEGORY),
             EXAMPLE_MIDDLE_CATEGORY,
             EXAMPLE_SUB_CATEGORY,
             RunningStatus.AVAILABLE,

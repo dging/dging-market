@@ -1,19 +1,13 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.domain.common.Image;
-import com.dging.dgingmarket.domain.common.Tag;
-import com.dging.dgingmarket.domain.product.Product;
-import com.dging.dgingmarket.domain.user.User;
-import com.dging.dgingmarket.util.EntityUtils;
-import com.dging.dgingmarket.util.enums.ImageType;
-import com.dging.dgingmarket.util.enums.ProductQuality;
-import com.dging.dgingmarket.util.enums.RunningStatus;
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
+import com.dging.dgingmarket.domain.common.enums.ProductQuality;
+import com.dging.dgingmarket.domain.common.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
 import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.util.ObjectUtils;
@@ -65,7 +59,7 @@ public class ProductResponse {
     private String location;
 
     @Schema(description = RESPONSE_MAIN_CATEGORY)
-    private String mainCategory;
+    private MainCategory mainCategory;
 
     @Schema(description = RESPONSE_MIDDLE_CATEGORY)
     private String middleCategory;
@@ -92,7 +86,7 @@ public class ProductResponse {
     private Date createdAt;
 
     @QueryProjection
-    public ProductResponse(Long id, Long storeId, String storeName, String title, String content, int favoriteCount, int viewCount, ProductQuality quality, int quantity, String region, String location, String mainCategory, String middleCategory, String subCategory, RunningStatus runningStatus, List<ImagesResponse> images, int price, List<TagsResponse> tags, boolean isTemporarySave, Date createdAt) {
+    public ProductResponse(Long id, Long storeId, String storeName, String title, String content, int favoriteCount, int viewCount, ProductQuality quality, int quantity, String region, String location, MainCategory mainCategory, String middleCategory, String subCategory, RunningStatus runningStatus, List<ImagesResponse> images, int price, List<TagsResponse> tags, boolean isTemporarySave, Date createdAt) {
         this.id = id;
         this.storeId = storeId;
         this.storeName = storeName;
@@ -115,6 +109,14 @@ public class ProductResponse {
         this.createdAt = createdAt;
     }
 
+    public String getMainCategory() {
+        if(ObjectUtils.isEmpty(mainCategory)) {
+            return null;
+        } else {
+            return mainCategory.getValue();
+        }
+    }
+
     public String getQuality() {
         if(ObjectUtils.isEmpty(quality)) {
             return null;
@@ -129,27 +131,5 @@ public class ProductResponse {
         } else {
             return runningStatus.getValue();
         }
-    }
-
-    public Product toProductWith() {
-
-        User user = EntityUtils.userThrowable();
-        return Product.create(
-                user.getStore(),
-                title,
-                content,
-                mainCategory,
-                middleCategory,
-                subCategory,
-                images.stream().map(v -> Image.create(user, ImageType.PRODUCT, "fileName", "path", v.getUrl(), 0)).toList(),
-                tags.stream().map(v -> Tag.create(v.getName())).toList(),
-                price,
-                quality,
-                quantity,
-                Boolean.parseBoolean(EXAMPLE_ALLOWS_OFFERS),
-                region,
-                location,
-                Boolean.parseBoolean(EXAMPLE_IS_DIRECT_TRADE_AVAILABLE),
-                Boolean.parseBoolean(EXAMPLE_IS_SHIPPING_FEE_INCLUDED));
     }
 }

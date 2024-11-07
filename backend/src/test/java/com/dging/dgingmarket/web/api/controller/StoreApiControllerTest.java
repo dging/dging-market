@@ -50,7 +50,7 @@ public class StoreApiControllerTest extends ApiDocumentationTest {
             List<StoreProductsResponse> queryResult = ResponseFixture.STORE_PRODUCTS;
             Page<StoreProductsResponse> page = new PageImpl<>(queryResult.subList(0, 10), Pageable.unpaged(), 20);
 
-            given(productService.storeProducts(any(), eq(user.getId()), any())).willReturn(page);
+            given(productService.storeProducts(any(), eq(user.getId()), any(), any())).willReturn(page);
 
             //when
             ResultActions result = mockMvc.perform(RestDocumentationRequestBuilders.get("/stores/{id}/products", user.getStore().getId())

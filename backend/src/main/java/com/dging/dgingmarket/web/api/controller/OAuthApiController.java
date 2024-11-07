@@ -1,8 +1,8 @@
 package com.dging.dgingmarket.web.api.controller;
 
 import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
+import com.dging.dgingmarket.domain.common.enums.SocialType;
 import com.dging.dgingmarket.service.social.OAuthService;
-import com.dging.dgingmarket.util.enums.SocialType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.dging.dgingmarket.util.enums;
+package com.dging.dgingmarket.domain.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;

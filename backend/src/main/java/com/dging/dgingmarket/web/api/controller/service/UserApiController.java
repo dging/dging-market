@@ -1,12 +1,12 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.client.dto.SocialProfile;
+import com.dging.dgingmarket.domain.common.enums.SocialType;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.AuthService;
 import com.dging.dgingmarket.service.social.OAuthService;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
-import com.dging.dgingmarket.util.enums.SocialType;
 import com.dging.dgingmarket.web.api.dto.user.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

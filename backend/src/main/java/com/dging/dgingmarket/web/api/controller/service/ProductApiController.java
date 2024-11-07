@@ -2,7 +2,6 @@ package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.docs.CustomDescriptionOverride;
 import com.dging.dgingmarket.domain.product.Product;
-import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.exception.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
@@ -31,7 +30,7 @@ import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_UPL
 import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_YOURS;
 import static com.dging.dgingmarket.exception.ProductErrorCode._PRODUCT_NOT_FOUND;
 import static com.dging.dgingmarket.exception.ProductErrorCode._USER_OWN_PRODUCT;
-import static com.dging.dgingmarket.exception.StoreErrorCode.*;
+import static com.dging.dgingmarket.exception.StoreErrorCode._REVIEW_MYSELF_ERROR;
 import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 
 @Slf4j

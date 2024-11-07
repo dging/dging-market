@@ -1,7 +1,6 @@
 
 package com.dging.dgingmarket.domain.store;
 
-import com.dging.dgingmarket.domain.product.QFavorite;
 import com.dging.dgingmarket.web.api.dto.store.*;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
@@ -12,7 +11,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.util.List;
 import java.util.Optional;
 
-import static com.dging.dgingmarket.domain.product.QFavorite.*;
+import static com.dging.dgingmarket.domain.product.QFavorite.favorite;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
 import static com.dging.dgingmarket.domain.store.QFollower.follower;
 import static com.dging.dgingmarket.domain.store.QReview.review;

@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.util;
 
-import com.dging.dgingmarket.util.enums.RunningStatus;
+import com.dging.dgingmarket.domain.common.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.product.ProductCreateRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductRunningStatusChangeRequest;
 import com.dging.dgingmarket.web.api.dto.product.ProductUpdateRequest;

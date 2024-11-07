@@ -2,11 +2,13 @@ package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
+import com.dging.dgingmarket.domain.common.enums.ProductQuality;
+import com.dging.dgingmarket.domain.common.enums.RunningStatus;
 import com.dging.dgingmarket.domain.store.Store;
+import com.dging.dgingmarket.util.converter.MainCategoryAttributeConverter;
 import com.dging.dgingmarket.util.converter.ProductQualityAttributeConverter;
 import com.dging.dgingmarket.util.converter.RunningStatusAttributeConverter;
-import com.dging.dgingmarket.util.enums.ProductQuality;
-import com.dging.dgingmarket.util.enums.RunningStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -43,8 +45,9 @@ public class Product {
     @Column(nullable = false)
     private int views;
 
-    @Column(length = 100, nullable = false)
-    private String mainCategory;
+    @Convert(converter = MainCategoryAttributeConverter.class)
+    @Column(length = 3, nullable = false, columnDefinition = "char(3)")
+    private MainCategory mainCategory;
 
     @Column(length = 100, nullable = false)
     private String middleCategory;
@@ -158,7 +161,7 @@ public class Product {
         this.productTags.addAll(tempProductTags);
     }
 
-    public static Product create(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+    public static Product create(Store store, String title, String content, MainCategory mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
         Product product = new Product();
         product.setStore(store);
         product.setTitle(title);
@@ -181,13 +184,13 @@ public class Product {
         return product;
     }
 
-    public static Product createTemporally(Store store, String title, String content, String mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+    public static Product createTemporally(Store store, String title, String content, MainCategory mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
         Product product = create(store, title, content, mainCategory, middleCategory, subCategory, images, tags, price, quality, quantity, allowsOffers, region, location, isDirectTradeAvailable, isShippingFreeIncluded);
         product.setUploaded(false);
         return product;
     }
 
-    public void update(String title, String content, String mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
+    public void update(String title, String content, MainCategory mainCategory, String middleCategory, String subCategory, List<Image> images, List<Tag> tags, int price, ProductQuality quality, int quantity, boolean allowsOffers, String region, String location, boolean isDirectTradeAvailable, boolean isShippingFreeIncluded) {
         this.title = title;
         this.content = content;
         this.mainCategory = mainCategory;

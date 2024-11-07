@@ -1,25 +1,25 @@
 package com.dging.dgingmarket.util.converter;
 
-import com.dging.dgingmarket.domain.common.enums.RunningStatus;
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 @Converter
-public class RunningStatusAttributeConverter implements AttributeConverter<RunningStatus, String> {
+public class MainCategoryAttributeConverter implements AttributeConverter<MainCategory, String> {
 
     @Override
-    public String convertToDatabaseColumn(RunningStatus attribute) {
+    public String convertToDatabaseColumn(MainCategory attribute) {
         if(ObjectUtils.isEmpty(attribute))
             return null;
         return attribute.getValue();
     }
 
     @Override
-    public RunningStatus convertToEntityAttribute(String dbData) {
+    public MainCategory convertToEntityAttribute(String dbData) {
         if(!StringUtils.hasText(dbData))
             return null;
-        return RunningStatus.find(dbData);
+        return MainCategory.find(dbData);
     }
 }

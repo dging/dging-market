@@ -3,7 +3,7 @@ package com.dging.dgingmarket.web.api.controller;
 import com.dging.dgingmarket.config.WithCustomMockUser;
 import com.dging.dgingmarket.util.ResponseFixture;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
-import com.dging.dgingmarket.util.enums.ImageType;
+import com.dging.dgingmarket.domain.common.enums.ImageType;
 import com.dging.dgingmarket.web.api.base.ApiDocumentationTest;
 import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
 import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;

@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.domain.product;
 
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.param.SearchParam;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
@@ -14,13 +15,12 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.util.ObjectUtils;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +47,30 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
     @Override
     public Page<FavoriteProductsResponse> favoriteProducts(Pageable pageable, Long userId, CommonCondition cond) {
 
+        List<Long> ids = queryFactory.select(product.id)
+                .from(product)
+                .join(store).on(store.eq(product.store))
+                .join(user).on(user.eq(store.user))
+                .join(favorite).on(favorite.product.eq(product))
+                .where(
+                        product.deleted.isFalse(),
+                        product.uploaded.isTrue(),
+                        user.id.eq(userId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
         JPAQuery<Product> query = queryFactory.selectFrom(product)
                 .join(store).on(store.eq(product.store))
                 .join(user).on(user.eq(store.user))
@@ -57,6 +81,8 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .leftJoin(tag).on(tag.eq(productTag.tag))
                 .where(
                         product.deleted.isFalse(),
+                        product.uploaded.isTrue(),
+                        product.id.in(ids),
                         user.id.eq(userId),
                         search(
                                 List.of(
@@ -77,11 +103,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                     pathBuilder.get(o.getProperty())));
         }
 
-        if(pageable.getSort().isEmpty()) {
-            query = query.orderBy(product.createdAt.desc());
-        }
-
-        List<FavoriteProductsResponse> queryResult = query
+        List<FavoriteProductsResponse> favoriteProducts = query
                 .transform(
                         GroupBy.groupBy(product.id).list(
                                 Projections.constructor(FavoriteProductsResponse.class,
@@ -102,7 +124,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                         )
                 );
 
-        queryResult.forEach(productsResponse -> {
+        favoriteProducts.forEach(productsResponse -> {
 
             List<ImagesResponse> distinctImages = productsResponse.getImages().stream()
                     .distinct()
@@ -115,33 +137,36 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
             productsResponse.setTags(distinctTags);
         });
 
-        int totalCount = queryResult.size();
+        JPAQuery<Long> count = queryFactory.select(product.id)
+                .from(product)
+                .join(store).on(store.eq(product.store))
+                .join(user).on(user.eq(store.user))
+                .join(favorite).on(favorite.product.eq(product))
+                .where(
+                        product.deleted.isFalse(),
+                        product.uploaded.isTrue(),
+                        user.id.eq(userId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
+                );
 
-        long offset = pageable.getOffset();
-
-        if(offset > totalCount) {
-            return new PageImpl(Collections.EMPTY_LIST, pageable, totalCount);
-        }
-
-        int limit = pageable.getPageSize() * (pageable.getPageNumber() + 1);
-
-        if (limit > totalCount) {
-            limit = totalCount;
-        }
-
-        return new PageImpl(queryResult.subList((int) offset, limit), pageable, totalCount);
+        return PageableExecutionUtils.getPage(favoriteProducts, pageable, count::fetchOne);
     }
 
     @Override
-    public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond) {
+    public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond, ProductsCondition productsCond) {
 
-        JPAQuery<Product> query = queryFactory.selectFrom(product)
+        List<Long> ids = queryFactory.select(product.id)
+                .from(product)
                 .join(store).on(store.eq(product.store))
-                .leftJoin(productImage).on(productImage.product.eq(product))
-                .leftJoin(image).on(image.eq(productImage.image))
-                .leftJoin(productTag).on(productTag.product.eq(product))
-                .leftJoin(tag).on(tag.eq(productTag.tag))
-                .leftJoin(favorite).on(favorite.product.eq(product))
                 .where(
                         product.deleted.isFalse(),
                         store.id.eq(storeId),
@@ -153,12 +178,37 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                 ),
                                 cond.getQuery()
                         ),
+                        filterByMainCategory(new PathBuilder<>(Product.class, product.getMetadata()), product.mainCategory.getMetadata(), productsCond.getMainCategory()),
                         dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
                         dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
                 )
-                .groupBy(product.id, tag.id, image.id)
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<Product> query = queryFactory.selectFrom(product)
+                .join(store).on(store.eq(product.store))
+                .leftJoin(productImage).on(productImage.product.eq(product))
+                .leftJoin(image).on(image.eq(productImage.image))
+                .leftJoin(productTag).on(productTag.product.eq(product))
+                .leftJoin(tag).on(tag.eq(productTag.tag))
+                .leftJoin(favorite).on(favorite.product.eq(product))
+                .where(
+                        product.deleted.isFalse(),
+                        product.id.in(ids),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        filterByMainCategory(new PathBuilder<>(Product.class, product.getMetadata()), product.mainCategory.getMetadata(), productsCond.getMainCategory()),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
+                )
+                .groupBy(product.id, tag.id, image.id);
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Product> pathBuilder = new PathBuilder<Product>(product.getType(), product.getMetadata());
@@ -186,7 +236,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                                         product.uploaded.not(),
                                         product.createdAt,
                                         product.updatedAt
-                                ).skipNulls()
+                                )
                         )
                 );
 
@@ -205,11 +255,21 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
         JPAQuery<Long> count = queryFactory.select(product.count())
                 .from(product)
-                .join(store).on(product.store.eq(store))
+                .join(store).on(store.eq(product.store))
                 .where(
                         product.deleted.isFalse(),
-                        product.uploaded.isTrue(),
-                        store.id.eq(storeId)
+                        store.id.eq(storeId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        filterByMainCategory(new PathBuilder<>(Product.class, product.getMetadata()), product.mainCategory.getMetadata(), productsCond.getMainCategory()),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
                 );
 
         return PageableExecutionUtils.getPage(storeProducts, pageable, count::fetchOne);
@@ -217,6 +277,26 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
 
     @Override
     public Page<ProductsResponse> products(Pageable pageable, CommonCondition cond) {
+
+        List<Long> ids = queryFactory.select(product.id)
+                .from(product)
+                .where(
+                        product.deleted.isFalse(),
+                        product.uploaded.isTrue(),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
 
         JPAQuery<Product> query = queryFactory.selectFrom(product)
                 .join(store).on(store.eq(product.store))
@@ -227,6 +307,7 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .where(
                         product.deleted.isFalse(),
                         product.uploaded.isTrue(),
+                        product.id.in(ids),
                         search(
                                 List.of(
                                         new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
@@ -284,7 +365,17 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
                 .from(product)
                 .where(
                         product.deleted.isFalse(),
-                        product.uploaded.isTrue()
+                        product.uploaded.isTrue(),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.title.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Product.class, product.getMetadata()), product.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, store.getMetadata()), store.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Product.class, product.getMetadata()), product.createdAt.getMetadata(), cond.getDateTo())
                 );
 
         return PageableExecutionUtils.getPage(products, pageable, count::fetchOne);
@@ -358,6 +449,15 @@ public class ProductQueryRepositoryImpl extends QuerydslRepositorySupport implem
             builder.or(searchParam.getEntity().getString(searchParam.getMetadata().getName()).contains(query));
         }
 
+        return builder;
+    }
+
+    private Predicate filterByMainCategory(PathBuilder<?> entity, PathMetadata metadata, MainCategory mainCategory) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+        if (!ObjectUtils.isEmpty(mainCategory)) {
+            builder.and(entity.getEnum(metadata.getName(), MainCategory.class).eq(mainCategory));
+        }
         return builder;
     }
 

@@ -1,7 +1,8 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
+import com.dging.dgingmarket.domain.common.enums.ProductQuality;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
-import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -31,6 +32,7 @@ public class ProductUpdateRequest {
     private String title;
 
     @NotEmpty
+    @Enum(enumClass = MainCategory.class, ignoreCase = true, message = ValidationMessages.MAIN_CATEGORY)
     @Schema(description = REQUEST_MAIN_CATEGORY, example = EXAMPLE_MAIN_CATEGORY)
     private String mainCategory;
 
@@ -75,6 +77,10 @@ public class ProductUpdateRequest {
 
     @Schema(description = REQUEST_IS_TEMPORARY_SAVE, example = EXAMPLE_IS_TEMPORARY_SAVE)
     private boolean isTemporarySave;
+
+    public MainCategory getMainCategory() {
+        return MainCategory.find(mainCategory);
+    }
 
     public ProductQuality getQuality() {
         return ProductQuality.find(quality);

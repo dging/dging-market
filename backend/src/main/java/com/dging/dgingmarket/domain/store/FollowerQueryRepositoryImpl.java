@@ -1,7 +1,6 @@
 package com.dging.dgingmarket.domain.store;
 
 import com.dging.dgingmarket.domain.product.QProduct;
-import com.dging.dgingmarket.domain.user.QUser;
 import com.dging.dgingmarket.util.param.SearchParam;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.QRecentProductsResponse;
@@ -11,7 +10,10 @@ import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import com.dging.dgingmarket.web.api.dto.store.QFollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.QFollowingsResponse;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.*;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
@@ -20,7 +22,6 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -28,7 +29,10 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 import static com.dging.dgingmarket.domain.common.QImage.image;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
@@ -50,13 +54,26 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
     @Override
     public Page<FollowersResponse> followers(Pageable pageable, Long storeId, CommonCondition cond) {
 
-        QUser from = new QUser("from");
-        QFollower follower = new QFollower("follower");
         QFollower fromFollower = new QFollower("fromFollower");
-        QUser fromFrom = new QUser("fromFrom");
-        QUser to = new QUser("to");
         QStore fromStore = new QStore("fromStore");
-        QStore toStore = new QStore("toStore");
+
+        List<Long> ids = queryFactory.select(fromStore.id)
+                .from(fromStore)
+                .join(follower).on(follower.from.eq(fromStore.user))
+                .where(
+                        follower.to.id.eq(storeId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Store.class, fromStore.getMetadata()), fromStore.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateTo())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
 
         JPAQuery<FollowersResponse> query = queryFactory
                 .select(new QFollowersResponse(
@@ -69,23 +86,17 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
                                 )
                                 .from(review)
                                 .where(review.store.eq(fromStore)),
-                        new CaseBuilder()
-                                .when(product.deleted.isFalse().and(product.uploaded.isTrue()))
-                                .then(product.id)
-                                .otherwise(Expressions.nullExpression())
-                                .countDistinct().castToNum(Integer.class),
-                        fromFrom.countDistinct().castToNum(Integer.class)
+                        JPAExpressions.select(product.count().castToNum(Integer.class))
+                                .from(product)
+                                .where(product.store.eq(fromStore)),
+                        JPAExpressions.select(fromFollower.from.count().castToNum(Integer.class))
+                                .from(fromFollower)
+                                .where(fromFollower.to.eq(fromStore.user))
                 ))
                 .from(fromStore)
-                .join(from).on(fromStore.user.eq(from))
-                .join(follower).on(follower.from.eq(from))
-                .join(to).on(follower.to.eq(to))
-                .join(toStore).on(toStore.user.eq(to))
-                .leftJoin(product).on(product.store.eq(fromStore))
-                .leftJoin(fromFollower).on(fromFollower.to.eq(from))
-                .leftJoin(fromFrom).on(fromFollower.from.eq(fromFrom))
+                .join(follower).on(follower.from.eq(fromStore.user))
                 .where(
-                        toStore.id.eq(storeId),
+                        fromStore.id.in(ids),
                         search(
                                 List.of(
                                         new SearchParam(new PathBuilder<>(Store.class, fromStore.getMetadata()), fromStore.name.getMetadata())
@@ -103,23 +114,24 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
                     pathBuilder.get(o.getProperty())));
         }
 
-        List<FollowersResponse> queryResult = query.fetch();
+        List<FollowersResponse> followers = query.fetch();
 
-        int totalCount = queryResult.size();
+        JPAQuery<Long> count = queryFactory.select(fromStore.count())
+                .from(fromStore)
+                .join(follower).on(follower.from.eq(fromStore.user))
+                .where(
+                        follower.to.id.eq(storeId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Store.class, fromStore.getMetadata()), fromStore.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateTo())
+                );
 
-        long offset = pageable.getOffset();
-
-        if (offset > totalCount) {
-            return new PageImpl(Collections.EMPTY_LIST, pageable, totalCount);
-        }
-
-        int limit = pageable.getPageSize() * (pageable.getPageNumber() + 1);
-
-        if (limit > totalCount) {
-            limit = totalCount;
-        }
-
-        return new PageImpl(queryResult.subList((int) offset, limit), pageable, totalCount);
+        return PageableExecutionUtils.getPage(followers, pageable, count::fetchOne);
     }
 
     @Override
@@ -128,6 +140,24 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
         QFollower toFollower = new QFollower("toFollower");
         QStore toStore = new QStore("toStore");
         QProduct subProduct = new QProduct("subProduct");
+
+        List<Long> ids = queryFactory.select(toStore.id)
+                .from(toStore)
+                .join(follower).on(follower.to.eq(toStore.user))
+                .where(
+                        follower.from.id.eq(storeId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Store.class, toStore.getMetadata()), toStore.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateTo())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
 
         JPAQuery<FollowingsResponse> query = queryFactory.select(new QFollowingsResponse(
                         toStore.id,
@@ -143,7 +173,7 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
                 .from(toStore)
                 .join(follower).on(follower.to.eq(toStore.user))
                 .where(
-                        follower.from.id.eq(storeId),
+                        toStore.id.in(ids),
                         search(
                                 List.of(
                                         new SearchParam(new PathBuilder<>(Store.class, toStore.getMetadata()), toStore.name.getMetadata())
@@ -153,8 +183,7 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
                         dateGoe(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateFrom()),
                         dateLt(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateTo())
                 )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                .groupBy(toStore.id);
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Follower> pathBuilder = new PathBuilder<Follower>(follower.getType(), follower.getMetadata());
@@ -196,9 +225,7 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
                         )
                 )
                 .leftJoin(image).on(productImage.image.eq(image))
-                .where(
-                        store.id.in(followingStoreIds)
-                )
+                .where(store.id.in(followingStoreIds))
                 .orderBy(product.createdAt.desc())
                 .fetch();
 
@@ -213,7 +240,17 @@ public class FollowerQueryRepositoryImpl extends QuerydslRepositorySupport imple
         JPAQuery<Long> count = queryFactory.select(toStore.count())
                 .from(toStore)
                 .join(follower).on(follower.to.eq(toStore.user))
-                .where(follower.from.id.eq(storeId));
+                .where(
+                        follower.from.id.eq(storeId),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Store.class, toStore.getMetadata()), toStore.name.getMetadata())
+                                ),
+                                cond.getQuery()
+                        ),
+                        dateGoe(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Follower.class, follower.getMetadata()), follower.createdAt.getMetadata(), cond.getDateTo())
+                );
 
         return PageableExecutionUtils.getPage(followings, pageable, count::fetchOne);
     }

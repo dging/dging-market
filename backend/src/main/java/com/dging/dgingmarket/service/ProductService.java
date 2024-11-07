@@ -4,6 +4,7 @@ import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.ImageRepository;
 import com.dging.dgingmarket.domain.common.Tag;
 import com.dging.dgingmarket.domain.common.TagRepository;
+import com.dging.dgingmarket.domain.common.enums.RunningStatus;
 import com.dging.dgingmarket.domain.common.exception.SomeFileNotUploadedException;
 import com.dging.dgingmarket.domain.common.exception.SomeFileNotYoursException;
 import com.dging.dgingmarket.domain.product.Product;
@@ -15,7 +16,6 @@ import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
-import com.dging.dgingmarket.util.enums.RunningStatus;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.*;
 import lombok.RequiredArgsConstructor;
@@ -95,8 +95,8 @@ public class ProductService {
         return productRepository.product(id).orElseThrow(ProductNotFoundException::new);
     }
 
-    public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond) {
-        return productRepository.storeProducts(pageable, storeId, cond);
+    public Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond, ProductsCondition productsCond) {
+        return productRepository.storeProducts(pageable, storeId, cond, productsCond);
     }
 
     @Transactional

@@ -1,10 +1,7 @@
 package com.dging.dgingmarket.domain.product;
 
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.product.FavoriteProductsResponse;
-import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
-import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;
-import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
+import com.dging.dgingmarket.web.api.dto.product.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,6 +11,6 @@ public interface ProductQueryRepository {
 
     Page<ProductsResponse> products(Pageable pageable, CommonCondition cond);
     Optional<ProductResponse> product(Long id);
-    Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond);
+    Page<StoreProductsResponse> storeProducts(Pageable pageable, Long storeId, CommonCondition cond, ProductsCondition productsCond);
     Page<FavoriteProductsResponse> favoriteProducts(Pageable pageable, Long userId, CommonCondition cond);
 }

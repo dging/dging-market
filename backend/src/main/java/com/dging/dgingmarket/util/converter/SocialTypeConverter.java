@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.util.converter;
 
-import com.dging.dgingmarket.util.enums.SocialType;
+import com.dging.dgingmarket.domain.common.enums.SocialType;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 

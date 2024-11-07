@@ -1,39 +1,31 @@
 package com.dging.dgingmarket.domain.store;
 
-import com.dging.dgingmarket.domain.product.QProduct;
-import com.dging.dgingmarket.domain.user.QUser;
 import com.dging.dgingmarket.util.param.SearchParam;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.product.QRecentProductsResponse;
-import com.dging.dgingmarket.web.api.dto.product.RecentProductsResponse;
-import com.dging.dgingmarket.web.api.dto.store.*;
+import com.dging.dgingmarket.web.api.dto.store.QStoreProductReviewsResponse;
+import com.dging.dgingmarket.web.api.dto.store.StoreProductReviewsResponse;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.*;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilder;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.support.PageableExecutionUtils;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-import static com.dging.dgingmarket.domain.common.QImage.image;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
-import static com.dging.dgingmarket.domain.product.QProductImage.productImage;
-import static com.dging.dgingmarket.domain.store.QFollower.follower;
 import static com.dging.dgingmarket.domain.store.QReview.review;
 import static com.dging.dgingmarket.domain.store.QStore.store;
-import static com.dging.dgingmarket.domain.user.QUser.*;
+import static com.dging.dgingmarket.domain.user.QUser.user;
 
 public class ReviewQueryRepositoryImpl extends QuerydslRepositorySupport implements ReviewQueryRepository {
 
@@ -48,6 +40,27 @@ public class ReviewQueryRepositoryImpl extends QuerydslRepositorySupport impleme
     public Page<StoreProductReviewsResponse> storeProductReviews(Long id, Pageable pageable, CommonCondition cond) {
 
         QStore reviewStore = new QStore("reviewStore");
+
+        List<Long> ids = queryFactory.select(review.id)
+                .from(review)
+                .join(store).on(review.store.eq(store))
+                .join(user).on(review.user.eq(user))
+                .join(reviewStore).on(reviewStore.user.eq(user))
+                .join(product).on(review.product.eq(product))
+                .where(
+                        store.id.eq(id),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Review.class, review.getMetadata()), review.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, reviewStore.getMetadata()), reviewStore.name.getMetadata())
+                                ),
+                                cond.getQuery()),
+                        dateGoe(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateTo())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
 
         JPAQuery<StoreProductReviewsResponse> query = queryFactory.select(new QStoreProductReviewsResponse(
                         review.id,
@@ -66,7 +79,7 @@ public class ReviewQueryRepositoryImpl extends QuerydslRepositorySupport impleme
                 .join(reviewStore).on(reviewStore.user.eq(user))
                 .join(product).on(review.product.eq(product))
                 .where(
-                        store.id.eq(id),
+                        store.id.in(ids),
                         search(
                                 List.of(
                                         new SearchParam(new PathBuilder<>(Review.class, review.getMetadata()), review.content.getMetadata()),
@@ -75,9 +88,7 @@ public class ReviewQueryRepositoryImpl extends QuerydslRepositorySupport impleme
                                 cond.getQuery()),
                         dateGoe(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateFrom()),
                         dateLt(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateTo())
-                )
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                );
 
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder<? extends Review> pathBuilder = new PathBuilder<Review>(review.getType(), review.getMetadata());
@@ -89,7 +100,21 @@ public class ReviewQueryRepositoryImpl extends QuerydslRepositorySupport impleme
 
         JPAQuery<Long> count = queryFactory.select(review.count())
                 .from(review)
-                .where(review.store.id.eq(id));
+                .join(store).on(review.store.eq(store))
+                .join(user).on(review.user.eq(user))
+                .join(reviewStore).on(reviewStore.user.eq(user))
+                .join(product).on(review.product.eq(product))
+                .where(
+                        store.id.eq(id),
+                        search(
+                                List.of(
+                                        new SearchParam(new PathBuilder<>(Review.class, review.getMetadata()), review.content.getMetadata()),
+                                        new SearchParam(new PathBuilder<>(Store.class, reviewStore.getMetadata()), reviewStore.name.getMetadata())
+                                ),
+                                cond.getQuery()),
+                        dateGoe(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateFrom()),
+                        dateLt(new PathBuilder<>(Review.class, review.getMetadata()), review.createdAt.getMetadata(), cond.getDateTo())
+                );
 
         return PageableExecutionUtils.getPage(reviews, pageable, count::fetchOne);
     }

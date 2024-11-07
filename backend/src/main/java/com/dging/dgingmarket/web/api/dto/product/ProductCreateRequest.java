@@ -2,10 +2,11 @@ package com.dging.dgingmarket.web.api.dto.product;
 
 import com.dging.dgingmarket.domain.common.Image;
 import com.dging.dgingmarket.domain.common.Tag;
+import com.dging.dgingmarket.domain.common.enums.MainCategory;
+import com.dging.dgingmarket.domain.common.enums.ProductQuality;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
-import com.dging.dgingmarket.util.enums.ProductQuality;
 import com.dging.dgingmarket.util.validation.Enum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -35,6 +36,7 @@ public class ProductCreateRequest {
     private String title;
 
     @NotEmpty
+    @Enum(enumClass = MainCategory.class, ignoreCase = true, message = ValidationMessages.MAIN_CATEGORY)
     @Schema(description = REQUEST_MAIN_CATEGORY, example = EXAMPLE_MAIN_CATEGORY)
     private String mainCategory;
 
@@ -80,6 +82,10 @@ public class ProductCreateRequest {
     @Schema(description = REQUEST_IS_TEMPORARY_SAVE, example = EXAMPLE_IS_TEMPORARY_SAVE)
     private Boolean isTemporarySave = false;
 
+    public MainCategory getMainCategory() {
+        return MainCategory.find(mainCategory);
+    }
+
     public ProductQuality getQuality() {
         return ProductQuality.find(quality);
     }
@@ -91,7 +97,7 @@ public class ProductCreateRequest {
                     store,
                     title,
                     content,
-                    mainCategory,
+                    getMainCategory(),
                     middleCategory,
                     subCategory,
                     images,
@@ -110,7 +116,7 @@ public class ProductCreateRequest {
                     store,
                     title,
                     content,
-                    mainCategory,
+                    getMainCategory(),
                     middleCategory,
                     subCategory,
                     images,

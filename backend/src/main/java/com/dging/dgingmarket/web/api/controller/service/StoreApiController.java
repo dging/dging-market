@@ -12,6 +12,7 @@ import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.product.ProductsCondition;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,10 +51,11 @@ public class StoreApiController {
             @ParameterObject Pageable pageable,
             @Valid @Schema(implementation = CommonCondition.class)
             @CustomDescriptionOverride(fieldName = "query", description = DocumentDescriptions.CONDITION_STORE_PRODUCTS_QUERY)
-            @ParameterObject CommonCondition cond
+            @ParameterObject CommonCondition cond,
+            @ParameterObject ProductsCondition productsCond
     ) {
 
-        Page<StoreProductsResponse> response = productService.storeProducts(pageable, id, cond);
+        Page<StoreProductsResponse> response = productService.storeProducts(pageable, id, cond, productsCond);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

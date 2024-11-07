@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
 import com.dging.dgingmarket.domain.common.Image;
-import com.dging.dgingmarket.util.enums.ImageType;
+import com.dging.dgingmarket.domain.common.enums.ImageType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

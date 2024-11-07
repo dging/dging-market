@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.api.dto.common;
 
+import com.dging.dgingmarket.domain.common.enums.ImageType;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
-import com.dging.dgingmarket.util.enums.ImageType;
 import com.dging.dgingmarket.util.validation.Enum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
