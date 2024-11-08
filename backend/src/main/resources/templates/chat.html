@@ -69,10 +69,10 @@
         message: `${senderId} has entered the room` // 입장 메시지
       };
 
-      stompClient.send("/app/chat/send", {}, JSON.stringify(enterMessage)); // 서버로 입장 메시지 전송
+      stompClient.send(`/app/chat/${chatRoomId}/send`, {}, JSON.stringify(enterMessage)); // 서버로 입장 메시지 전송
 
       // 채팅 메시지 구독
-      stompClient.subscribe('/topic/chat', function (messageOutput) {
+      stompClient.subscribe(`/topic/chat/${chatRoomId}`, function (messageOutput) {
         showMessage(JSON.parse(messageOutput.body));
       });
 
@@ -100,7 +100,7 @@
         message: message
       };
 
-      stompClient.send("/app/chat/send", {}, JSON.stringify(chatMessage));
+      stompClient.send(`/app/chat/${chatRoomId}/send`, {}, JSON.stringify(chatMessage));
       document.getElementById('messageInput').value = ''; // 메시지 입력창 비우기
     }
   }
