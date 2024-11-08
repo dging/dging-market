@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Arrange, SpanBold } from '../Base';
-import { ImgBtn } from '../Button';
+import { Arrange } from '../Base';
 import Test from '../../assets/images/Test.png';
 
 const CardImg = styled.div<{ $bg?: string }>`

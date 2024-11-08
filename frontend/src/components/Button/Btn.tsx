@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 import React from 'react';
 import { styled } from 'styled-components';
 import Arrange from '../Base/Arrange';

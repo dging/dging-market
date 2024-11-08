@@ -4,7 +4,6 @@ import ReactStars from 'react-stars';
 import { Arrange } from '../Base';
 import { ImgBtn, DeclarationBtn, NavigateBtn } from '../Button';
 import DefaultProfile from '../../assets/images/DefaultProfile.png';
-import Declaration from '../../assets/images/Declaration.png';
 
 const WrapCard = styled(Arrange)`
   border: 1px solid ${({ theme }) => theme.color.black5};
