@@ -10,12 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 @CrossOrigin
-@RequestMapping
+@RequestMapping("/html")
 @RequiredArgsConstructor
 public class WebController {
 
     @GetMapping("/addr")
     public String address() {
         return "addr";
+    }
+
+    @GetMapping("/chat")
+    public String chat() {
+        return "chat";
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,11 +30,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 // CSRF를 비활성화
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 // 상태를 저장하지 않도록 세션 관리를 Stateless로 설정
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/ws/**", "/app/**").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/exception/**",
                                 "/users",
@@ -44,8 +45,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,
                                 "/exception/**",
                                 "/oauth/**",
-                                "/files/**",
-                                "/addr"
+                                "/files/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.PUT, "/exception/**").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/exception/**").permitAll()
@@ -76,7 +76,7 @@ public class SecurityConfiguration {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
         return (web) -> web.ignoring()
-                .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/docs/openapi3.yaml")
+                .requestMatchers("/html/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/docs/openapi3.yaml")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }
