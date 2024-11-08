@@ -1,3 +1,5 @@
+import { CSS } from 'styled-components/dist/types';
+
 export interface BtnType {
   as?: string;
   position?: string;
@@ -43,6 +45,7 @@ export interface ArrangeType {
   $bottom?: boolean;
   $backgroundimage?: any;
   $backgroundposition?: string;
+  style?: React.CSSProperties;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 

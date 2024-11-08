@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import ReactStars from 'react-stars';
 import { Arrange } from '../Base';
-import { ImgBtn, DeclarationBtn, NavigateBtn } from '../Button';
+import { ImgBtn } from '../Button';
 import { CheckBox } from '../CheckBox';
 import Reservation from '../../assets/images/Reservation.png';
 import Soldout from '../../assets/images/Soldout.png';

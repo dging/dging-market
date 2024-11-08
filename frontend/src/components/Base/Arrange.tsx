@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { styled } from 'styled-components';
 import { ArrangeType } from '../../types/types';
@@ -28,5 +27,9 @@ const WrapArrange = styled.div<ArrangeType>`
 `;
 
 export default function Arrange(props: ArrangeType) {
-  return <WrapArrange {...props}>{props.children}</WrapArrange>;
+  return (
+    <WrapArrange {...props} style={props.style}>
+      {props.children}
+    </WrapArrange>
+  );
 }

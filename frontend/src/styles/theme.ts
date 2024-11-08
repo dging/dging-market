@@ -128,6 +128,10 @@ const font = {
     fontFamily: 'NSBold',
     fontSize: '14px',
   },
+  b16: {
+    fontFamily: 'NSBold',
+    fontSize: '16px',
+  },
   b18: {
     fontFamily: 'NSBold',
     fontSize: '18px',
