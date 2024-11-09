@@ -2,20 +2,11 @@ import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../components/Base';
 import RoundButton from '../components/Button//RoundBtn';
-import { MainCard } from '../components/Card';
+import { FollowerCard } from '../components/Card';
 import StoreProfile from '../components/Profile/StoreProfile';
 import { MystoreMainMenu } from '../components/Menu';
 
-const WrapBlack = styled(Arrange)`
-  ${({ theme }) => theme.font.r18}
-`;
-
-const WrapGrey = styled(Arrange)`
-  color: ${({ theme }) => theme.color.black2};
-`;
-
 const WrapCard = styled(Arrange)`
-  width: 100%;
   grid-template-columns: repeat(4, 1fr);
 `;
 
@@ -24,12 +15,29 @@ export default function MystoreFollower() {
   const [status, setStatus] = useState(type[0]);
   const theme = useTheme();
   return (
-    <Arrange
+    <WrapCard
+      display='grid'
       width={theme.page_size.width}
       margin='0 auto'
-      padding='0 0 100px 0'
+      padding='20px 0 100px 0'
+      gap='20px'
     >
-      팔로워
-    </Arrange>
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+      <FollowerCard />
+    </WrapCard>
   );
 }
