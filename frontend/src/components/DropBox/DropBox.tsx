@@ -10,7 +10,7 @@ import DownArrowBlack from '../../assets/images/DownArrowBlack.png';
 type DropBoxType = BtnType & {
   items: Array<string>;
   type?: string | undefined;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: (type?: string) => void;
 };
 
 type WrapItemType = ArrangeType & { $except?: boolean; $status?: boolean };
@@ -70,11 +70,11 @@ export default function DropBox(props: DropBoxType) {
 
   const onClickItem = (type: string) => {
     setItems(type);
-    navigate('/category', {
-      state: {
-        type: type,
-      },
-    });
+    setIsShow(false);
+
+    if (props.onClick) {
+      props.onClick(type);
+    }
   };
 
   // 로직 다시 짜기
@@ -101,7 +101,6 @@ export default function DropBox(props: DropBoxType) {
               key={index}
               onClick={() => {
                 onClickItem(value);
-                setIsShow(false);
               }}
             >
               {value}

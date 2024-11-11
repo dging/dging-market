@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { MainSearchMenu } from '../components/Menu';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../components/Base';
 import { MainCard } from '../components/Card';
@@ -23,16 +22,31 @@ const WrapCard = styled(Arrange)`
 export default function MainSearchPage() {
   const theme = useTheme();
   const location = useLocation();
-  const type = { ...location.state };
+  const [searchParams] = useSearchParams();
 
+  const first = searchParams.get('first');
+  const second = searchParams.get('second');
+  const third = searchParams.get('third');
 
-  const words = ['전체', '판매중', '예약중', '판매완료'];
-  const items = ['전체', 'CD', 'Vinyl', 'Cassette', 'DVD'];
+  const [change, setChange] = useState(first);
+
+  useEffect(() => {
+    console.log('first : ', first);
+    setChange(first);
+  }, [first]);
+
+  useEffect(() => {
+    console.log('second : ', second);
+    setChange(second);
+  }, [second]);
+
+  useEffect(() => {
+    console.log('third : ', third);
+    setChange(third);
+  }, [third]);
 
   return (
     <>
-      <MainSearchMenu type={type.type} />
-
       <Arrange
         width='100%'
         minwidth={theme.page_size.minwidth}
@@ -44,8 +58,8 @@ export default function MainSearchPage() {
           padding={`${theme.size.xxxxxl} 0 ${theme.size.xxxxxxl} 0`}
         >
           <Title>
-            <PinkSpan>{type.type}</PinkSpan>
-            {type.type !== '전체' && <> 전체</>}상품
+            <PinkSpan>{change}</PinkSpan>
+            {change !== '전체' && <> 전체</>}상품
           </Title>
           <WrapCard
             width='100%'

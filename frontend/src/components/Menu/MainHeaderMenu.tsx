@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ImgBtn, IncludeImgBtn } from '../Button';
 import { Arrange } from '../Base';
@@ -18,7 +18,11 @@ const Bar = styled.div`
 
 export default function MainHeaderMenu() {
   const navigate = useNavigate();
+  const location = useLocation().pathname;
   const [isShow, setIsShow] = useState<boolean>(false);
+  useEffect(() => {
+    setIsShow(false);
+  }, [location]);
 
   return (
     <Arrange display='flex' alignitems='center' gap='10px'>

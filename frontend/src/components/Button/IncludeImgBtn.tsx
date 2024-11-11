@@ -12,10 +12,10 @@ const IncludeImgButton = styled.button<IncludeImgBtnType>`
   height: ${(props) => props.height || 'fit-content'};
   padding: 0;
   border: none;
-  background-color: white;
+  background-color: ${(props) => props.bgcolor || 'white'};
   align-items: center;
   gap: ${(props) => props.gap || '4px'};
-  cursor: pointer;
+  cursor: ${(props) => (props.as === 'div' ? 'auto' : 'pointer')};
 `;
 
 const RightImg = styled.div<RightImgType>`
@@ -35,9 +35,11 @@ const Text = styled.div<IncludeImgBtnType>`
   width: ${(props) => props.$textwidth || 'fit-content'};
   height: ${(props) => props.$textheight || 'fit-content'};
   color: ${(props) =>
-    props.$change ? props.theme.color.pink100 : props.theme.color.black0};
+    (props.$change ? props.theme.color.pink100 : props.theme.color.black0) ||
+    props.textcolor};
   font-family: ${(props) => (props.$change ? 'NSBold' : 'NSRegular')};
   font-size: ${(props) => props.fontsize || '16px'};
+  ${(props) => props.font}
 `;
 
 const LeftImg = styled.div<LeftImgType>`
@@ -53,26 +55,36 @@ const LeftImg = styled.div<LeftImgType>`
   background-color: transparent;
 `;
 
-RightImg.defaultProps = {
-  $change: false,
-  $rightbgimg: null,
-  $rightbgchangeimg: null,
-};
-
 LeftImg.defaultProps = {
   $change: false,
   $leftbgimg: null,
   $leftbgchangeimg: null,
 };
 
+// Text.defaultProps = {
+//   textcolor: '#282828',
+// };
+
+RightImg.defaultProps = {
+  $change: false,
+  $rightbgimg: null,
+  $rightbgchangeimg: null,
+};
+
 export default function IncludeImgBtn(
   props: IncludeImgBtnType & RightImgType & LeftImgType
 ) {
   return (
-    <IncludeImgButton {...props} onClick={props.onClick}>
+    <IncludeImgButton
+      {...props}
+      style={props.mainstyle}
+      onClick={props.onClick}
+    >
       {props.$leftbgimg && <LeftImg {...props} />}
 
-      <Text {...props}>{props.text}</Text>
+      <Text {...props} style={props.textstyle}>
+        {props.text}
+      </Text>
       {props.$rightbgimg && <RightImg {...props} />}
     </IncludeImgButton>
   );

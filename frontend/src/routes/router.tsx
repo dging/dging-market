@@ -13,16 +13,22 @@ import {
   MystoreFollowing,
   MystoreFollower,
 } from '../templates';
-import MainPage from '../pages/MainPage';
-import MainSearchPage from '../pages/MainSearchPage';
-import SellPage from '../pages/SellPage';
-import TalkPage from '../pages/TalkPage';
-import MygoodsPage from '../pages/MygoodsPage';
-import KeepgoodsPage from '../pages/KeepgoodsPage';
-import SettingPage from '../pages/SettingPage';
-import ServicePage from '../pages/ServicePage';
-import GoodsManagePage from '../pages/GoodsManagePage';
-import HistoryPage from '../pages/HistoryPage';
+
+import { MainSearchMenu } from '../components/Menu';
+
+import {
+  MainPage,
+  MainSearchPage,
+  SellPage,
+  TalkPage,
+  MygoodsPage,
+  KeepgoodsPage,
+  SettingPage,
+  ServicePage,
+  GoodsManagePage,
+  GoodsDetailPage,
+  HistoryPage,
+} from '../pages';
 
 export const router = createBrowserRouter([
   {
@@ -32,10 +38,6 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <MainPage />,
-      },
-      {
-        path: '/category',
-        element: <MainSearchPage />,
       },
 
       {
@@ -53,6 +55,23 @@ export const router = createBrowserRouter([
       {
         path: '/service',
         element: <ServicePage />,
+      },
+      {
+        path: '/detail/:id',
+        element: <GoodsDetailPage />,
+      },
+      {
+        element: <MainSearchMenu />,
+        children: [
+          {
+            path: '/category',
+            element: <MainSearchPage />,
+          },
+          // {
+          //   path: '/detail/:id',
+          //   element: <GoodsDetailPage />,
+          // },
+        ],
       },
       {
         element: <MystoreLayout />,

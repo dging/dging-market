@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../Base';
 import { ImgBtn } from '../Button';
 import DropBox from '../DropBox/DropBox';
 import Home from '../../assets/images/Home.png';
 import RightArrowBlack from '../../assets/images/RightArrowBlack.png';
-import { useNavigate } from 'react-router-dom';
 
 const WrapMainSearchMenu = styled(Arrange)`
   background-color: ${({ theme }) => theme.color.pink1};
@@ -16,11 +16,18 @@ const HomeText = styled(Arrange)`
   padding-top: 1px;
 `;
 
-export default function MainSearchMenu(props: { type: string }) {
+export default function MainSearchMenu() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+  const type = { ...location.state }.type;
+  console.log('MainSearchMenu : ', type);
 
-  const items = ['전체', 'CD', 'Vinyl', 'Cassette', 'DVD'];
+  const items1 = ['전체', 'CD', 'Vinyl', 'Cassette', 'DVD'];
   const items2 = [
     '전체',
     'POP',
@@ -55,7 +62,26 @@ export default function MainSearchMenu(props: { type: string }) {
     'Rock 컴필레이션',
   ];
 
-  console.log(props.type);
+  const [firstParam, setFirstParam] = useState(params.get('first'));
+  const [secondParam, setSecondParam] = useState(params.get('second'));
+  const [thirdParam, setThirdParam] = useState(params.get('third'));
+
+  useEffect(() => {
+    setFirstParam(params.get('first'));
+    setSecondParam(params.get('second'));
+    setThirdParam(params.get('third'));
+  }, [params]);
+
+  // console.log('MainSearchMenu : ', props.type);
+
+  const onClickFirst = (first?: string) => {
+    console.log('onClickFirst : ', type);
+
+    const params = new URLSearchParams({
+      first: first || items1[0],
+    });
+    navigate(`/category?${params.toString()}`);
+  };
 
   return (
     <WrapMainSearchMenu
@@ -79,8 +105,13 @@ export default function MainSearchMenu(props: { type: string }) {
           height='16px'
           $backgroundimage={RightArrowBlack}
         />
-        <DropBox items={items} type={props.type} />
-        {props.type !== items[0] && (
+        {/* 첫번째 Dropdown */}
+        <DropBox
+          items={items1}
+          type={firstParam || items1[0]}
+          onClick={() => onClickFirst('CD')}
+        />
+        {firstParam !== items1[0] && (
           <>
             <ImgBtn
               as='div'
@@ -88,11 +119,11 @@ export default function MainSearchMenu(props: { type: string }) {
               height='16px'
               $backgroundimage={RightArrowBlack}
             />
+            {/* 두번째 Dropdown */}
             <DropBox items={items2} type={items2[0]} />
           </>
         )}
-        {((props.type !== items2[0] && items2.includes(props.type)) ||
-          items3.includes(props.type)) && (
+        {firstParam !== items1[0] && secondParam !== items2[0] && (
           <>
             <ImgBtn
               as='div'
@@ -100,7 +131,8 @@ export default function MainSearchMenu(props: { type: string }) {
               height='16px'
               $backgroundimage={RightArrowBlack}
             />
-            <DropBox items={items3} />
+            {/* 세번째 Dropdown */}
+            <DropBox items={items3} type={items3[0]} />
           </>
         )}
       </Arrange>

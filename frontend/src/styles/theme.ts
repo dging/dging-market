@@ -69,15 +69,29 @@ const font = {
     fontSize: '18px',
     lineHeight: '150%',
   },
+  info12: {
+    fontFamily: 'NSRegular',
+    fontSize: '12px',
+    letterSpacing: '-0.96px',
+  },
   info14: {
     fontFamily: 'NSRegular',
     fontSize: '14px',
     letterSpacing: '-1.28px',
   },
-
-  info12: {
+  info14_bold: {
+    fontFamily: 'NSBold',
+    fontSize: '14px',
+    letterSpacing: '-1.28px',
+  },
+  info18: {
     fontFamily: 'NSRegular',
-    fontSize: '12px',
+    fontSize: '18px',
+    letterSpacing: '-0.96px',
+  },
+  info18_bold: {
+    fontFamily: 'NSBold',
+    fontSize: '18px',
     letterSpacing: '-0.96px',
   },
   ac12: {
@@ -93,7 +107,13 @@ const font = {
   price18: {
     fontFamily: 'NSBold',
     fontSize: '18px',
-    letterSpacing: '-0.36px',
+    letterSpacing: '-1.44px',
+  },
+
+  price40: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '40px',
+    letterSpacing: '-0.2px',
   },
   date14: {
     fontFamily: 'NSRegular',
@@ -115,6 +135,10 @@ const font = {
   r18: {
     fontFamily: 'NSRegular',
     fontSize: '18px',
+  },
+  r24: {
+    fontFamily: 'NSRegular',
+    fontSize: '24px',
   },
   r32: {
     fontFamily: 'NSRegular',

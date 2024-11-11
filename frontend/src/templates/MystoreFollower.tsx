@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../components/Base';
-import RoundButton from '../components/Button//RoundBtn';
 import { FollowerCard } from '../components/Card';
-import StoreProfile from '../components/Profile/StoreProfile';
-import { MystoreMainMenu } from '../components/Menu';
 
 const WrapCard = styled(Arrange)`
   grid-template-columns: repeat(4, 1fr);

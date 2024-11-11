@@ -52,12 +52,11 @@ export default function MainGoodsMenu() {
   const items = ['CD', 'Vinyl', 'Cassette', 'DVD'];
 
   const onClickItem = (type: string) => {
-    setIsSelect(type);
-    navigate('/category', {
-      state: {
-        type: type,
-      },
+    const params = new URLSearchParams({
+      first: type,
     });
+    setIsSelect(type);
+    navigate(`/category?${params.toString()}`);
   };
   return (
     <WrapMainGoodsMenu

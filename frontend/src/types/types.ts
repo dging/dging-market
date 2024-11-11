@@ -59,7 +59,13 @@ export interface IncludeImgBtnType {
   gap?: string;
   $change?: boolean;
   text?: string;
+  textcolor?: string;
   fontsize?: string;
+  font?: string;
+  textstyle?: CSS.Properties;
+  bgcolor?: string;
+  style?: React.CSSProperties;
+  mainstyle?: React.CSSProperties;
   onClick?: any;
 }
 

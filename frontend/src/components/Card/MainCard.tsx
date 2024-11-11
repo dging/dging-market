@@ -1,7 +1,12 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Arrange } from '../Base';
 import Test from '../../assets/images/Test.png';
+
+const WrapCard = styled(Arrange)`
+  cursor: pointer;
+`;
 
 const CardImg = styled.div<{ $bg?: string }>`
   box-sizing: border-box;
@@ -37,13 +42,29 @@ const Won = styled.span`
 const Date = styled.div`
   display: flex;
   align-items: center;
-  ${({ theme }) => theme.font.date14}
-  color: ${({ theme }) => theme.color.black2}
+  ${({ theme }) => theme.font.date14};
+  color: ${({ theme }) => theme.color.black2};
 `;
 
-export default function MainCard(props: { bg?: string }) {
+const WrapLink = styled(Link)`
+  color: ${({ theme }) => theme.color.black0};
+  text-decoration: none;
+`;
+
+export default function MainCard(props: {
+  id?: string;
+  bg?: string;
+  title?: string;
+  price?: string;
+  date?: string;
+}) {
+  const navigate = useNavigate();
   return (
-    <Arrange display='flex' flexdirection='column'>
+    <WrapCard
+      display='flex'
+      flexdirection='column'
+      onClick={() => navigate(`/detail/${props.id}`)}
+    >
       <CardImg $bg={Test} />
       <Title>Test - Test</Title>
       <Arrange width='100%' display='flex' justifycontent='space-between'>
@@ -52,6 +73,6 @@ export default function MainCard(props: { bg?: string }) {
         </Price>
         <Date>12시간 전</Date>
       </Arrange>
-    </Arrange>
+    </WrapCard>
   );
 }
