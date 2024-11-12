@@ -10,6 +10,7 @@ import Tag from '../assets/images/Tag.png';
 const Bar = styled.div`
   width: 1px;
   height: 74px;
+  margin: 8px 0 0 0;
   background-color: ${({ theme }) => theme.color.black5};
 `;
 
@@ -55,7 +56,6 @@ function GoodsInfo() {
       <Arrange
         display='flex'
         width='100%'
-        alignitems='center'
         padding='20px 10px 30px 10px'
         gap='10px'
         style={{

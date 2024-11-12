@@ -18,6 +18,7 @@ export default function GoodsDetailPage() {
       <GoodsProfile />
       <Arrange display='flex'>
         <GoodsInfo />
+
         <StoreInfo />
       </Arrange>
     </Arrange>

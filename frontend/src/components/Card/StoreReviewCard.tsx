@@ -31,10 +31,15 @@ const TitleH4 = styled.div`
 `;
 
 const Body16 = styled.div`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  width: 100%;
   height: 48px;
-  /* text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap; */
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
   color: ${({ theme }) => theme.color.black2};
   ${({ theme }) => theme.font.body16};
 `;
@@ -61,18 +66,24 @@ export default function StoreReviewCard(props: { $location?: string }) {
     >
       <Profile $bgimg={DefaultProfile} $location={isStoreReview()} />
       <Arrange
-        width='100%'
+        width={isStoreReview() ? '100%' : '285px'}
         display='flex'
         flexdirection='column'
         gap='20px'
         padding={isStoreReview() ? `${theme.size.xxxs} 0` : 0}
       >
         <Arrange width='100%' display='flex' flexdirection='column' gap='8px'>
-          {isStoreReview() ? (
-            <TitleH3>상점 1020938호</TitleH3>
-          ) : (
-            <TitleH4>상점 1020938호</TitleH4>
-          )}
+          <Arrange width='100%' display='flex' justifycontent='space-between'>
+            {isStoreReview() ? (
+              <TitleH3>상점 1020938호</TitleH3>
+            ) : (
+              <TitleH4>상점 1020938호</TitleH4>
+            )}
+            <Date width='100px' textalign='right'>
+              1년 전
+            </Date>
+          </Arrange>
+
           <ReactStars value={starScore} size={20} edit={false} />
           {isStoreReview() && <NavigateBtn />}
         </Arrange>
@@ -86,9 +97,6 @@ export default function StoreReviewCard(props: { $location?: string }) {
         )}
         {isStoreReview() && <DeclarationBtn />}
       </Arrange>
-      <Date width='100px' textalign='right'>
-        1년 전
-      </Date>
     </Arrange>
   );
 }
