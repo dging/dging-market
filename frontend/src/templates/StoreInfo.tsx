@@ -5,9 +5,6 @@ import { IncludeImgBtn } from '../components/Button';
 import { StoreReviewCard } from '../components/Card';
 import { BarTitle } from '../components/Title';
 import { SmallStoreProfile } from '../components/Profile';
-import Locate from '../assets/images/Locate.png';
-import NoteBook from '../assets/images/NoteBook.png';
-import Tag from '../assets/images/Tag.png';
 import RightArrowBlack from '../assets/images/RightArrowBlack.png';
 
 const TitleH3 = styled.div`
@@ -35,11 +32,10 @@ export default function StoreInfo() {
   const theme = useTheme();
   return (
     <Arrange
-      padding='0 0 0 30px'
+      padding='0 0 0 10px'
       display='flex'
       flexdirection='column'
       gap='50px'
-      style={{ borderLeft: `1px solid ${theme.color.black5}` }}
     >
       <BarTitle title='상점정보' style={{ width: '100%', ...theme.font.r18 }} />
 

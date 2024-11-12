@@ -13,10 +13,8 @@ const DeclarationButton = styled.button`
   align-items: center;
   gap: 2px;
   color: ${({ theme }) => theme.color.black2};
-  ${({ theme }) => theme.color.black2}
-  &:hover {
-    cursor: pointer;
-  }
+  ${({ theme }) => theme.color.black2};
+  cursor: pointer;
 `;
 
 export default function DeclarationBtn() {
