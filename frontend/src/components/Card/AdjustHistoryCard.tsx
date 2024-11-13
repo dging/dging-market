@@ -72,7 +72,7 @@ export default function AdjustHistoryCard(props: {
         <Arrange
           display='flex'
           flexdirection='column'
-          width='100%'
+          width='498px'
           height='64px'
           padding='4px 15px 8px 15px'
         >

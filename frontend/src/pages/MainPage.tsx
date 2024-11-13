@@ -3,6 +3,7 @@ import styled, { useTheme } from 'styled-components';
 import { MainGoodsMenu, MainSearchMenu } from '../components/Menu';
 import { Arrange } from '../components/Base';
 import { MainCard } from '../components/Card';
+import { UnderlineTitle } from '../components/Title';
 
 const Title = styled.div`
   text-decoration: underline;
@@ -43,10 +44,13 @@ export default function MainPage() {
           width={theme.page_size.width}
           padding={`${theme.size.xxxxxl} 0 ${theme.size.xxxxxxl} 0`}
         >
-          <Title>오늘 들어온 상품</Title>
+          <UnderlineTitle font={theme.font.b32}>
+            오늘 들어온 상품
+          </UnderlineTitle>
           <WrapCard
             width='100%'
             display='grid'
+            margin='50px 0 0 0'
             gap='50px'
             justifycontent='space-between'
           >
