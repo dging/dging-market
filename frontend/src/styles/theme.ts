@@ -105,9 +105,14 @@ const font = {
     letterSpacing: '-1.6px',
   },
   price18: {
-    fontFamily: 'NSBold',
+    fontFamily: 'NSExtraBold',
     fontSize: '18px',
-    letterSpacing: '-1.44px',
+    letterSpacing: '-0.36px',
+  },
+  price20: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '20px',
+    letterSpacing: '-0.4px',
   },
 
   price40: {
@@ -119,6 +124,11 @@ const font = {
     fontFamily: 'NSRegular',
     fontSize: '14px',
     letterSpacing: '-1.12px',
+  },
+  r10_ls8: {
+    fontFamily: 'NSRegular',
+    fontSize: '10px',
+    letterSpacing: '-0.1px',
   },
   r12: {
     fontFamily: 'NSRegular',
@@ -144,6 +154,16 @@ const font = {
     fontFamily: 'NSRegular',
     fontSize: '32px',
   },
+  b10_lh150: {
+    fontFamily: 'NSBold',
+    fontSize: '10px',
+    lineHeight: '150%',
+  },
+  b10_ls8: {
+    fontFamily: 'NSBold',
+    fontSize: '10px',
+    letterSpacing: '-0.08px',
+  },
   b12: {
     fontFamily: 'NSBold',
     fontSize: '12px',
@@ -156,6 +176,11 @@ const font = {
   b14: {
     fontFamily: 'NSBold',
     fontSize: '14px',
+  },
+  b14_lh150: {
+    fontFamily: 'NSBold',
+    fontSize: '14px',
+    lineHeight: '150%',
   },
   b16: {
     fontFamily: 'NSBold',
@@ -177,6 +202,20 @@ const font = {
   b32: {
     fontFamily: 'NSBold',
     fontSize: '32px',
+  },
+  eb10: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '10px',
+  },
+  eb12_ls2: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '12px',
+    letterSpacing: '-0.24px',
+  },
+  eb14_ls2: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '14px',
+    letterSpacing: '-0.28px',
   },
   eb18_ls2: {
     fontFamily: 'NSExtraBold',

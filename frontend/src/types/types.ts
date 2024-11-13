@@ -7,11 +7,13 @@ export interface BtnType {
   children?: React.ReactNode;
   width?: string;
   height?: string;
+  padding?: string;
   borderradius?: string;
   $status?: boolean;
   $backgroundimage?: string;
   $backgroundcolor?: any;
   $backgroundposition?: string;
+  style?: React.CSSProperties;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 

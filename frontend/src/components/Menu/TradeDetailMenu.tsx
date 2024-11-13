@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../Base';
 
@@ -24,7 +24,9 @@ const Bar = styled.div`
 export default function TradeDetailMenu() {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [isSelect, setIsSelect] = useState('판매내역');
+  const location = useLocation();
+  const path = location.pathname;
+  const [isSelect, setIsSelect] = useState(path);
   return (
     <Arrange
       width='100%'
@@ -41,9 +43,9 @@ export default function TradeDetailMenu() {
         padding={`${theme.size.xl} 0`}
       >
         <DetailMenuButton
-          $change={isSelect === '판매내역'}
+          $change={isSelect === '/history/sell'}
           onClick={() => {
-            setIsSelect('판매내역');
+            setIsSelect('/history/sell');
             navigate('/history/sell');
           }}
         >
@@ -51,9 +53,9 @@ export default function TradeDetailMenu() {
         </DetailMenuButton>
         <Bar />
         <DetailMenuButton
-          $change={isSelect === '구매내역'}
+          $change={isSelect === '/history/buy'}
           onClick={() => {
-            setIsSelect('구매내역');
+            setIsSelect('/history/buy');
             navigate('/history/buy');
           }}
         >
@@ -61,9 +63,9 @@ export default function TradeDetailMenu() {
         </DetailMenuButton>
         <Bar />
         <DetailMenuButton
-          $change={isSelect === '정산내역'}
+          $change={isSelect === '/history/adjust'}
           onClick={() => {
-            setIsSelect('정산내역');
+            setIsSelect('/history/adjust');
             navigate('/history/adjust');
           }}
         >

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Btn from '../Button/Btn';
 import ImgBtn from '../Button/ImgBtn';
 import { BtnType, ArrangeType } from '../../types/types';
@@ -51,7 +51,6 @@ const WrapItem = styled(Arrange)<WrapItemType>`
   padding: ${({ theme }) => theme.size.xxxs};
   color: ${(props) =>
     props.$status ? props.theme.color.black0 : props.theme.color.black2};
-
   text-align: center;
   ${({ theme }) => theme.font.r14};
   cursor: pointer;
@@ -59,6 +58,7 @@ const WrapItem = styled(Arrange)<WrapItemType>`
 
 export default function DropBox(props: DropBoxType) {
   const navigate = useNavigate();
+  const theme = useTheme();
   const [items, setItems] = useState<string>(props.items[0]);
   const [isShow, setIsShow] = useState<boolean>(false);
 
@@ -77,12 +77,21 @@ export default function DropBox(props: DropBoxType) {
     }
   };
 
+  const onClickDelete = () => {
+    alert('정말 삭제하시겠습니까?');
+    window.location.reload();
+  };
+
   // 로직 다시 짜기
 
   return (
     <Arrange position='relative'>
-      <DropBoxButton $status={isShow} onClick={() => setIsShow(!isShow)}>
-        <Arrange display='flex' width='118px' justifycontent='space-between'>
+      <DropBoxButton
+        $status={isShow}
+        onClick={() => setIsShow(!isShow)}
+        {...props}
+      >
+        <Arrange display='flex' width='100%' justifycontent='space-between'>
           <DropBoxText>{items}</DropBoxText>
           <ImgBtn
             as='div'
@@ -93,19 +102,33 @@ export default function DropBox(props: DropBoxType) {
         </Arrange>
       </DropBoxButton>
       {isShow && (
-        <DropBoxBoard position='absolute' $status={isShow}>
-          {props.items.map((value, index) => (
-            <WrapItem
-              width='100%'
-              $status={items === value}
-              key={index}
-              onClick={() => {
-                onClickItem(value);
-              }}
-            >
-              {value}
-            </WrapItem>
-          ))}
+        <DropBoxBoard position='absolute' $status={isShow} {...props}>
+          {props.items.map((value, index) =>
+            value === '삭제' ? (
+              <WrapItem
+                style={{ color: theme.color.pink100 }}
+                width='100%'
+                $status={items === value}
+                key={index}
+                onClick={() => {
+                  onClickDelete();
+                }}
+              >
+                {value}
+              </WrapItem>
+            ) : (
+              <WrapItem
+                width='100%'
+                $status={items === value}
+                key={index}
+                onClick={() => {
+                  onClickItem(value);
+                }}
+              >
+                {value}
+              </WrapItem>
+            )
+          )}
         </DropBoxBoard>
       )}
     </Arrange>

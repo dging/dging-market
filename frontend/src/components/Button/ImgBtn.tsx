@@ -29,7 +29,7 @@ const ImageButton = styled.button<BtnType>`
 export default function ImgBtn(props: BtnType) {
   return (
     // <WrapImageButton margin={props.margin}>
-    <ImageButton {...props} onClick={props.onClick}>
+    <ImageButton {...props} onClick={props.onClick} style={props.style}>
       {props.children}
     </ImageButton>
     // </WrapImageButton>

@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../Base';
 import { Btn, ImgBtn, IncludeImgBtn } from '../Button';
-import { CheckBox } from '../CheckBox';
-import Reservation from '../../assets/images/Reservation.png';
-import Soldout from '../../assets/images/Soldout.png';
 import Test from '../../assets/images/Test.png';
 import RightArrowBlack from '../../assets/images/RightArrowBlack.png';
 
@@ -81,7 +78,13 @@ export default function SellHistoryCard(props: {
           구매자 : 닉네임
         </Date>
 
-        <Btn width='100%' $status={status} onClick={() => setStatus(!status)}>
+        <Btn
+          width='100%'
+          height='30px'
+          padding='0px'
+          $status={status}
+          onClick={() => setStatus(!status)}
+        >
           {status ? '후기 남기기' : '후기 수정하기'}
         </Btn>
       </Arrange>

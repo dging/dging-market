@@ -5,3 +5,6 @@ export { default as KeepCard } from './KeepCard';
 export { default as FollowingCard } from './FollowingCard';
 export { default as FollowerCard } from './FollowerCard';
 export { default as SellHistoryCard } from './SellHistoryCard';
+export { default as BuyHistoryCard } from './BuyHistoryCard';
+export { default as AdjustHistoryCard } from './AdjustHistoryCard';
+export { default as GoodsManageCard } from './GoodsManageCard';
