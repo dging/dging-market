@@ -8,7 +8,7 @@ import { RoundCategory, TradeCategory } from '../components/Category';
 import { words } from '../utils/_data';
 import Filter from '../assets/images/Filter.png';
 
-export default function HistoryPage() {
+export default function SellHistoryTemplate() {
   const theme = useTheme();
   return (
     <Arrange width={theme.page_size.width} margin='0 auto'>

@@ -148,6 +148,11 @@ const font = {
     fontFamily: 'NSBold',
     fontSize: '12px',
   },
+  b12_lh150: {
+    fontFamily: 'NSBold',
+    fontSize: '12px',
+    lineHeight: '150%',
+  },
   b14: {
     fontFamily: 'NSBold',
     fontSize: '14px',
@@ -155,6 +160,11 @@ const font = {
   b16: {
     fontFamily: 'NSBold',
     fontSize: '16px',
+  },
+  b16_ls8: {
+    fontFamily: 'NSBold',
+    fontSize: '16px',
+    letterSpacing: '-1.28px',
   },
   b18: {
     fontFamily: 'NSBold',
@@ -167,6 +177,11 @@ const font = {
   b32: {
     fontFamily: 'NSBold',
     fontSize: '32px',
+  },
+  eb18_ls2: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '18px',
+    letterSpacing: '-0.36px',
   },
   eb24: {
     fontFamily: 'NSExtraBold',

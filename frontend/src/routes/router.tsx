@@ -12,6 +12,9 @@ import {
   MystoreKeep,
   MystoreFollowing,
   MystoreFollower,
+  SellHistoryTemplate,
+  BuyHistoryTemplate,
+  AdjustmentTemplate,
 } from '../templates';
 
 import { MainSearchMenu } from '../components/Menu';
@@ -118,8 +121,16 @@ export const router = createBrowserRouter([
             element: <HistoryLayout />,
             children: [
               {
-                path: '/history',
-                element: <HistoryPage />,
+                path: '/history/sell',
+                element: <SellHistoryTemplate />,
+              },
+              {
+                path: '/history/buy',
+                element: <BuyHistoryTemplate />,
+              },
+              {
+                path: '/history/adjust',
+                element: <AdjustmentTemplate />,
               },
             ],
           },

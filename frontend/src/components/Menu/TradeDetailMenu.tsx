@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { Arrange } from '../Base';
 
@@ -22,11 +23,12 @@ const Bar = styled.div`
 
 export default function TradeDetailMenu() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [isSelect, setIsSelect] = useState('판매내역');
   return (
     <Arrange
       width='100%'
-      minwidth={theme.page_size.minwidth}
+      // minwidth={theme.page_size.minwidth}
       $bottom={true}
       display='flex'
       justifycontent='center'
@@ -40,21 +42,30 @@ export default function TradeDetailMenu() {
       >
         <DetailMenuButton
           $change={isSelect === '판매내역'}
-          onClick={() => setIsSelect('판매내역')}
+          onClick={() => {
+            setIsSelect('판매내역');
+            navigate('/history/sell');
+          }}
         >
           판매내역
         </DetailMenuButton>
         <Bar />
         <DetailMenuButton
           $change={isSelect === '구매내역'}
-          onClick={() => setIsSelect('구매내역')}
+          onClick={() => {
+            setIsSelect('구매내역');
+            navigate('/history/buy');
+          }}
         >
           구매내역
         </DetailMenuButton>
         <Bar />
         <DetailMenuButton
           $change={isSelect === '정산내역'}
-          onClick={() => setIsSelect('정산내역')}
+          onClick={() => {
+            setIsSelect('정산내역');
+            navigate('/history/adjust');
+          }}
         >
           정산내역
         </DetailMenuButton>

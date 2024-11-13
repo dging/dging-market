@@ -31,7 +31,7 @@ export default function MainHeader() {
           $backgroundimage={Logo}
           onClick={() => navigate('/')}
         />
-        <Searchbar />
+        <Searchbar type={true} />
         <MainHeaderMenu />
       </Arrange>
     </Arrange>

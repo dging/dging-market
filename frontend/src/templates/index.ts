@@ -5,3 +5,6 @@ export { default as MystoreFollowing } from './MystoreFollowing';
 export { default as MystoreFollower } from './MystoreFollower';
 export { default as GoodsInfo } from './GoodsInfo';
 export { default as StoreInfo } from './StoreInfo';
+export { default as SellHistoryTemplate } from './SellHistoryTemplate';
+export { default as BuyHistoryTemplate } from './BuyHistoryTemplate';
+export { default as AdjustmentTemplate } from './AdjustmentTemplate';

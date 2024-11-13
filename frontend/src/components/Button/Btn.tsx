@@ -25,7 +25,13 @@ export default function Btn(props: BtnType) {
   return (
     // <WrapBtn margin={props.margin}>
     <Button {...props} onClick={props.onClick}>
-      <Arrange height='16px' display='flex' alignitems='center'>
+      <Arrange
+        width='100%'
+        height='16px'
+        display='flex'
+        alignitems='center'
+        justifycontent='center'
+      >
         {props.children}
       </Arrange>
     </Button>

@@ -59,13 +59,13 @@ export default function MystoreMenu() {
           <Bar />
 
           <IncludeImgBtn
-            $change={getPath() === '/history'}
+            $change={getPath().includes('/history')}
             $leftbgimg={ReceiptBlack}
             $leftbgchangeimg={ReceiptPink}
             text='구매 / 판매 내역'
             onClick={() => {
-              setIsSelect('/history');
-              navigate('/history');
+              setIsSelect('/history/sell');
+              navigate('/history/sell');
             }}
           />
         </Arrange>
