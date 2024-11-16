@@ -33,3 +33,102 @@ export const items3 = [
   'Old Rock',
   'Rock 컴필레이션',
 ];
+
+export const profile_cheat = [
+  {
+    id: 0,
+    name: 'FDOPE1',
+    date: '9월 7일',
+    content:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
+  },
+  {
+    id: 1,
+    name: 'FDOPE2',
+    date: '9월 8일',
+    content:
+      'Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
+  },
+  {
+    id: 2,
+    name: 'FDOPE3',
+    date: '9월 9일',
+    content: 'hello',
+  },
+];
+
+export const cheat = [
+  {
+    id: 0,
+    name: 'FDOPE1',
+    date: '9월 7일',
+    last_connect: '13일 전',
+    talk: [
+      { name: 'FDOPE1', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      {
+        name: 'FDOPE1',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
+      },
+      {
+        name: 'FDOPE1',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet risus quis tellus maximus ullamcorper. Cras condimentum non nisl eget.',
+      },
+      { name: 'you', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      { name: 'FDOPE1', content: 'hello' },
+      { name: 'you', content: 'hello' },
+    ],
+  },
+
+  {
+    id: 2,
+    name: 'FDOPE2',
+    date: '9월 8일',
+    last_connect: '13일 전',
+    talk: [
+      { name: 'FDOPE2', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      {
+        name: 'FDOPE2',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
+      },
+      {
+        name: 'FDOPE2',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet risus quis tellus maximus ullamcorper. Cras condimentum non nisl eget.',
+      },
+      { name: 'you', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      { name: 'FDOPE2', content: 'hello' },
+      { name: 'you', content: 'hello' },
+    ],
+  },
+
+  {
+    id: 3,
+    name: 'FDOPE3',
+    date: '9월 9일',
+    talk: [
+      { name: 'FDOPE3', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      {
+        name: 'FDOPE3',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
+      },
+      {
+        name: 'FDOPE3',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet risus quis tellus maximus ullamcorper. Cras condimentum non nisl eget.',
+      },
+      { name: 'you', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      { name: 'FDOPE3', content: 'hello' },
+      { name: 'you', content: 'hello' },
+    ],
+  },
+];

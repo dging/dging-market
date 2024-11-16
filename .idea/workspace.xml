@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="64c050f4-9c09-4f75-bb60-f58e7b68e6f5" name="Changes" comment="Changes" />
+    <list default="true" id="64c050f4-9c09-4f75-bb60-f58e7b68e6f5" name="Changes" comment="Changes">
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Button/Btn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Button/Btn.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Card/MainCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Card/MainCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Card/StoreReviewCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Card/StoreReviewCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Card/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Card/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CheckBox/CheckBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CheckBox/CheckBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/templates/MystoreKeep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/templates/MystoreKeep.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,19 +43,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feat/front__setting",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/kimhyejin/Desktop/dging-market",
-    "project.structure.last.edited": "프로젝트",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/front__setting&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/kimhyejin/Desktop/dging-market&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;프로젝트&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/backend/src/main/resources" />

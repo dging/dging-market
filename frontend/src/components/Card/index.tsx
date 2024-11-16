@@ -8,3 +8,5 @@ export { default as SellHistoryCard } from './SellHistoryCard';
 export { default as BuyHistoryCard } from './BuyHistoryCard';
 export { default as AdjustHistoryCard } from './AdjustHistoryCard';
 export { default as GoodsManageCard } from './GoodsManageCard';
+export { default as TalkProfileCard } from './TalkProfileCard';
+export { default as TalkDetailCard } from './TalkDetailCard';
