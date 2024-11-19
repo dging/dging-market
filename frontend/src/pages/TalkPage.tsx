@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ImgBtn } from '../components/Button';
 import { TalkProfileCard, TalkDetailCard } from '../components/Card';
 import { Arrange } from '../components/Base';
 import RoundArrowDown from '../assets/images/RoundDownArrow.png';
 import { profile_cheat, cheat } from '../utils/_data';
+import { number } from 'prop-types';
 
 const BackgroundTalk = styled.div`
   display: flex;
@@ -23,9 +24,10 @@ const WrapTitle = styled.div`
 `;
 
 const WrapTalk1 = styled.div`
+  box-sizing: border-box;
   display: flex;
   width: 570px;
-  height: 911px;
+  height: 913px;
   padding: 80px 0;
   background-color: white;
   border: 1px solid ${({ theme }) => theme.color.black5};
@@ -43,11 +45,11 @@ const WrapTalk2 = styled.div`
   border: 1px solid ${({ theme }) => theme.color.black5};
   border-radius: 16px;
   flex-direction: column;
-  gap: 10px;
 `;
 
 export default function TalkPage() {
   const [status, setStatus] = useState<number | null>(null);
+
   return (
     <BackgroundTalk>
       <Arrange display='flex' margin='0 auto' gap='20px'>
@@ -70,9 +72,12 @@ export default function TalkPage() {
             />
           ))}
         </WrapTalk1>
-        <WrapTalk2>
-          <TalkDetailCard />
-        </WrapTalk2>
+
+        {status !== null && (
+          <WrapTalk2>
+            <TalkDetailCard props={status} />
+          </WrapTalk2>
+        )}
       </Arrange>
     </BackgroundTalk>
   );

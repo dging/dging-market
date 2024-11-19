@@ -39,6 +39,7 @@ export const profile_cheat = [
     id: 0,
     name: 'FDOPE1',
     date: '9월 7일',
+
     content:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
   },
@@ -60,9 +61,12 @@ export const profile_cheat = [
 export const cheat = [
   {
     id: 0,
+    title: 'TEST1 - TEST1',
     name: 'FDOPE1',
+    price: 200000,
     date: '9월 7일',
     last_connect: '13일 전',
+    state: '무료배송',
     talk: [
       { name: 'FDOPE1', content: 'hello' },
       { name: 'you', content: 'hello' },
@@ -79,39 +83,45 @@ export const cheat = [
       { name: 'you', content: 'hello' },
       { name: 'you', content: 'hello' },
       { name: 'FDOPE1', content: 'hello' },
+      { name: 'you', content: 'hello' },
+    ],
+  },
+
+  {
+    id: 1,
+    title: 'TEST2 - TEST2',
+    name: 'FDOPE2',
+    price: 300000,
+    date: '9월 8일',
+    last_connect: '13일 전',
+    state: '무료배송',
+    talk: [
+      { name: 'FDOPE2', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      {
+        name: 'FDOPE2',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
+      },
+      {
+        name: 'FDOPE2',
+        content:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet risus quis tellus maximus ullamcorper. Cras condimentum non nisl eget.',
+      },
+      { name: 'you', content: 'hello' },
+      { name: 'you', content: 'hello' },
+      { name: 'FDOPE2', content: 'hello' },
       { name: 'you', content: 'hello' },
     ],
   },
 
   {
     id: 2,
-    name: 'FDOPE2',
-    date: '9월 8일',
-    last_connect: '13일 전',
-    talk: [
-      { name: 'FDOPE2', content: 'hello' },
-      { name: 'you', content: 'hello' },
-      {
-        name: 'FDOPE2',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a justo nec ipsum cursus sagittis nec ac enim. Sed aliquam.',
-      },
-      {
-        name: 'FDOPE2',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet risus quis tellus maximus ullamcorper. Cras condimentum non nisl eget.',
-      },
-      { name: 'you', content: 'hello' },
-      { name: 'you', content: 'hello' },
-      { name: 'FDOPE2', content: 'hello' },
-      { name: 'you', content: 'hello' },
-    ],
-  },
-
-  {
-    id: 3,
+    title: 'TEST3 - TEST3',
     name: 'FDOPE3',
+    price: 400000,
     date: '9월 9일',
+    state: '유료배송',
     talk: [
       { name: 'FDOPE3', content: 'hello' },
       { name: 'you', content: 'hello' },

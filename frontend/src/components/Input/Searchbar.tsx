@@ -35,26 +35,26 @@ const SearchInput = styled.input<{ $status?: boolean }>`
 `;
 
 export default function Searchbar(props: {
-  type?: boolean;
+  $type?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   const theme = useTheme();
 
   return (
     <WrapSearchbar
-      width={props.type ? '637px' : '570px'}
+      width={props.$type ? '637px' : '570px'}
       height='46px'
       padding={theme.size.xxs}
       display='flex'
       alignitems='center'
-      $status={props.type}
+      $status={props.$type}
       {...props}
     >
-      <ImgBtn as='div' $backgroundimage={props.type ? DiskGray : Search} />
+      <ImgBtn as='div' $backgroundimage={props.$type ? DiskGray : Search} />
       <SearchInput
-        placeholder={props.type ? '상품명 / 상점명 검색' : '상품명 검색'}
+        placeholder={props.$type ? '상품명 / 상점명 검색' : '상품명 검색'}
         onChange={props.onChange}
-        $status={props.type}
+        $status={props.$type}
       />
     </WrapSearchbar>
   );
