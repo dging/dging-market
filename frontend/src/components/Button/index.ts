@@ -5,3 +5,4 @@ export { default as RoundBtn } from './RoundBtn';
 export { default as IncludeImgBtn } from './IncludeImgBtn';
 export { default as DeclarationBtn } from './DeclarationBtn';
 export { default as NavigateBtn } from './NavigateBtn';
+export { default as RadioBtn } from './RadioBtn';

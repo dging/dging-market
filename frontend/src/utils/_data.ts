@@ -34,6 +34,39 @@ export const items3 = [
   'Rock 컴필레이션',
 ];
 
+export const category1 = ['CD', 'Vinyl', 'Cassette', 'DVD'];
+export const category2 = [
+  'POP',
+  'K-POP',
+  'J-POP',
+  'Rock',
+  '월드 뮤직',
+  '발라드',
+  'RAP/힙합',
+  '알앤비/소울',
+  '인디',
+  '일렉트로닉/하우스',
+  '뉴에이지',
+  '재즈/블루스',
+  '클래식',
+  '종교/명상',
+  '컴필레이션',
+  '포크',
+  '기타',
+];
+
+export const category3 = [
+  'Rock',
+  'British / Modern / Garage / Indie',
+  'Metal / Hardcore',
+  'Alternative / Grunge',
+  'Hard Rock',
+  'Punk',
+  'Art / Progressive / Psychedelic',
+  'Old Rock',
+  'Rock 컴필레이션',
+];
+
 export const profile_cheat = [
   {
     id: 0,

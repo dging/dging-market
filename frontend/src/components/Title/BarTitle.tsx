@@ -7,8 +7,8 @@ const WrapBarTitle = styled.div`
 `;
 
 export default function BarTitle(props: {
-  title?: string;
+  children?: React.ReactNode;
   style?: React.CSSProperties;
 }) {
-  return <WrapBarTitle style={props.style}>| {props.title}</WrapBarTitle>;
+  return <WrapBarTitle style={props.style}>| {props.children}</WrapBarTitle>;
 }

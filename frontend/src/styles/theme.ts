@@ -104,6 +104,16 @@ const font = {
     fontSize: '16px',
     letterSpacing: '-1.6px',
   },
+  category18: {
+    fontFamily: 'NSRegular',
+    fontSize: '18px',
+    letterSpacing: '-1.8px',
+  },
+  category18_bold: {
+    fontFamily: 'NSBold',
+    fontSize: '18px',
+    letterSpacing: '-1.8px',
+  },
   price18: {
     fontFamily: 'NSExtraBold',
     fontSize: '18px',

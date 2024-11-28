@@ -37,7 +37,7 @@ export default function StoreInfo() {
       flexdirection='column'
       gap='50px'
     >
-      <BarTitle title='상점정보' style={{ width: '100%', ...theme.font.r18 }} />
+      <BarTitle style={{ width: '100%', ...theme.font.r18 }}>상점정보</BarTitle>
 
       <Arrange
         display='flex'

@@ -10,6 +10,7 @@ export interface BtnType {
   padding?: string;
   borderradius?: string;
   $status?: boolean;
+  $location?: string;
   $backgroundimage?: string;
   $backgroundcolor?: any;
   $backgroundposition?: string;

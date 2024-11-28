@@ -23,7 +23,7 @@ function GoodsInfo() {
       gap='50px'
       padding='0 20px 0 0'
     >
-      <BarTitle title='상품정보' style={{ ...theme.font.r18 }} />
+      <BarTitle style={{ ...theme.font.r18 }}>상품정보</BarTitle>
       <Arrange width='747px' style={{ ...theme.font.body14 }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non risus
         pharetra, egestas orci eget, suscipit nisi. Duis est arcu, tempus non
