@@ -24,7 +24,7 @@ const RoundButton = styled(Btn)<BtnType>`
 
 export default function RoundBtn(props: BtnType) {
   const path = useLocation().pathname;
-  console.log(location);
+
   return (
     <RoundButton
       {...props}

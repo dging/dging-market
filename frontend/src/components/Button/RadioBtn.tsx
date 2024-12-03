@@ -58,13 +58,12 @@ interface RadioBtnType {
 }
 
 export default function RadioBtn(props: RadioBtnType) {
-  console.log(props.inputValue);
   const [currentStatus, setCurrentStatus] = useState(0);
 
   return (
     <Arrange display='flex' flexdirection='column' gap='40px'>
       {props.inputValue.map((val, idx) => (
-        <RadioWrapper defaultChecked={idx === currentStatus}>
+        <RadioWrapper defaultChecked={idx === currentStatus} key={idx}>
           <RadioInput
             type='radio'
             name={props.name}

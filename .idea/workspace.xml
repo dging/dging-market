@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="64c050f4-9c09-4f75-bb60-f58e7b68e6f5" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Base/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Base/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Button/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Button/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Title/BarTitle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Title/BarTitle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/SellPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/SellPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/templates/GoodsInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/templates/GoodsInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/templates/StoreInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/templates/StoreInfo.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="64c050f4-9c09-4f75-bb60-f58e7b68e6f5" name="Changes" comment="Changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

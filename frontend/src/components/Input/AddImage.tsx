@@ -36,7 +36,11 @@ export default function AddImage() {
       <AddImageLabel htmlFor='file'>
         <AddImageDiv>파일 업로드하기</AddImageDiv>
       </AddImageLabel>
-      <AddImageInput type='file' name='file' />
+      <AddImageInput
+        type='file'
+        name='file'
+        onChange={() => console.log('image')}
+      />
     </>
   );
 }

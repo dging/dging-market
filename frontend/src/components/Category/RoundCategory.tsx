@@ -11,7 +11,10 @@ const WrapRoundCategory = styled.div`
   flex-wrap: wrap;
 `;
 
-export default function RoundCategory(props: { words: Array<string> }) {
+export default function RoundCategory(props: {
+  words: Array<string>;
+  action?: any;
+}) {
   const [status, setStatus] = useState(0);
 
   return (
@@ -20,7 +23,9 @@ export default function RoundCategory(props: { words: Array<string> }) {
         <RoundBtn
           key={index}
           $status={status === index}
-          onClick={() => setStatus(index)}
+          onClick={() => {
+            setStatus(index);
+          }}
         >
           {value}
         </RoundBtn>
