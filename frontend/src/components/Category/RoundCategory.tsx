@@ -25,6 +25,7 @@ export default function RoundCategory(props: {
           $status={status === index}
           onClick={() => {
             setStatus(index);
+            props.action?.();
           }}
         >
           {value}

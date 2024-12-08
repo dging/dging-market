@@ -11,9 +11,9 @@ interface SellCategory {
   third: string;
 }
 
-export const SellImage = atom({
+export const SellImage = atom<string[]>({
   key: 'SellImage',
-  default: [] as SellImageType[],
+  default: [],
 });
 
 export const SellName = atom({
@@ -21,17 +21,13 @@ export const SellName = atom({
   default: '',
 });
 
-export const SellCategory = atom({
+export const SellCategory = atom<string[]>({
   key: 'SellCategory',
-  default: {
-    first: '',
-    second: '',
-    third: '',
-  },
+  default: ['', '', '', ''],
 });
 
-export const SellStates = atom({
-  key: 'SellStates',
+export const SellState = atom({
+  key: 'SellState',
   default: '',
 });
 
@@ -40,9 +36,9 @@ export const SellDescription = atom({
   default: '',
 });
 
-export const SellTag = atom({
+export const SellTag = atom<string[]>({
   key: 'SellTag',
-  default: ['test1'],
+  default: [],
 });
 
 export const SellPrice = atom({
@@ -50,9 +46,23 @@ export const SellPrice = atom({
   default: '',
 });
 
+export const SellProposal = atom({
+  key: 'SellProposal',
+  default: false,
+});
+
 export const SellDeliveryFee = atom({
   key: 'SellDeliveryFee',
   default: '',
+});
+
+export const SellAddress = atom({
+  key: 'SellAddress',
+  default: {
+    zonecode: '',
+    address: '',
+    detailAddress: '',
+  },
 });
 
 export const SellDirect = atom({
@@ -65,25 +75,25 @@ export const SellCount = atom({
   default: '',
 });
 
-export const SellState = atom({
-  key: 'SellState',
-  default: {
-    image: [],
-    title: 'test',
-    category: {
-      first: '',
-      second: '',
-      third: '',
-    },
-    state: '',
-    description: 'description test',
-    tag: [],
-    price: '',
-    deliveryfee: '',
-    direct: {
-      state: false,
-      address: '',
-    },
-    count: '',
-  },
-});
+// export const SellState = atom({
+//   key: 'SellState',
+//   default: {
+//     image: [],
+//     title: 'test',
+//     category: {
+//       first: '',
+//       second: '',
+//       third: '',
+//     },
+//     state: '',
+//     description: 'description test',
+//     tag: ['tag1'],
+//     price: '',
+//     deliveryfee: '',
+//     direct: {
+//       state: false,
+//       address: '',
+//     },
+//     count: '',
+//   },
+// });

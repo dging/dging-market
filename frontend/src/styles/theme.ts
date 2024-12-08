@@ -227,6 +227,10 @@ const font = {
     fontSize: '14px',
     letterSpacing: '-0.28px',
   },
+  eb18: {
+    fontFamily: 'NSExtraBold',
+    fontSize: '18px',
+  },
   eb18_ls2: {
     fontFamily: 'NSExtraBold',
     fontSize: '18px',

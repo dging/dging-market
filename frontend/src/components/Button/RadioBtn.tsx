@@ -50,6 +50,7 @@ export const RadioIcon = styled.span`
 
 interface RadioBtnType {
   inputValue: Array<string>;
+  setValue?: any;
   name: string;
   disabled?: boolean;
   defaultChecked?: boolean;
@@ -58,10 +59,15 @@ interface RadioBtnType {
 }
 
 export default function RadioBtn(props: RadioBtnType) {
-  const [currentStatus, setCurrentStatus] = useState(0);
+  const [currentStatus, setCurrentStatus] = useState<number | null>(null);
 
   return (
-    <Arrange display='flex' flexdirection='column' gap='40px'>
+    <Arrange
+      display='flex'
+      flexdirection='column'
+      gap='40px'
+      height={`${40 * (props.inputValue.length - 1) + 21}px`}
+    >
       {props.inputValue.map((val, idx) => (
         <RadioWrapper defaultChecked={idx === currentStatus} key={idx}>
           <RadioInput
@@ -70,7 +76,10 @@ export default function RadioBtn(props: RadioBtnType) {
             value={val}
             disabled={false}
             defaultChecked={idx === currentStatus}
-            onChange={() => setCurrentStatus(idx)}
+            onChange={() => {
+              setCurrentStatus(idx);
+              props.setValue?.(val);
+            }}
           />
           <RadioIcon defaultChecked={idx === currentStatus}>
             <Arrange width='100px' margin='-2px 0 0 24px'>

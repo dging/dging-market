@@ -7,17 +7,17 @@ import {
 } from '../layout/Layout';
 
 import {
-  MystoreGoods,
-  MystoreReview,
-  MystoreKeep,
-  MystoreFollowing,
-  MystoreFollower,
+  MystoreGoodsTemplate,
+  MystoreReviewTemplate,
+  MystoreKeepTemplate,
+  MystoreFollowingTemplate,
+  MystoreFollowerTemplate,
   SellHistoryTemplate,
   BuyHistoryTemplate,
   AdjustmentTemplate,
 } from '../templates';
 
-import { MainSearchMenu } from '../components/Menu';
+import { MainSearchMenu } from '../section/Menu';
 
 import {
   MainPage,
@@ -81,23 +81,23 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/mystore/goods',
-            element: <MystoreGoods />,
+            element: <MystoreGoodsTemplate />,
           },
           {
             path: '/mystore/review',
-            element: <MystoreReview />,
+            element: <MystoreReviewTemplate />,
           },
           {
             path: '/mystore/keep',
-            element: <MystoreKeep />,
+            element: <MystoreKeepTemplate />,
           },
           {
             path: '/mystore/following',
-            element: <MystoreFollowing />,
+            element: <MystoreFollowingTemplate />,
           },
           {
             path: '/mystore/follower',
-            element: <MystoreFollower />,
+            element: <MystoreFollowerTemplate />,
           },
         ],
       },

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { MainGoodsMenu, MainSearchMenu } from '../components/Menu';
+import { MainGoodsMenu, MainSearchMenu } from '../section/Menu';
 import { Arrange } from '../components/Base';
 import { MainCard } from '../components/Card';
 import { UnderlineTitle } from '../components/Title';

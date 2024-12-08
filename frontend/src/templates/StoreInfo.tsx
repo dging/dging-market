@@ -4,7 +4,7 @@ import { Arrange } from '../components/Base';
 import { IncludeImgBtn } from '../components/Button';
 import { StoreReviewCard } from '../components/Card';
 import { BarTitle } from '../components/Title';
-import { SmallStoreProfile } from '../components/Profile';
+import { SmallStoreProfile } from '../section/Profile';
 import RightArrowBlack from '../assets/images/RightArrowBlack.png';
 
 const TitleH3 = styled.div`

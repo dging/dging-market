@@ -5,7 +5,7 @@ import ImgBtn from '../../components/Button/ImgBtn';
 import Searchbar from '../../components/Input/Searchbar';
 import Arrange from '../../components/Base/Arrange';
 import Logo from '../../assets/images/Logo.png';
-import MainHeaderMenu from '../../components/Menu/MainHeaderMenu';
+import MainHeaderMenu from '../../section/Menu/MainHeaderMenu';
 
 export default function MainHeader() {
   const navigate = useNavigate();
