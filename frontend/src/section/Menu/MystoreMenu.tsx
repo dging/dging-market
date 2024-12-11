@@ -31,7 +31,12 @@ export default function MystoreMenu() {
       justifycontent='center'
     >
       <Arrange width={theme.page_size.width}>
-        <Arrange display='flex' gap='50px' padding={`${theme.size.xl} 0px`}>
+        <Arrange
+          display='flex'
+          gap='50px'
+          padding={`${theme.size.xl} 0px`}
+          alignitems='center'
+        >
           <IncludeImgBtn
             $change={getPath() === '/sell'}
             $leftbgimg={DiskBlack}

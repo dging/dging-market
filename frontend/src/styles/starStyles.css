@@ -1,0 +1,8 @@
+.custom-star > span {
+  margin-right: 5px;
+  -webkit-text-stroke: 1px #868b94;
+}
+
+.custom-star > span:last-child {
+  margin-right: 0;
+}
