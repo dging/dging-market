@@ -9,9 +9,10 @@ import { CheckBox } from '../../components/CheckBox';
 import { ShowModal } from '../../recoil/reviewModal/atom';
 import CloseGray from '../../assets/images/CloseGray.png';
 import LeftArrowGray from '../../assets/images/LeftArrowGray.png';
-import RightArrowPink from '../../assets/images/RightArrowPink.png';
+import RightArrowGray from '../../assets/images/RightArrowGray.png';
 import CheckBorderGray from '../../assets/images/CheckBorderGray.png';
 import CheckBorderPink from '../../assets/images/CheckBorderPink.png';
+import '../../styles/starStyles.css';
 
 export default function ThirdQuestion(props: {
   setValue: React.Dispatch<React.SetStateAction<number>>;
@@ -19,34 +20,20 @@ export default function ThirdQuestion(props: {
   const theme = useTheme();
   return (
     <>
-      ThirdQuestion
-      <Arrange width='100%' display='flex' justifycontent='space-between'>
+      <ReactStars count={5} size={30} color1='white' className='custom-star' />
+      <Arrange width='100%' display='flex' margin='40px 0 0 0'>
         <IncludeImgBtn
-          $leftbgimg={LeftArrowGray}
-          $leftimgwidth='20px'
-          $leftimgheight='20px'
-          text='이전'
+          text='다음'
           textstyle={{
-            marginTop: '2px',
             color: theme.color.black2,
             ...theme.font.r16,
           }}
-          gap='0px'
-          onClick={() => props.setValue(1)}
-        />
-
-        <IncludeImgBtn
-          text='등록'
-          textstyle={{
-            marginTop: '2px',
-            color: theme.color.pink100,
-            ...theme.font.r16,
-          }}
-          $rightbgimg={RightArrowPink}
+          $rightbgimg={RightArrowGray}
           $rightimgwidth='20px'
           $rightimgheight='20px'
           gap='0px'
-          onClick={() => props.setValue(3)}
+          mainstyle={{ marginLeft: 'auto' }}
+          onClick={() => props.setValue(1)}
         />
       </Arrange>
     </>

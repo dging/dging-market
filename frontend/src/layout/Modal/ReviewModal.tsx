@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useRecoilState } from 'recoil';
+import ReactStars from 'react-stars';
 import { FirstQuestion, SecondQuestion, ThirdQuestion } from '../Modal';
 import { Arrange } from '../../components/Base';
 import { Btn, ImgBtn } from '../../components/Button';

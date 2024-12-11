@@ -13,7 +13,7 @@ const ImageButton = styled.button<BtnType>`
   width: ${(props) => props.width || '24px'};
   height: ${(props) => props.height || '24px'};
   padding: 0;
-  margin: 0;
+  margin: ${(props) => props.margin || '0px'};
   background-image: url(${(props) => props.$backgroundimage || null});
   background-position: ${(props) => props.$backgroundposition || '100%'};
   background-color: ${(props) => props.$backgroundcolor || 'transparent'};

@@ -1,5 +1,8 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
+import { ShowModal } from '../../recoil/reviewModal/atom';
+import { useRecoilState } from 'recoil';
+import { ReviewModal } from '../../layout/Modal';
 import { Arrange } from '../../components/Base';
 import { ImgBtn } from '../../components/Button';
 import { Searchbar } from '../../components/Input';
@@ -9,9 +12,11 @@ import { words } from '../../utils/_data';
 import Filter from '../../assets/images/Filter.png';
 
 export default function SellHistoryTemplate() {
+  const [showModal, setShowModal] = useRecoilState(ShowModal);
   const theme = useTheme();
   return (
     <Arrange width={theme.page_size.width} margin='0 auto'>
+      {showModal && <ReviewModal />}
       <Arrange
         width='100%'
         display='flex'

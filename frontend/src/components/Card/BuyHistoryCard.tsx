@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
+
 import { Arrange } from '../Base';
 import { Btn, ImgBtn, IncludeImgBtn } from '../Button';
 import Test from '../../assets/images/Test.png';
@@ -60,6 +61,7 @@ export default function BuyHistoryCard(props: {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   const theme = useTheme();
+
   const [status, setStatus] = useState(false);
   const [text, setText] = useState('거래완료');
 

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { ShowModal } from '../../recoil/reviewModal/atom';
 import { Arrange } from '../Base';
 import { Btn, ImgBtn, IncludeImgBtn } from '../Button';
 import Test from '../../assets/images/Test.png';
@@ -42,6 +44,7 @@ export default function SellHistoryCard(props: {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   const theme = useTheme();
+  const [showModal, setShowModal] = useRecoilState(ShowModal);
   const [status, setStatus] = useState(false);
   const [text, setText] = useState('취소 / 환불');
 
@@ -83,7 +86,10 @@ export default function SellHistoryCard(props: {
           height='30px'
           padding='0px'
           $status={status}
-          onClick={() => setStatus(!status)}
+          onClick={() => {
+            setStatus(!status);
+            setShowModal(true);
+          }}
         >
           {status ? '후기 남기기' : '후기 수정하기'}
         </Btn>
