@@ -2,14 +2,8 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import ReactStars from 'react-stars';
-import { Arrange } from '../Base';
-import { ImgBtn, DeclarationBtn, NavigateBtn } from '../Button';
-import DefaultProfile from '../../assets/images/DefaultProfile.png';
-
-const WrapCard = styled(Arrange)`
-  border: 1px solid ${({ theme }) => theme.color.black5};
-  border-radius: ${({ theme }) => theme.size.xxxxxs};
-`;
+import { Arrange, DeclarationBtn, NavigateBtn } from '../../components';
+import { DefaultProfile } from '../../assets/images';
 
 const Profile = styled.div<{ $bgimg?: any; $location: boolean }>`
   width: ${(props) => (props.$location ? '72px' : '48px')};

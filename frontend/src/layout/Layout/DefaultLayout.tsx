@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { useTheme } from 'styled-components';
-import { Arrange, WrapLayout } from '../../components/Base';
+import { Arrange } from '../../components';
 import { LoginHeader, MainHeader } from '../Header';
 import Footer from '../Footer/Footer';
 

@@ -1,12 +1,15 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
-import { Arrange } from '../components/Base';
-import { ImgBtn } from '../components/Button';
-import { Searchbar } from '../components/Input';
-import { SellHistoryCard } from '../components/Card';
-import { RoundCategory, TradeCategory } from '../components/Category';
+import {
+  Arrange,
+  ImgBtn,
+  Searchbar,
+  SellHistoryCard,
+  RoundCategory,
+  TradeCategory,
+} from '../components';
 import { words } from '../utils/_data';
-import Filter from '../assets/images/Filter.png';
+import { Filter } from '../assets/images';
 
 export default function HistoryPage() {
   const theme = useTheme();
@@ -32,11 +35,11 @@ export default function HistoryPage() {
         padding='50px 0'
         style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
       >
+        {/* <SellHistoryCard />
         <SellHistoryCard />
         <SellHistoryCard />
         <SellHistoryCard />
-        <SellHistoryCard />
-        <SellHistoryCard />
+        <SellHistoryCard /> */}
       </Arrange>
     </Arrange>
   );

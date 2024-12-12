@@ -1,16 +1,8 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled, { useTheme } from 'styled-components';
-import { Arrange, SpanGray } from '../../components/Base';
-import { RadioBtn, RoundBtn } from '../../components/Button';
-import { RoundCategory, SellRoundCategory } from '../../components/Category';
-import { UnderlineTitle, BarTitle } from '../../components/Title';
-import { AddImage } from '../../components/Input';
-import { category1, category2, category3 } from '../../utils/_data';
-import { onPressEnter } from '../../utils/onPressEnter';
+import { Arrange, BarTitle } from '../../components';
 import { SellName } from '../../recoil/sell/atom';
-import { useSell } from '../../recoil/sell/useSell';
 
 const WrapContent = styled.div`
   display: flex;

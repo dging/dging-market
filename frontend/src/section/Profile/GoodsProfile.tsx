@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import ReactStars from 'react-stars';
-import { Arrange, SpanBold } from '../../components/Base';
 import {
-  ImgBtn,
-  SmallBtn,
-  IncludeImgBtn,
+  Arrange,
   DeclarationBtn,
-} from '../../components/Button';
-import Test from '../../assets/images/Test.png';
-import HeartEmpty from '../../assets/images/HeartEmpty.png';
-import Time from '../../assets/images/Time.png';
-import Eye from '../../assets/images/Eye.png';
-import HeartFill from '../../assets/images/HeartFill.png';
-import MessageFill from '../../assets/images/MessageFill.png';
-import PayImmediately from '../../assets/images/PayImmediately.png';
-import StoreManagement from '../../assets/images/StoreManagement.png';
+  ImgBtn,
+  IncludeImgBtn,
+  SmallBtn,
+  SpanBold,
+} from '../../components';
+
+import {
+  HeartEmpty,
+  HeartFill,
+  Eye,
+  Test,
+  Time,
+  MessageFill,
+  PayImmediately,
+  StoreManagement,
+} from '../../assets/images';
 
 const WrapStoreImage = styled.div<{ $bg?: string }>`
   width: 472px;

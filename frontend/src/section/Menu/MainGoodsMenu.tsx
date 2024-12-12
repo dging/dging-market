@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import { ImgBtn } from '../../components/Button';
-import { BtnType } from '../../types/types';
-import CD from '../../assets/images/CD.png';
-import Cassette from '../../assets/images/Cassette.png';
-import DVD from '../../assets/images/DVD.png';
-import Vinyl from '../../assets/images/Vinyl.png';
+import { Arrange, ImgBtn } from '../../components';
+import { Cassette, CD, DVD, Vinyl } from '../../assets/images';
 
 const WrapMainGoodsMenu = styled(Arrange)`
   background-color: ${({ theme }) => theme.color.pink1};

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { Btn } from '../Button';
-import { Arrange } from '../Base';
+import { Arrange, Btn } from '../../components';
 
 const WrapTradeCategory = styled(Arrange)`
   border: 1px solid ${({ theme }) => theme.color.black1};

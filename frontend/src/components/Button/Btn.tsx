@@ -1,7 +1,6 @@
 import React from 'react';
-import { styled } from 'styled-components';
-import Arrange from '../Base/Arrange';
-import { BtnType, BtnButtonType } from '../../types/types';
+import styled from 'styled-components';
+import { BtnType } from '../../types/types';
 
 const Button = styled.button<BtnType>`
   box-sizing: border-box;
@@ -23,19 +22,8 @@ const Button = styled.button<BtnType>`
 
 export default function Btn(props: BtnType) {
   return (
-    // <WrapBtn margin={props.margin}>
     <Button {...props} onClick={props.onClick} style={props.style}>
       {props.children}
-      {/* <Arrange
-        width='100%'
-        height='16px'
-        display='flex'
-        alignitems='center'
-        justifycontent='center'
-      >
-        
-      </Arrange> */}
     </Button>
-    // </WrapBtn>
   );
 }

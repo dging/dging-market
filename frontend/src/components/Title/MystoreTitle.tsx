@@ -1,8 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../Base';
-import DropBox from '../DropBox/DropBox';
+import { Arrange, DropBox } from '../../components';
 
 const WrapTitle = styled(Arrange)<{ $location?: boolean }>`
   ${({ theme }) => theme.font.b24};

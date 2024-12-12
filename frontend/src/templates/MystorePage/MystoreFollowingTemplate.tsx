@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import { FollowingCard } from '../../components/Card';
+import { useTheme } from 'styled-components';
+import { Arrange, FollowingCard } from '../../components';
 
 export default function MystoreFollowingTemplate() {
   const type = ['최신순', '인기순', '저가순', '고가순'];

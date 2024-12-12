@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import RoundButton from '../../components/Button/RoundBtn';
-import { StoreReviewScoreCard, StoreReviewCard } from '../../components/Card';
-import StoreProfile from '../../section/Profile/StoreProfile';
-import { MystoreMainMenu } from '../../section/Menu';
+import {
+  Arrange,
+  StoreReviewScoreCard,
+  StoreReviewCard,
+} from '../../components';
 
 const WrapBlack = styled(Arrange)`
   ${({ theme }) => theme.font.r18}

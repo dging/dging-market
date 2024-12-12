@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import ReactStars from 'react-stars';
-import { Arrange } from '../Base';
+import { Arrange } from '../../components';
 
 const WrapScoreCard = styled(Arrange)`
   border: 1px solid ${({ theme }) => theme.color.black5};

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import Arrange from '../../components/Base/Arrange';
-import Btn from '../../components/Button/Btn';
+import { Arrange, Btn } from '../../components';
 import { setState } from '../../utils/setState';
-import DownArrow from '../../assets/images/DownArrowBlack.png';
-import NoAlert from '../../assets/images/NoAlert.png';
+import { DownArrowBlack, NoAlert } from '../../assets/images';
 
 const WrapAlert = styled(Arrange)`
   right: 0;
-  /* bottom: 56px; */
+  top: 35px;
 
   background-color: white;
   border: 1px solid ${({ theme }) => theme.color.black1};
@@ -19,6 +17,7 @@ const WrapAlert = styled(Arrange)`
 `;
 
 const AlertBtn = styled(Btn)<{ $open?: boolean }>`
+  height: 36px;
   border-bottom-left-radius: ${(props) =>
     props.$open ? '0px' : props.theme.color.black1};
   border-bottom-right-radius: ${(props) =>
@@ -42,7 +41,7 @@ export default function Alert() {
               width={`${theme.size.m}`}
               height={`${theme.size.m}`}
               margin='0 0 0 4px'
-              $backgroundimage={DownArrow}
+              $backgroundimage={DownArrowBlack}
             />
           </Arrange>
         </AlertBtn>

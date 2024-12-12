@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Arrange } from '../Base';
-import { ImgBtn } from '../Button';
-import Test from '../../assets/images/Test.png';
+import { Arrange, ImgBtn } from '../../components';
+import { Test } from '../../assets/images';
 
 const WrapTalkCard = styled.div<{ $status?: boolean }>`
   box-sizing: border-box;

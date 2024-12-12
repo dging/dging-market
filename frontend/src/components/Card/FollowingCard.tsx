@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../Base';
-import { ImgBtn, IncludeImgBtn } from '../Button';
-import { CheckBox } from '../CheckBox';
+import { Arrange, ImgBtn } from '../../components';
 import { BtnType } from '../../types/types';
-import Test from '../../assets/images/Test.png';
-import UserCheck from '../../assets/images/UserCheck.png';
+import { Test, UserCheck } from '../../assets/images';
 
 const Ring = styled.div`
   width: 4px;
@@ -13,8 +10,6 @@ const Ring = styled.div`
   border: 3px solid ${({ theme }) => theme.color.black0};
   border-radius: 10px;
 `;
-
-const FollowingImg = styled(ImgBtn)<BtnType>``;
 
 const Name = styled(Arrange)`
   color: white;

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { BarTitle } from '../../components/Title';
-import { SellInput } from '../../components/Input';
+import { BarTitle, SellInput } from '../../components';
 import { SellCount } from '../../recoil/sell/atom';
 
 const WrapContent = styled.div`

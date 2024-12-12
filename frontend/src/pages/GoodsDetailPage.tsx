@@ -1,8 +1,8 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import { Arrange } from '../components/Base';
-import { GoodsProfile } from '../section/Profile';
+import styled, { useTheme } from 'styled-components';
+import { Arrange } from '../components';
+import { GoodsProfile } from '../section';
 import { GoodsInfo, StoreInfo } from '../templates';
 
 const WrapInfo = styled.div`

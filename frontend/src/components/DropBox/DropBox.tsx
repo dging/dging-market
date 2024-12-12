@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import Btn from '../Button/Btn';
-import ImgBtn from '../Button/ImgBtn';
+import { Arrange, Btn, ImgBtn } from '../../components';
 import { BtnType, ArrangeType } from '../../types/types';
-import Arrange from '../Base/Arrange';
-import DownArrowBlack from '../../assets/images/DownArrowBlack.png';
+import { DownArrowBlack } from '../../assets/images';
 
 type DropBoxType = BtnType & {
   items: Array<string>;

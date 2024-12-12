@@ -1,9 +1,6 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import Arrange from '../../components/Base/Arrange';
-import Btn from '../../components/Button/Btn';
-import Alert from '../../components/Alert/Alert';
+import { useTheme } from 'styled-components';
+import { Arrange, Btn, Alert } from '../../components';
 
 export default function LoginHeader() {
   const theme = useTheme();

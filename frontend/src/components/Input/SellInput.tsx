@@ -1,6 +1,6 @@
 import React from 'react';
-import { styled, useTheme } from 'styled-components';
-import { SpanGray } from '../Base';
+import styled from 'styled-components';
+import { SpanGray } from '../../components';
 
 const WrapShortInput = styled.div`
   display: flex;

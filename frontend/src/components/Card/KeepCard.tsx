@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../Base';
-import { ImgBtn } from '../Button';
-import { CheckBox } from '../CheckBox';
-import Reservation from '../../assets/images/Reservation.png';
-import Soldout from '../../assets/images/Soldout.png';
-import CheckBorderWhite from '../../assets/images/CheckBorderWhite.png';
-import CheckBorderGray from '../../assets/images/CheckBorderGray.png';
-import Test from '../../assets/images/Test.png';
+import { Arrange, ImgBtn, CheckBox } from '../../components';
+import {
+  Reservation,
+  Soldout,
+  CheckBorderWhite,
+  CheckBorderGray,
+  Test,
+} from '../../assets/images';
 
 const WrapCard = styled(Arrange)`
   width: 570px;

@@ -1,10 +1,8 @@
 import React from 'react';
-import { Arrange, WrapLayout } from '../../components/Base';
 import { Outlet } from 'react-router-dom';
-import StoreProfile from '../../section/Profile/StoreProfile';
-import { MystoreTitle } from '../../components/Title';
-import { MystoreMainMenu } from '../../section/Menu';
 import { useTheme } from 'styled-components';
+import { Arrange, MystoreTitle } from '../../components';
+import { MystoreMainMenu, StoreProfile } from '../../section';
 
 export default function MystoreLayout() {
   const theme = useTheme();

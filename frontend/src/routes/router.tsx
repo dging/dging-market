@@ -12,9 +12,11 @@ import {
   MystoreKeepTemplate,
   MystoreFollowingTemplate,
   MystoreFollowerTemplate,
+  AdjustmentTemplate,
   SellHistoryTemplate,
   BuyHistoryTemplate,
-  AdjustmentTemplate,
+  SellDetailHistoryTemplate,
+  BuyDetailHistoryTemplate,
 } from '../templates';
 
 import { MainSearchMenu } from '../section/Menu';
@@ -131,6 +133,14 @@ export const router = createBrowserRouter([
               {
                 path: '/history/adjust',
                 element: <AdjustmentTemplate />,
+              },
+              {
+                path: `/history/sell/:id`,
+                element: <SellHistoryTemplate />,
+              },
+              {
+                path: `/history/buy/:id`,
+                element: <BuyDetailHistoryTemplate />,
               },
             ],
           },

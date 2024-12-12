@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Arrange } from '../Base';
-import { ImgBtn } from '../Button';
-import Declaration from '../../assets/images/Declaration.png';
+import { Arrange, ImgBtn } from '../../components';
+import { Declaration } from '../../assets/images';
 
 const DeclarationButton = styled.button`
   display: flex;

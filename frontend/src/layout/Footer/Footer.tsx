@@ -1,12 +1,10 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
-import Arrange from '../../components/Base/Arrange';
-import SpanBold from '../../components/Base/SpanBold';
-import ImgBtn from '../../components/Button/ImgBtn';
-import Github from '../../assets/images/Github.png';
+import styled from 'styled-components';
+import { Arrange, SpanBold, ImgBtn } from '../../components';
+import { Github } from '../../assets/images';
 
 const WrapFooter = styled(Arrange)`
-  min-width: 1160px;
+  min-width: ${({ theme }) => theme.page_size.width};
   padding: ${({ theme }) => theme.size.xxxxxl};
   color: ${({ theme }) => theme.color.black2};
   ${({ theme }) => theme.font.body16};

@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import styled, { useTheme } from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import { useSell } from '../../recoil/sell/useSell';
-import { Arrange } from '../../components/Base';
-import { RadioBtn } from '../../components/Button';
-import { UnderlineTitle, BarTitle } from '../../components/Title';
+import { Arrange, RadioBtn, UnderlineTitle, BarTitle } from '../../components';
 
 const Wrap = styled.div<{ gap?: number }>`
   display: flex;

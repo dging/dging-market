@@ -1,11 +1,13 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../components/Base';
-import { IncludeImgBtn } from '../components/Button';
-import { StoreReviewCard } from '../components/Card';
-import { BarTitle } from '../components/Title';
-import { SmallStoreProfile } from '../section/Profile';
-import RightArrowBlack from '../assets/images/RightArrowBlack.png';
+import {
+  Arrange,
+  BarTitle,
+  IncludeImgBtn,
+  StoreReviewCard,
+} from '../components';
+import { SmallStoreProfile } from '../section';
+import { RightArrowBlack } from '../assets/images';
 
 const TitleH3 = styled.div`
   width: 100%;

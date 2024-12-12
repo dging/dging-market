@@ -1,13 +1,13 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../components/Base';
-import { GoodsManageCard } from '../components/Card';
-import { DropBox } from '../components/DropBox';
-import { Searchbar } from '../components/Input';
-import { ImgBtn } from '../components/Button';
-import { RoundCategory, TradeCategory } from '../components/Category';
+import { useTheme } from 'styled-components';
+import {
+  Arrange,
+  DropBox,
+  GoodsManageCard,
+  RoundCategory,
+  Searchbar,
+} from '../components';
 import { words } from '../utils/_data';
-import Filter from '../assets/images/Filter.png';
 
 export default function GoodsManagePage() {
   const theme = useTheme();

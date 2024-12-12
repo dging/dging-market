@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Btn from './Btn';
 import IncludeImgBtn from './IncludeImgBtn';
 import RightArrowBlack from '../../assets/images/RightArrowBlack.png';
 

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { styled } from 'styled-components';
-import { ImgBtn, IncludeImgBtn } from '../../components/Button';
-import { Arrange } from '../../components/Base';
+import styled from 'styled-components';
+import { Arrange, ImgBtn, IncludeImgBtn } from '../../components';
 import StoreMenu from '../Menu/StoreMenu';
-
-import DiskBlack from '../../assets/images/DiskBlack.png';
-import MessageBlack from '../../assets/images/MessageBlack.png';
-import Store from '../../assets/images/Store.png';
-import DownArrowBlack from '../../assets/images/DownArrowBlack.png';
+import {
+  DownArrowBlack,
+  DiskBlack,
+  MessageBlack,
+  Store,
+} from '../../assets/images';
 
 const Bar = styled.div`
   width: 1px;

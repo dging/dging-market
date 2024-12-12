@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import { useRecoilState } from 'recoil';
-import ReactStars from 'react-stars';
-import { FirstQuestion } from '../Modal';
-import { Arrange } from '../../components/Base';
-import { ImgBtn, IncludeImgBtn } from '../../components/Button';
-import { CheckBox } from '../../components/CheckBox';
-import { ShowModal } from '../../recoil/reviewModal/atom';
-import CloseGray from '../../assets/images/CloseGray.png';
-import LeftArrowGray from '../../assets/images/LeftArrowGray.png';
-import RightArrowGray from '../../assets/images/RightArrowGray.png';
-import CheckBorderGray from '../../assets/images/CheckBorderGray.png';
-import CheckBorderPink from '../../assets/images/CheckBorderPink.png';
+import { useTheme } from 'styled-components';
+import { Arrange, CheckBox, IncludeImgBtn } from '../../components';
+import {
+  LeftArrowGray,
+  RightArrowGray,
+  CheckBorderGray,
+  CheckBorderPink,
+} from '../../assets/images';
 
 export default function SecondQuestion(props: {
   setValue: React.Dispatch<React.SetStateAction<number>>;
@@ -31,14 +26,17 @@ export default function SecondQuestion(props: {
     setCheckList(
       checkList.map((val, idx) => {
         if (key === 5 && val.value === false) {
+          // 마지막이 false일 때 누르면 나머지 모든 값이 false로 되고 마지막만 true로 되게
           console.log('check1');
           console.log('before:', checkList, key, idx);
           return { ...val, value: idx === key };
         } else if (key === 5 && val.value === true) {
+          // 마지막이 true일 때 다른 버튼 누르면 마지막 false되고 나머지 true로 되게
           console.log('check2');
           console.log('before:', checkList, key, idx);
           return { ...val, value: false };
         }
+        // 클릭 시 true, false 왔다갔다
         return idx === key ? { ...val, value: !val.value } : val;
       })
     );
@@ -122,7 +120,10 @@ export default function SecondQuestion(props: {
           $rightimgwidth='20px'
           $rightimgheight='20px'
           gap='0px'
-          onClick={() => props.setValue(2)}
+          onClick={() => {
+            props.setValue(2);
+            console.log('checkList : ', checkList);
+          }}
         />
       </Arrange>
     </>

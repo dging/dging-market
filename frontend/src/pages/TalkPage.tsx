@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ImgBtn } from '../components/Button';
-import { TalkProfileCard, TalkDetailCard } from '../components/Card';
-import { Arrange } from '../components/Base';
-import RoundArrowDown from '../assets/images/RoundDownArrow.png';
-import { profile_cheat, cheat } from '../utils/_data';
-import { number } from 'prop-types';
+import {
+  Arrange,
+  ImgBtn,
+  TalkProfileCard,
+  TalkDetailCard,
+} from '../components';
+import { RoundDownArrow } from '../assets/images';
+import { profile_cheat } from '../utils/_data';
 
 const BackgroundTalk = styled.div`
   display: flex;
@@ -60,7 +62,7 @@ export default function TalkPage() {
               as='div'
               width='24px'
               height='24px'
-              $backgroundimage={RoundArrowDown}
+              $backgroundimage={RoundDownArrow}
             />
           </Arrange>
           {profile_cheat.map((val, idx) => (

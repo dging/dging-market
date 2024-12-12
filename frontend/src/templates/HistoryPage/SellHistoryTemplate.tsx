@@ -1,19 +1,22 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
-import { ShowModal } from '../../recoil/reviewModal/atom';
-import { useRecoilState } from 'recoil';
+import { useReviewModal } from '../../recoil/reviewModal/useReviewModal';
 import { ReviewModal } from '../../layout/Modal';
-import { Arrange } from '../../components/Base';
-import { ImgBtn } from '../../components/Button';
-import { Searchbar } from '../../components/Input';
-import { SellHistoryCard } from '../../components/Card';
-import { RoundCategory, TradeCategory } from '../../components/Category';
-import { words } from '../../utils/_data';
-import Filter from '../../assets/images/Filter.png';
+import {
+  Arrange,
+  ImgBtn,
+  Searchbar,
+  SellHistoryCard,
+  RoundCategory,
+  TradeCategory,
+} from '../../components';
+import { sellData, words } from '../../utils/_data';
+import { Filter } from '../../assets/images';
 
 export default function SellHistoryTemplate() {
-  const [showModal, setShowModal] = useRecoilState(ShowModal);
   const theme = useTheme();
+  const { showModal } = useReviewModal();
+
   return (
     <Arrange width={theme.page_size.width} margin='0 auto'>
       {showModal && <ReviewModal />}
@@ -37,11 +40,9 @@ export default function SellHistoryTemplate() {
         padding='50px 0'
         style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
       >
-        <SellHistoryCard />
-        <SellHistoryCard />
-        <SellHistoryCard />
-        <SellHistoryCard />
-        <SellHistoryCard />
+        {sellData.map((val) => (
+          <SellHistoryCard content={val} key={val.id} />
+        ))}
       </Arrange>
     </Arrange>
   );

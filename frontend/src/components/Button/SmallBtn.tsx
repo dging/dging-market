@@ -1,7 +1,7 @@
 import React from 'react';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import Arrange from '../Base/Arrange';
-import { BtnType, BtnButtonType } from '../../types/types';
+import { BtnType } from '../../types/types';
 
 const Button = styled.button<BtnType>`
   box-sizing: border-box;
@@ -18,12 +18,10 @@ const Button = styled.button<BtnType>`
 
 export default function SmallBtn(props: BtnType) {
   return (
-    // <WrapBtn margin={props.margin}>
     <Button {...props} onClick={props.onClick}>
       <Arrange height='14px' display='flex' alignitems='center'>
         {props.children}
       </Arrange>
     </Button>
-    // </WrapBtn>
   );
 }

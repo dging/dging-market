@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
+import { Arrange } from '../../components';
 
 const DetailMenuButton = styled.button<{ $change: boolean }>`
   width: fit-content;

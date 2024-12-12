@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import { ImgBtn } from '../../components/Button';
-import DropBox from '../../components/DropBox/DropBox';
-import Home from '../../assets/images/Home.png';
-import RightArrowBlack from '../../assets/images/RightArrowBlack.png';
+import { Arrange, DropBox, ImgBtn } from '../../components';
+import { Home, RightArrowBlack } from '../../assets/images';
 
 const WrapMainSearchMenu = styled(Arrange)`
   background-color: ${({ theme }) => theme.color.pink1};

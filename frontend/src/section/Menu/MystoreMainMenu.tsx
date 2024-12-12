@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
 
 const WrapMenu = styled.div<{ $isOwner?: boolean }>`
   display: grid;

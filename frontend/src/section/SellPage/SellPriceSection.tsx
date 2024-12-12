@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { BarTitle } from '../../components/Title';
-import { SellInput } from '../../components/Input';
-import { SellPrice } from '../../recoil/sell/atom';
 import { useSell } from '../../recoil/sell/useSell';
-import PinkRoundCheck from '../../assets/images/PinkRoundCheck.png';
+import { SellInput } from '../../components';
+import { PinkRoundCheck } from '../../assets/images';
 
 const WrapContent = styled.div`
   display: flex;

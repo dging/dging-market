@@ -1,12 +1,13 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import { AdjustHistoryCard } from '../../components/Card';
-import { Searchbar } from '../../components/Input';
-import { ImgBtn } from '../../components/Button';
-import { RoundCategory, TradeCategory } from '../../components/Category';
-import { words } from '../../utils/_data';
-import Filter from '../../assets/images/Filter.png';
+import {
+  Arrange,
+  AdjustHistoryCard,
+  Searchbar,
+  TradeCategory,
+  ImgBtn,
+} from '../../components';
+import { Filter } from '../../assets/images';
 
 const Money = styled.div`
   display: flex;

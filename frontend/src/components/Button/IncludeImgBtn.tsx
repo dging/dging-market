@@ -61,10 +61,6 @@ LeftImg.defaultProps = {
   $leftbgchangeimg: null,
 };
 
-// Text.defaultProps = {
-//   textcolor: '#282828',
-// };
-
 RightImg.defaultProps = {
   $change: false,
   $rightbgimg: null,

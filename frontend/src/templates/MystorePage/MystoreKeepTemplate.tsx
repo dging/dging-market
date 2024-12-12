@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import { RoundBtn, ImgBtn } from '../../components/Button';
-import { CheckBox } from '../../components/CheckBox';
-import { KeepCard } from '../../components/Card';
-import CheckBorderWhite from '../../assets/images/CheckBorderWhite.png';
-import CheckBorderGray from '../../assets/images/CheckBorderGray.png';
+import { Arrange, CheckBox, KeepCard, RoundBtn } from '../../components';
+import { CheckBorderGray, CheckBorderWhite } from '../../assets/images';
 
 const SelectDeleteBtn = styled.button`
   height: 32px;

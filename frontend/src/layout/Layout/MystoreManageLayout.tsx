@@ -1,8 +1,8 @@
 import React from 'react';
-import { Arrange, WrapLayout } from '../../components/Base';
 import { Outlet } from 'react-router-dom';
-import { MystoreMenu } from '../../section/Menu';
 import { useTheme } from 'styled-components';
+import { Arrange } from '../../components';
+import { MystoreMenu } from '../../section';
 
 export default function MystoreManageLayout() {
   const theme = useTheme();

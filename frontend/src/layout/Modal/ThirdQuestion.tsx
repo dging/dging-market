@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import { useRecoilState } from 'recoil';
-import ReactStars from 'react-stars';
-import { FirstQuestion } from '../Modal';
-import { Arrange } from '../../components/Base';
-import { ImgBtn, IncludeImgBtn } from '../../components/Button';
-import { CheckBox } from '../../components/CheckBox';
-import { ShowModal } from '../../recoil/reviewModal/atom';
-import CloseGray from '../../assets/images/CloseGray.png';
-import LeftArrowGray from '../../assets/images/LeftArrowGray.png';
-import RightArrowPink from '../../assets/images/RightArrowPink.png';
-import CheckBorderGray from '../../assets/images/CheckBorderGray.png';
-import CheckBorderPink from '../../assets/images/CheckBorderPink.png';
+import React from 'react';
+import { useTheme } from 'styled-components';
+import { Arrange, IncludeImgBtn } from '../../components';
+import { LeftArrowGray, RightArrowPink } from '../../assets/images';
 
 export default function ThirdQuestion(props: {
   setValue: React.Dispatch<React.SetStateAction<number>>;

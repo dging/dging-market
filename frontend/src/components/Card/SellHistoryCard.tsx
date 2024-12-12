@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { ShowModal } from '../../recoil/reviewModal/atom';
-import { Arrange } from '../Base';
-import { Btn, ImgBtn, IncludeImgBtn } from '../Button';
-import Test from '../../assets/images/Test.png';
-import RightArrowBlack from '../../assets/images/RightArrowBlack.png';
+import { useReviewModal } from '../../recoil/reviewModal/useReviewModal';
+import { Arrange, Btn, ImgBtn, IncludeImgBtn } from '../../components';
+import { addComma } from '../../utils/addComma';
+import { Test, RightArrowBlack } from '../../assets/images';
 
 const WrapCard = styled(Arrange)`
   width: 570px;
@@ -38,15 +36,25 @@ const Date = styled(Arrange)`
   color: ${({ theme }) => theme.color.black2};
 `;
 
+interface ContentType {
+  id: number;
+  title: string;
+  price: string;
+  paydate: string;
+  buyer: string;
+  state: string;
+  tradeway: string;
+  review: boolean;
+}
+
 export default function SellHistoryCard(props: {
+  content: ContentType;
   $rightbgimg?: string;
   value?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   const theme = useTheme();
-  const [showModal, setShowModal] = useRecoilState(ShowModal);
-  const [status, setStatus] = useState(false);
-  const [text, setText] = useState('취소 / 환불');
+  const { setShowModal, modalInfo, setModalInfo } = useReviewModal();
 
   return (
     <WrapCard display='flex'>
@@ -60,9 +68,9 @@ export default function SellHistoryCard(props: {
       >
         <Arrange width='348px' display='flex' alignitems='center' gap='10px'>
           <Arrange width='100%' display='flex' justifycontent='space-between'>
-            <Title>Test - Test</Title>
+            <Title>{props.content.title}</Title>
             <IncludeImgBtn
-              text={text}
+              text={props.content.state || '오류'}
               font={theme.font.b16_ls8}
               textcolor={theme.color.black0}
               $rightimgwidth='20px'
@@ -73,25 +81,28 @@ export default function SellHistoryCard(props: {
           </Arrange>
         </Arrange>
         <Price width='100%' height='18px' display='flex' alignitems='center'>
-          200,000<Unit>원</Unit>
+          {addComma(props.content.price) || '0'}
+          <Unit>원</Unit>
         </Price>
         <Date width='100%'>
-          결제완료일 : 2024-10-14 22:49
+          결제완료일 : {props.content.paydate}
           <br />
-          구매자 : 닉네임
+          구매자 : {props.content.buyer}
         </Date>
 
         <Btn
           width='100%'
           height='30px'
           padding='0px'
-          $status={status}
+          $status={!props.content.review}
           onClick={() => {
-            setStatus(!status);
-            setShowModal(true);
+            if (!props.content.review) {
+              setShowModal(true);
+              setModalInfo({ ...modalInfo, name: props.content.buyer });
+            }
           }}
         >
-          {status ? '후기 남기기' : '후기 수정하기'}
+          {props.content.review ? '후기 수정하기' : '후기 남기기'}
         </Btn>
       </Arrange>
     </WrapCard>

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import styled, { useTheme } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import ReactStars from 'react-stars';
-import { Arrange, SpanBold } from '../Base';
-import { ImgBtn, SmallBtn, DeclarationBtn } from '../Button';
-import Test from '../../assets/images/Test.png';
-import UserPlus from '../../assets/images/UserPlus.png';
+import { Arrange, SpanBold, ImgBtn } from '../../components';
+import { Test, UserPlus } from '../../assets/images';
 
 const WrapStoreProfile = styled(Arrange)`
   position: relative;

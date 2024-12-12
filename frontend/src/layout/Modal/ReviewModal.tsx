@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { useRecoilState } from 'recoil';
-import ReactStars from 'react-stars';
+import { useReviewModal } from '../../recoil/reviewModal/useReviewModal';
 import { FirstQuestion, SecondQuestion, ThirdQuestion } from '../Modal';
-import { Arrange } from '../../components/Base';
-import { Btn, ImgBtn } from '../../components/Button';
-import { ShowModal } from '../../recoil/reviewModal/atom';
-import CloseGray from '../../assets/images/CloseGray.png';
+import { Arrange, Btn, ImgBtn } from '../../components';
+import { CloseGray } from '../../assets/images';
 import '../../styles/starStyles.css';
 
 const BlackBackground = styled.div`
@@ -34,15 +31,39 @@ const WrapReviewModal = styled.div`
 
 export default function ReviewModal() {
   const theme = useTheme();
-  const [showModal, setShowModal] = useRecoilState(ShowModal);
+  const { showModal, setShowModal, modalInfo, resetModal, closeModal } =
+    useReviewModal();
   const [order, setOrder] = useState(0);
 
   const questions = [
-    '닉네임과의 거래에 만족하셨나요?',
-    '닉네임님에게 후기를 남겨주세요!',
+    `${modalInfo.name}님과의 거래에 만족하셨나요?`,
+    `${modalInfo.name}님에게 후기를 남겨주세요!`,
     '소중한 후기를 더 자세히 적어주세요!',
     '후기가 성공적으로 등록되었습니다!',
   ];
+
+  const QuestionList = () => {
+    if (order === 0) {
+      return <FirstQuestion setValue={setOrder} />;
+    } else if (order === 1) {
+      return <SecondQuestion setValue={setOrder} />;
+    } else if (order === 2) {
+      return <ThirdQuestion setValue={setOrder} />;
+    } else if (order === 3) {
+      return (
+        <Btn
+          $status={true}
+          style={{ marginTop: '20px' }}
+          onClick={() => {
+            closeModal();
+            setOrder(0);
+          }}
+        >
+          확인
+        </Btn>
+      );
+    }
+  };
 
   return (
     <>
@@ -59,7 +80,7 @@ export default function ReviewModal() {
                 $backgroundimage={CloseGray}
                 margin='0 0 0 auto'
                 onClick={() => {
-                  setShowModal(false);
+                  closeModal();
                   setOrder(0);
                 }}
               />
@@ -67,21 +88,7 @@ export default function ReviewModal() {
                 {questions[order]}
               </Arrange>
 
-              {order === 0 && <FirstQuestion setValue={setOrder} />}
-              {order === 1 && <SecondQuestion setValue={setOrder} />}
-              {order === 2 && <ThirdQuestion setValue={setOrder} />}
-              {order === 3 && (
-                <Btn
-                  $status={true}
-                  style={{ marginTop: '20px' }}
-                  onClick={() => {
-                    setShowModal(false);
-                    setOrder(0);
-                  }}
-                >
-                  확인
-                </Btn>
-              )}
+              <QuestionList />
             </Arrange>
           </WrapReviewModal>
         </BlackBackground>

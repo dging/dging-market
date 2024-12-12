@@ -1,8 +1,7 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../components/Base';
-import { MainCard } from '../components/Card';
+import { Arrange, MainCard } from '../components';
 
 const Title = styled.div`
   margin-bottom: ${({ theme }) => theme.size.xxxxxl};

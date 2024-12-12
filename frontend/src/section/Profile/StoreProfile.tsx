@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import ReactStars from 'react-stars';
-import { Arrange, SpanBold } from '../../components/Base';
-import { ImgBtn, SmallBtn, DeclarationBtn } from '../../components/Button';
-import Test from '../../assets/images/Test.png';
-import UserPlusWhite from '../../assets/images/UserPlusWhite.png';
-import Verification from '../../assets/images/Verification.png';
+import {
+  Arrange,
+  SpanBold,
+  ImgBtn,
+  SmallBtn,
+  DeclarationBtn,
+} from '../../components';
+import { Test, UserPlusWhite, Verification } from '../../assets/images';
 
 const WrapStoreProfile = styled(Arrange)`
   position: relative;

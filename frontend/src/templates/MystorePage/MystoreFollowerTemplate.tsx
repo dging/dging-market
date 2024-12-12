@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import { FollowerCard } from '../../components/Card';
+import { Arrange, FollowerCard } from '../../components';
 
 const WrapCard = styled(Arrange)`
   grid-template-columns: repeat(4, 1fr);

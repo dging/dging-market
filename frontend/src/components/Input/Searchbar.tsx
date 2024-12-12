@@ -1,8 +1,6 @@
 import { styled, useTheme } from 'styled-components';
-import ImgBtn from '../Button/ImgBtn';
-import Arrange from '../Base/Arrange';
-import DiskGray from '../../assets/images/DiskGray.png';
-import Search from '../../assets/images/Search.png';
+import { Arrange, ImgBtn } from '../../components';
+import { DiskGray, Search } from '../../assets/images';
 
 const WrapSearchbar = styled(Arrange)`
   border: ${(props) =>

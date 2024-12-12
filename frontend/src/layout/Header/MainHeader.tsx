@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
-import ImgBtn from '../../components/Button/ImgBtn';
-import Searchbar from '../../components/Input/Searchbar';
-import Arrange from '../../components/Base/Arrange';
-import Logo from '../../assets/images/Logo.png';
-import MainHeaderMenu from '../../section/Menu/MainHeaderMenu';
+import { useTheme } from 'styled-components';
+import { MainHeaderMenu } from '../../section';
+import { Arrange, ImgBtn, Searchbar } from '../../components';
+import { Logo } from '../../assets/images';
 
 export default function MainHeader() {
   const navigate = useNavigate();

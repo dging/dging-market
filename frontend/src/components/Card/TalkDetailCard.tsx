@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Arrange } from '../Base';
-import { ImgBtn } from '../Button';
+import { Arrange, ImgBtn } from '../../components';
 import { cheat } from '../../utils/_data';
-import Test from '../../assets/images/Test.png';
-import Default from '../../assets/images/Default.png';
-import AddPicture from '../../assets/images/AddPicture.png';
+import { AddPicture, Default, Test } from '../../assets/images';
 
 const TopInfo = styled.div`
   padding: 8px 20px;

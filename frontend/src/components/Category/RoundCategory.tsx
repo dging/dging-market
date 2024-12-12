@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { RoundBtn } from '../Button';
-import { Arrange } from '../Base/';
+import { RoundBtn } from '../../components';
 
 const WrapRoundCategory = styled.div`
   display: flex;

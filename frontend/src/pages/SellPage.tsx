@@ -1,9 +1,13 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../components/Base';
-import { RadioBtn } from '../components/Button';
-import { UnderlineTitle, BarTitle } from '../components/Title';
-import { AddImage } from '../components/Input';
+import { useSell } from '../recoil/sell/useSell';
+import {
+  Arrange,
+  AddImage,
+  RadioBtn,
+  UnderlineTitle,
+  BarTitle,
+} from '../components';
 import {
   SellCategorySection,
   SellCountSection,
@@ -11,9 +15,7 @@ import {
   SellDirectSection,
   SellPriceSection,
   SellTagSection,
-} from '../section/SellPage';
-
-import { useSell } from '../recoil/sell/useSell';
+} from '../section';
 
 const Wrap = styled.div<{ gap?: number }>`
   display: flex;

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../Base';
-import { Btn, ImgBtn, IncludeImgBtn, RoundBtn } from '../Button';
-import Test from '../../assets/images/Test.png';
-import RightArrowGray from '../../assets/images/RightArrowGray.png';
+import { Arrange, ImgBtn } from '../../components';
+import { Test } from '../../assets/images';
 
 const Price = styled(Arrange)`
   color: ${({ theme }) => theme.color.black0};

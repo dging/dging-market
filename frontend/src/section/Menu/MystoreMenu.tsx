@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
+import { Arrange, IncludeImgBtn } from '../../components';
 import { getPath } from '../../utils/getPath';
-import { IncludeImgBtn } from '../../components/Button';
-import { Arrange } from '../../components/Base';
-import DiskBlack from '../../assets/images/DiskBlack.png';
-import DiskPink from '../../assets/images/DiskPink.png';
-import LayersBlack from '../../assets/images/LayersBlack.png';
-import LayersPink from '../../assets/images/LayersPink.png';
-import ReceiptBlack from '../../assets/images/ReceiptBlack.png';
-import ReceiptPink from '../../assets/images/ReceiptPink.png';
+import {
+  DiskBlack,
+  DiskPink,
+  LayersBlack,
+  LayersPink,
+  ReceiptBlack,
+  ReceiptPink,
+} from '../../assets/images';
 
 const Bar = styled.div`
   width: 1px;

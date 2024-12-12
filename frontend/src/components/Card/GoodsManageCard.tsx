@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../Base';
-import { Btn, ImgBtn, IncludeImgBtn } from '../Button';
-import { DropBox } from '../DropBox';
-import Test from '../../assets/images/Test.png';
-import HeartPink from '../../assets/images/HeartPink.png';
+import { Arrange, Btn, ImgBtn, IncludeImgBtn, DropBox } from '../../components';
+import { Test, HeartPink } from '../../assets/images';
 
 const WrapCard = styled(Arrange)`
   width: 570px;

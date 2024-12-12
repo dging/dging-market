@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import Btn from './Btn';
 import { BtnType } from '../../types/types';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Arrange, WrapLayout } from '../../components/Base';
-import { TradeDetailMenu } from '../../section/Menu';
+import { Arrange } from '../../components';
+import { TradeDetailMenu } from '../../section';
 import { useTheme } from 'styled-components';
 
 export default function HistoryLayout() {

@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
-import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import RoundButton from '../../components/Button//RoundBtn';
-import { StoreReviewScoreCard, StoreReviewCard } from '../../components/Card';
-import StoreProfile from '../../section/Profile/StoreProfile';
-import { MystoreMainMenu } from '../../section/Menu';
-
-const WrapBlack = styled(Arrange)`
-  ${({ theme }) => theme.font.r18}
-`;
-
-const WrapGrey = styled(Arrange)`
-  color: ${({ theme }) => theme.color.black2};
-`;
-
-const WrapCard = styled(Arrange)`
-  width: 100%;
-  grid-template-columns: repeat(4, 1fr);
-`;
+import { useTheme } from 'styled-components';
+import {
+  Arrange,
+  StoreReviewScoreCard,
+  StoreReviewCard,
+} from '../../components';
 
 export default function MystoreReview() {
   const type = ['최신순', '인기순', '저가순', '고가순'];

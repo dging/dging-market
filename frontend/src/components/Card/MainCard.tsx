@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Arrange } from '../Base';
-import Test from '../../assets/images/Test.png';
+import { Arrange } from '../../components';
+import { Test } from '../../assets/images';
 
 const WrapCard = styled(Arrange)`
   cursor: pointer;
@@ -44,11 +44,6 @@ const Date = styled.div`
   align-items: center;
   ${({ theme }) => theme.font.date14};
   color: ${({ theme }) => theme.color.black2};
-`;
-
-const WrapLink = styled(Link)`
-  color: ${({ theme }) => theme.color.black0};
-  text-decoration: none;
 `;
 
 export default function MainCard(props: {

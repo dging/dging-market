@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import RoundButton from '../../components/Button/RoundBtn';
-import { MainCard } from '../../components/Card';
-import StoreProfile from '../../section/Profile/StoreProfile';
-import { MystoreMainMenu } from '../../section/Menu';
+import { Arrange, RoundBtn, MainCard } from '../../components';
 
 const WrapBlack = styled(Arrange)`
   ${({ theme }) => theme.font.r18}
@@ -43,13 +39,13 @@ export default function MystoreGoodsTemplate() {
         </WrapBlack>
         <Arrange display='flex' gap='10px'>
           {type.map((val, idx) => (
-            <RoundButton
+            <RoundBtn
               key={idx}
               $status={status === type[idx]}
               onClick={() => setStatus(type[idx])}
             >
               {val}
-            </RoundButton>
+            </RoundBtn>
           ))}
         </Arrange>
       </Arrange>

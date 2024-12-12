@@ -1,11 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../components/Base';
-import { IncludeImgBtn } from '../components/Button';
-import { BarTitle } from '../components/Title';
-import Locate from '../assets/images/Locate.png';
-import NoteBook from '../assets/images/NoteBook.png';
-import Tag from '../assets/images/Tag.png';
+import { Arrange, BarTitle, IncludeImgBtn } from '../components';
+import { Locate, Notebook, Tag } from '../assets/images';
 
 const Bar = styled.div`
   width: 1px;
@@ -130,7 +126,7 @@ function GoodsInfo() {
         >
           <IncludeImgBtn
             as='div'
-            $leftbgimg={NoteBook}
+            $leftbgimg={Notebook}
             text='카테고리'
             textstyle={{ color: theme.color.black1, ...theme.font.info14 }}
           />

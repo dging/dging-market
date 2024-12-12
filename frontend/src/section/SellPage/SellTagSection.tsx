@@ -1,9 +1,8 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange, SpanGray } from '../../components/Base';
-import { BarTitle } from '../../components/Title';
-import { onPressEnter } from '../../utils/onPressEnter';
 import { useSell } from '../../recoil/sell/useSell';
+import { Arrange, BarTitle, SpanGray } from '../../components';
+import { onPressEnter } from '../../utils/onPressEnter';
 
 const WrapContent = styled.div`
   display: flex;

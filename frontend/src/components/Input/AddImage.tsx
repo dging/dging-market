@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import Btn from '../Button/Btn';
-import Arrange from '../Base/Arrange';
 import { useSell } from '../../recoil/sell/useSell';
-import ImageRegistration from '../../assets/images/ImageRegistration.png';
+import { ImageRegistration } from '../../assets/images';
 
 const WrapInput = styled.div`
   div {

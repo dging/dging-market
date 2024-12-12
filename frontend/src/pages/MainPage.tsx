@@ -1,15 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { MainGoodsMenu, MainSearchMenu } from '../section/Menu';
-import { Arrange } from '../components/Base';
-import { MainCard } from '../components/Card';
-import { UnderlineTitle } from '../components/Title';
-
-const Title = styled.div`
-  text-decoration: underline;
-  margin-bottom: ${({ theme }) => theme.size.xxxxxl};
-  ${({ theme }) => theme.font.r32}
-`;
+import { MainGoodsMenu } from '../section';
+import { Arrange, MainCard, UnderlineTitle } from '../components';
 
 const WrapCard = styled(Arrange)`
   width: 100%;
@@ -18,8 +10,7 @@ const WrapCard = styled(Arrange)`
 
 export default function MainPage() {
   const theme = useTheme();
-  const words = ['전체', '판매중', '예약중', '판매완료'];
-  const items = ['전체', 'CD', 'Vinyl', 'Cassette', 'DVD'];
+
   const data = [
     { id: '1', title: 'Test - Test', price: '20000', date: '12' },
     { id: '2', title: 'Test - Test', price: '30000', date: '15' },

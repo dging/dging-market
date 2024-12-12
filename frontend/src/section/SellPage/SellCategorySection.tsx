@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Arrange } from '../../components/Base';
-import { RoundBtn } from '../../components/Button';
-import { SellRoundCategory } from '../../components/Category';
-import { BarTitle } from '../../components/Title';
-import { category1, category2, category3 } from '../../utils/_data';
 import { useSell } from '../../recoil/sell/useSell';
+import {
+  Arrange,
+  BarTitle,
+  RoundBtn,
+  SellRoundCategory,
+} from '../../components';
+import { category1, category2, category3 } from '../../utils/_data';
 
 const GrayRoundBtn = styled(RoundBtn)`
   border: 1px solid
