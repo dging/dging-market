@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { useReviewModal } from '../../recoil/reviewModal/useReviewModal';
 import { ReviewModal } from '../../layout/Modal';
 import {

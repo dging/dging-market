@@ -24,8 +24,7 @@ const Bar = styled.div`
 export default function TradeDetailMenu() {
   const theme = useTheme();
   const navigate = useNavigate();
-  const location = useLocation();
-  const path = location.pathname;
+  const path = useLocation().pathname;
   const [isSelect, setIsSelect] = useState(path);
   return (
     <Arrange
@@ -43,9 +42,9 @@ export default function TradeDetailMenu() {
         padding={`${theme.size.xl} 0`}
       >
         <DetailMenuButton
-          $change={isSelect === '/history/sell'}
+          $change={path.includes('/history/sell')}
           onClick={() => {
-            setIsSelect('/history/sell');
+            setIsSelect(path);
             navigate('/history/sell');
           }}
         >
@@ -53,9 +52,9 @@ export default function TradeDetailMenu() {
         </DetailMenuButton>
         <Bar />
         <DetailMenuButton
-          $change={isSelect === '/history/buy'}
+          $change={path.includes('/history/buy')}
           onClick={() => {
-            setIsSelect('/history/buy');
+            setIsSelect(path);
             navigate('/history/buy');
           }}
         >
@@ -63,9 +62,9 @@ export default function TradeDetailMenu() {
         </DetailMenuButton>
         <Bar />
         <DetailMenuButton
-          $change={isSelect === '/history/adjust'}
+          $change={path.includes('/history/adjust')}
           onClick={() => {
-            setIsSelect('/history/adjust');
+            setIsSelect(path);
             navigate('/history/adjust');
           }}
         >

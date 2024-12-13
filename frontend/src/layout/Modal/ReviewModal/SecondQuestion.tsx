@@ -1,47 +1,45 @@
 import React, { useState } from 'react';
 import { useTheme } from 'styled-components';
-import { Arrange, CheckBox, IncludeImgBtn } from '../../components';
+import { useReviewModal } from '../../../recoil/reviewModal/useReviewModal';
+import { Arrange, CheckBox, IncludeImgBtn } from '../../../components';
 import {
   LeftArrowGray,
   RightArrowGray,
   CheckBorderGray,
   CheckBorderPink,
-} from '../../assets/images';
+} from '../../../assets/images';
 
 export default function SecondQuestion(props: {
   setValue: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const theme = useTheme();
+  const { modalCheckReview, setModalCheckReview, handleCheckReview } =
+    useReviewModal();
 
-  const [checkList, setCheckList] = useState([
-    { content: '😏 구매확정이 빨라요.', value: false },
-    { content: '😎 거래톡 답변이 빨라요.', value: false },
-    { content: '😇 친절하고 배려가 넘쳐요.', value: false },
-    { content: '🤩 무리한 네고를 하지 않아요.', value: false },
-    { content: '☺️ 꼭 필요한 문의만 해요.', value: false },
-    { content: '선택할 항목이 없어요.', value: false },
-  ]);
+  const onClickNextStep = () => {
+    if (handleCheckReview() === 'stop') {
+      alert('최소 1개의 선택을 해주세요.');
+    } else if (handleCheckReview() === 'pass') {
+      props.setValue(2);
+    } else {
+      alert('Error');
+    }
+  };
 
   const onChangeCheckBox = (key: number) => {
-    setCheckList(
-      checkList.map((val, idx) => {
-        if (key === 5 && val.value === false) {
+    setModalCheckReview(
+      modalCheckReview.map((val, idx) => {
+        if (modalCheckReview[5].value === false && key === 5) {
           // 마지막이 false일 때 누르면 나머지 모든 값이 false로 되고 마지막만 true로 되게
-          console.log('check1');
-          console.log('before:', checkList, key, idx);
           return { ...val, value: idx === key };
-        } else if (key === 5 && val.value === true) {
+        } else if (modalCheckReview[5].value === true && key !== 5) {
           // 마지막이 true일 때 다른 버튼 누르면 마지막 false되고 나머지 true로 되게
-          console.log('check2');
-          console.log('before:', checkList, key, idx);
-          return { ...val, value: false };
+          return { ...val, value: idx === key };
         }
         // 클릭 시 true, false 왔다갔다
         return idx === key ? { ...val, value: !val.value } : val;
       })
     );
-
-    console.log('after:', checkList);
   };
 
   const CheckBoxList = (props: {
@@ -84,7 +82,7 @@ export default function SecondQuestion(props: {
         gap='5px'
         margin='0 0 20px 0'
       >
-        {checkList.map((val, idx) => (
+        {modalCheckReview.map((val, idx) => (
           <CheckBoxList
             content={val.content}
             value={val.value}
@@ -120,10 +118,7 @@ export default function SecondQuestion(props: {
           $rightimgwidth='20px'
           $rightimgheight='20px'
           gap='0px'
-          onClick={() => {
-            props.setValue(2);
-            console.log('checkList : ', checkList);
-          }}
+          onClick={onClickNextStep}
         />
       </Arrange>
     </>

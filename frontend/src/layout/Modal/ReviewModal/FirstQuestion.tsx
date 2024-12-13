@@ -1,27 +1,35 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
 import ReactStars from 'react-stars';
-import { useReviewModal } from '../../recoil/reviewModal/useReviewModal';
-import { Arrange, IncludeImgBtn } from '../../components';
-import { RightArrowGray } from '../../assets/images';
-import '../../styles/starStyles.css';
+import { useReviewModal } from '../../../recoil/reviewModal/useReviewModal';
+import { Arrange, IncludeImgBtn } from '../../../components';
+import { RightArrowGray } from '../../../assets/images';
+import '../../../styles/starStyles.css';
 
 export default function FirstQuestion(props: {
   setValue: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const { modalInfo, setModalInfo, consoleModalInfo } = useReviewModal();
+  const { modalRate, setModalRate } = useReviewModal();
   const theme = useTheme();
+
+  const onClickNextStep = () => {
+    if (modalRate === 0) {
+      alert('0점은 줄 수 없습니다.');
+    } else {
+      props.setValue(1);
+    }
+  };
 
   return (
     <>
       <ReactStars
         count={5}
-        value={modalInfo.rate}
+        value={modalRate}
         size={30}
         color1='white'
         className='custom-star'
         onChange={(e) => {
-          setModalInfo({ ...modalInfo, rate: e });
+          setModalRate(e);
         }}
       />
       <Arrange width='100%' display='flex' margin='40px 0 0 0'>
@@ -36,10 +44,7 @@ export default function FirstQuestion(props: {
           $rightimgheight='20px'
           gap='0px'
           mainstyle={{ marginLeft: 'auto' }}
-          onClick={() => {
-            props.setValue(1);
-            consoleModalInfo();
-          }}
+          onClick={onClickNextStep}
         />
       </Arrange>
     </>

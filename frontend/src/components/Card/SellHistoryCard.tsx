@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { useReviewModal } from '../../recoil/reviewModal/useReviewModal';
 import { Arrange, Btn, ImgBtn, IncludeImgBtn } from '../../components';
@@ -54,7 +55,8 @@ export default function SellHistoryCard(props: {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   const theme = useTheme();
-  const { setShowModal, modalInfo, setModalInfo } = useReviewModal();
+  const navigate = useNavigate();
+  const { setShowModal, setModalName } = useReviewModal();
 
   return (
     <WrapCard display='flex'>
@@ -77,6 +79,9 @@ export default function SellHistoryCard(props: {
               $rightimgheight='20px'
               $rightbgimg={RightArrowBlack}
               gap='0px'
+              onClick={() => {
+                navigate(`/history/sell/${props.content.id}`);
+              }}
             />
           </Arrange>
         </Arrange>
@@ -98,7 +103,7 @@ export default function SellHistoryCard(props: {
           onClick={() => {
             if (!props.content.review) {
               setShowModal(true);
-              setModalInfo({ ...modalInfo, name: props.content.buyer });
+              setModalName(props.content.buyer);
             }
           }}
         >

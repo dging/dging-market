@@ -72,7 +72,7 @@ export default function BuyHistoryCard(props: {
   content: ContentType;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
-  const { setShowModal, modalInfo, setModalInfo } = useReviewModal();
+  const { setShowModal, setModalName } = useReviewModal();
 
   return (
     <WrapCard
@@ -126,7 +126,7 @@ export default function BuyHistoryCard(props: {
         onClick={() => {
           if (!props.content.review) {
             setShowModal(true);
-            setModalInfo({ ...modalInfo, name: props.content.seller });
+            setModalName(props.content.seller);
           }
         }}
       >

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { SetterOrUpdater } from 'recoil';
 import { useSell } from '../../recoil/sell/useSell';
 import { ImageRegistration } from '../../assets/images';
 
@@ -41,9 +42,19 @@ interface FileInfo {
   type: string;
 }
 
-export default function AddImage() {
+export default function AddImage(props: {
+  value?: string[];
+  setValue?: SetterOrUpdater<string[]>;
+}) {
   const [files, setFiles] = useState<FileInfo[]>([]);
-  const { sellImage, setSellImage, addImage } = useSell();
+  // const { addImage } = useSell();
+
+  const addImage = (file?: File) => {
+    if (file !== undefined) {
+      // props.setValue(...props.value, file);
+    }
+    console.log(props.value, props.setValue);
+  };
 
   return (
     <>
@@ -64,7 +75,7 @@ export default function AddImage() {
           }}
         />
       </WrapInput>
-      <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '20px' }}>
+      {/* <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '20px' }}>
         {sellImage.map((val, idx) => (
           <img
             key={idx}
@@ -79,7 +90,7 @@ export default function AddImage() {
             }}
           />
         ))}
-      </div>
+      </div> */}
     </>
   );
 }

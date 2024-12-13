@@ -136,7 +136,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: `/history/sell/:id`,
-                element: <SellHistoryTemplate />,
+                element: <SellDetailHistoryTemplate />,
               },
               {
                 path: `/history/buy/:id`,

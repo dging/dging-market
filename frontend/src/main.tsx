@@ -9,13 +9,13 @@ import GlobalStyle from './styles/global.ts';
 import { router } from './routes/router.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <RouterProvider router={router} />
-        <App />
-      </ThemeProvider>
-    </RecoilRoot>
-  </StrictMode>
+  // <StrictMode>
+  <RecoilRoot>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+      <App />
+    </ThemeProvider>
+  </RecoilRoot>
+  // </StrictMode>
 );
