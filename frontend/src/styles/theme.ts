@@ -53,6 +53,11 @@ const font = {
     fontSize: '14px',
     lineHeight: '150%',
   },
+  body14_bold: {
+    fontFamily: 'NSBold',
+    fontSize: '14px',
+    lineHeight: '150%',
+  },
   body16_sparse: {
     fontFamily: 'NSRegular',
     fontSize: '16px',
@@ -61,6 +66,11 @@ const font = {
   },
   body16: {
     fontFamily: 'NSRegular',
+    fontSize: '16px',
+    lineHeight: '150%',
+  },
+  body16_bold: {
+    fontFamily: 'NSBold',
     fontSize: '16px',
     lineHeight: '150%',
   },
@@ -77,11 +87,16 @@ const font = {
   info14: {
     fontFamily: 'NSRegular',
     fontSize: '14px',
-    letterSpacing: '-1.28px',
+    letterSpacing: '-1.12px',
   },
   info14_bold: {
     fontFamily: 'NSBold',
     fontSize: '14px',
+    letterSpacing: '-1.12px',
+  },
+  info16: {
+    fontFamily: 'NSRegular',
+    fontSize: '16px',
     letterSpacing: '-1.28px',
   },
   info18: {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useReviewModal } from '../../recoil/reviewModal/useReviewModal';
 import { Arrange, Btn, ImgBtn } from '../../components';
@@ -72,6 +73,7 @@ export default function BuyHistoryCard(props: {
   content: ContentType;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }) {
+  const navigate = useNavigate();
   const { setShowModal, setModalName } = useReviewModal();
 
   return (
@@ -84,7 +86,14 @@ export default function BuyHistoryCard(props: {
     >
       <Arrange width='100%' display='flex' justifycontent='space-between'>
         <TitleDate>{props.content.buydate}</TitleDate>
-        <ImgBtn width='16px' height='16px' $backgroundimage={RightArrowGray} />
+        <ImgBtn
+          width='16px'
+          height='16px'
+          $backgroundimage={RightArrowGray}
+          onClick={() => {
+            navigate(`/history/buy/${props.content.id}`);
+          }}
+        />
       </Arrange>
       <Bar />
       <Status>{props.content.state}</Status>

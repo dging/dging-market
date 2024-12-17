@@ -18,7 +18,7 @@ const Button = styled.button<BtnType>`
 
 export default function SmallBtn(props: BtnType) {
   return (
-    <Button {...props} onClick={props.onClick}>
+    <Button {...props} onClick={props.onClick} style={props.style}>
       <Arrange height='14px' display='flex' alignitems='center'>
         {props.children}
       </Arrange>
