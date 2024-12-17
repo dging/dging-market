@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { Arrange, ImgBtn, IncludeImgBtn, SmallBtn } from '../../components';
 import { addComma } from '../../utils/addComma';
@@ -89,7 +90,9 @@ const BankIcon = styled.div`
 
 export default function SellDetailHistoryTemplate() {
   const theme = useTheme();
+  const location = useLocation();
   const [showExplain, setShowExplain] = useState(false);
+  const { trade } = location.state.trade;
 
   return (
     <Arrange
@@ -104,11 +107,15 @@ export default function SellDetailHistoryTemplate() {
       <Body16Bold>2024.12.31</Body16Bold>
 
       <LineBox>
-        <div>
-          <Body16Bold margin='0 0 10px 0'>입금 완료</Body16Bold>
-          <Body14>등록한 계좌로 판매 금액이 입금되었어요.</Body14>
-        </div>
-        <Line />
+        {trade === 'safe' && (
+          <>
+            <div>
+              <Body16Bold margin='0 0 10px 0'>입금 완료</Body16Bold>
+              <Body14>등록한 계좌로 판매 금액이 입금되었어요.</Body14>
+            </div>
+            <Line />
+          </>
+        )}
 
         <Arrange width='100%' display='flex' gap='40px' alignitems='center'>
           <ImgBtn
@@ -148,49 +155,66 @@ export default function SellDetailHistoryTemplate() {
           <Body14>{addComma('100000')}원</Body14>
         </Arrange>
 
-        <Line />
+        {trade === 'safe' && (
+          <>
+            <Line />
 
-        <Arrange width='100%' display='flex' flexdirection='column' gap='10px'>
-          <Arrange width='100%' display='flex' justifycontent='space-between'>
-            <Body14Bold display='flex' alignitems='center'>
-              입금예정금액
-              <InfoBtn
-                width='20px'
-                height='20px'
-                margin='-2px 0 0 2px'
-                $backgroundimage={InfoGray}
-              />
-              <Arrange position='relative' width='3px' height='20px'>
-                <ExplainBtn
-                  as='div'
-                  width='230px'
-                  height='30px'
-                  $backgroundimage={Explain}
-                />
-              </Arrange>
-            </Body14Bold>
-            <Body14Bold>{addComma('0')}원</Body14Bold>
-          </Arrange>
-
-          <Arrange width='100%' display='flex' justifycontent='space-between'>
-            <Body14Bold>입금완료금액</Body14Bold>
-            <Body14Bold>{addComma('100,000')}원</Body14Bold>
-          </Arrange>
-
-          <Body14 $status={true}>내 계좌</Body14>
-
-          <AccountWrap>
-            <Arrange display='flex' gap='10px'>
-              <BankIcon />
-              <Arrange style={{ ...theme.font.info16 }}>농협은행</Arrange>
-            </Arrange>
             <Arrange
-              style={{ color: theme.color.black2, ...theme.font.info14 }}
+              width='100%'
+              display='flex'
+              flexdirection='column'
+              gap='10px'
             >
-              1234456545845 &middot; 김민희
+              <Arrange
+                width='100%'
+                display='flex'
+                justifycontent='space-between'
+              >
+                <Body14Bold display='flex' alignitems='center'>
+                  입금예정금액
+                  <InfoBtn
+                    width='20px'
+                    height='20px'
+                    margin='-2px 0 0 2px'
+                    $backgroundimage={InfoGray}
+                  />
+                  <Arrange position='relative' width='3px' height='20px'>
+                    <ExplainBtn
+                      as='div'
+                      width='230px'
+                      height='30px'
+                      $backgroundimage={Explain}
+                    />
+                  </Arrange>
+                </Body14Bold>
+                <Body14Bold>{addComma('0')}원</Body14Bold>
+              </Arrange>
+
+              <Arrange
+                width='100%'
+                display='flex'
+                justifycontent='space-between'
+              >
+                <Body14Bold>입금완료금액</Body14Bold>
+                <Body14Bold>{addComma('100,000')}원</Body14Bold>
+              </Arrange>
+
+              <Body14 $status={true}>내 계좌</Body14>
+
+              <AccountWrap>
+                <Arrange display='flex' gap='10px'>
+                  <BankIcon />
+                  <Arrange style={{ ...theme.font.info16 }}>농협은행</Arrange>
+                </Arrange>
+                <Arrange
+                  style={{ color: theme.color.black2, ...theme.font.info14 }}
+                >
+                  1234456545845 &middot; 김민희
+                </Arrange>
+              </AccountWrap>
             </Arrange>
-          </AccountWrap>
-        </Arrange>
+          </>
+        )}
       </LineBox>
 
       <Body16Bold>거래 정보</Body16Bold>
@@ -229,24 +253,30 @@ export default function SellDetailHistoryTemplate() {
             <SmallBtn style={{ marginLeft: '20px' }}>번개톡</SmallBtn>
           </Arrange>
 
-          <Arrange display='flex'>
-            <Body14 $status={true} width='74px'>
-              거래방법
-            </Body14>
-            <Body14>택배거래</Body14>
-          </Arrange>
+          {trade === 'safe' && (
+            <>
+              <Arrange display='flex'>
+                <Body14 $status={true} width='74px'>
+                  거래방법
+                </Body14>
+                <Body14>택배거래</Body14>
+              </Arrange>
 
-          <Arrange display='flex'>
-            <Body14 $status={true} width='74px'>
-              운송장
-            </Body14>
-            <Body14>
-              우체국택배
-              <span style={{ marginLeft: '10px', textDecoration: 'underline' }}>
-                6218001074341
-              </span>
-            </Body14>
-          </Arrange>
+              <Arrange display='flex'>
+                <Body14 $status={true} width='74px'>
+                  운송장
+                </Body14>
+                <Body14>
+                  우체국택배
+                  <span
+                    style={{ marginLeft: '10px', textDecoration: 'underline' }}
+                  >
+                    6218001074341
+                  </span>
+                </Body14>
+              </Arrange>
+            </>
+          )}
         </Arrange>
       </LineBox>
     </Arrange>

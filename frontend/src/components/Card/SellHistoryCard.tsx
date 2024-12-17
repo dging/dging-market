@@ -80,7 +80,9 @@ export default function SellHistoryCard(props: {
               $rightbgimg={RightArrowBlack}
               gap='0px'
               onClick={() => {
-                navigate(`/history/sell/${props.content.id}`);
+                navigate(`/history/sell/${props.content.id}`, {
+                  state: { trade: props.content.tradeway },
+                });
               }}
             />
           </Arrange>
