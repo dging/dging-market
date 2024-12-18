@@ -92,7 +92,7 @@ export default function SellDetailHistoryTemplate() {
   const theme = useTheme();
   const location = useLocation();
   const [showExplain, setShowExplain] = useState(false);
-  const { trade } = location.state.trade;
+  const { trade } = location.state;
 
   return (
     <Arrange
