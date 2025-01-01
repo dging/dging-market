@@ -1,0 +1,51 @@
+import React, { useState } from 'react';
+import styled, { useTheme } from 'styled-components';
+import {
+  Arrange,
+  StoreReviewScoreCard,
+  StoreReviewCard,
+} from '../../components';
+
+const WrapBlack = styled(Arrange)`
+  ${({ theme }) => theme.font.r18}
+`;
+
+const WrapGrey = styled(Arrange)`
+  color: ${({ theme }) => theme.color.black2};
+`;
+
+const WrapCard = styled(Arrange)`
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+`;
+
+export default function MystoreReviewTemplate() {
+  const type = ['최신순', '인기순', '저가순', '고가순'];
+  const [status, setStatus] = useState(type[0]);
+  const theme = useTheme();
+  return (
+    <Arrange
+      width={theme.page_size.width}
+      margin='0 auto'
+      padding='0 0 100px 0'
+    >
+      <StoreReviewScoreCard />
+      <Arrange
+        display='flex'
+        flexdirection='column'
+        width='100%'
+        padding={`${theme.size.xxxxl} 0 ${theme.size.xl} 0`}
+        gap='40px'
+      >
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+        <StoreReviewCard />
+      </Arrange>
+    </Arrange>
+  );
+}

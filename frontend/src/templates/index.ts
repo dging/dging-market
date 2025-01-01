@@ -1,0 +1,12 @@
+export { default as MystoreGoodsTemplate } from './MystorePage/MystoreFollowerTemplate';
+export { default as MystoreReviewTemplate } from './MystorePage/MystoreReviewTemplate';
+export { default as MystoreKeepTemplate } from './MystorePage/MystoreKeepTemplate';
+export { default as MystoreFollowingTemplate } from './MystorePage/MystoreFollowingTemplate';
+export { default as MystoreFollowerTemplate } from './MystorePage/MystoreFollowerTemplate';
+export { default as GoodsInfo } from './GoodsInfo';
+export { default as StoreInfo } from './StoreInfo';
+export { default as AdjustmentTemplate } from './HistoryPage/AdjustmentTemplate';
+export { default as SellHistoryTemplate } from './HistoryPage/SellHistoryTemplate';
+export { default as BuyHistoryTemplate } from './HistoryPage/BuyHistoryTemplate';
+export { default as SellDetailHistoryTemplate } from './HistoryPage/SellDetailHistoryTemplate';
+export { default as BuyDetailHistoryTemplate } from './HistoryPage/BuyDetailHistoryTemplate';
