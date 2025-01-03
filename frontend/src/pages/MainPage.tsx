@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { MainGoodsMenu } from '../section';
 import { Arrange, MainCard, UnderlineTitle } from '../components';
+import { getProductsId } from '../api/product/productApi';
 
 const WrapCard = styled(Arrange)`
   width: 100%;
@@ -20,6 +21,14 @@ export default function MainPage() {
     { id: '6', title: 'Test - Test', price: '70000', date: '18' },
     { id: '7', title: 'Test - Test', price: '80000', date: '15' },
   ];
+
+  useEffect(() => {
+    // const test = async () => {
+    //   const data = await getProductsId(1);
+    //   console.log(data);
+    // };
+    // test();
+  }, []);
 
   return (
     <>

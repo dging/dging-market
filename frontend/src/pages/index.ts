@@ -9,3 +9,5 @@ export { default as SellPage } from './SellPage';
 export { default as ServicePage } from './ServicePage';
 export { default as SettingPage } from './SettingPage';
 export { default as TalkPage } from './TalkPage';
+
+export { default as KakaoRedirectPage } from './oauth/KakaoRedirectPage';

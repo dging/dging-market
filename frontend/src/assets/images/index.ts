@@ -32,6 +32,12 @@ export { default as LayersBlack } from './LayersBlack.png';
 export { default as LayersPink } from './LayersPink.png';
 export { default as LeftArrowGray } from './LeftArrowGray.png';
 export { default as Locate } from './Locate.png';
+
+export { default as LoginFacebook } from './LoginFacebook.png';
+export { default as LoginGoogle } from './LoginGoogle.png';
+export { default as LoginKakao } from './LoginKakao.png';
+export { default as LoginNaver } from './LoginNaver.png';
+
 export { default as Logo } from './Logo.png';
 export { default as MessageBlack } from './MessageBlack.png';
 export { default as MessageDot } from './MessageDot.png';
@@ -45,6 +51,7 @@ export { default as ReceiptPink } from './ReceiptPink.png';
 export { default as Reservation } from './Reservation.png';
 export { default as RightArrowBlack } from './RightArrowBlack.png';
 export { default as RightArrowGray } from './RightArrowGray.png';
+export { default as RightArrowLightGray } from './RightArrowLightGray.png';
 export { default as RightArrowPink } from './RightArrowPink.png';
 export { default as RoundDownArrow } from './RoundDownArrow.png';
 export { default as Search } from './Search.png';

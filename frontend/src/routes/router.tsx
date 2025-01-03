@@ -33,9 +33,11 @@ import {
   GoodsManagePage,
   GoodsDetailPage,
   HistoryPage,
+  KakaoRedirectPage,
 } from '../pages';
 
 export const router = createBrowserRouter([
+  { path: '/oauth/kakao/redirect', element: <KakaoRedirectPage /> },
   {
     element: <DefaultLayout />,
     errorElement: <div>error</div>,
@@ -44,7 +46,6 @@ export const router = createBrowserRouter([
         path: '/',
         element: <MainPage />,
       },
-
       {
         path: '/talk',
         element: <TalkPage />,

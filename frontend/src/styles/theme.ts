@@ -13,6 +13,10 @@ const color = {
   black3: '#F2F3F6',
   black4: '#F9F9F9',
   black5: '#EAEBEE',
+  facebook: '#1a78f2',
+  kakao: '#FEE500',
+  naver: '#03C75A',
+  google: '#fff',
 };
 
 const size = {
