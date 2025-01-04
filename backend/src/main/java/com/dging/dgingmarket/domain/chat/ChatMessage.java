@@ -16,15 +16,6 @@ import java.util.Date;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(
-        name = "TBL_CHAT_MESSAGE",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name="chat_message_uk",
-                        columnNames = {"from_user_fk", "to_user_fk"}
-                )
-        }
-)
 @EntityListeners({AuditingEntityListener.class})
 public class ChatMessage {
 
@@ -33,12 +24,8 @@ public class ChatMessage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "from_user_fk", nullable = false)
-    private User from;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "to_user_fk", nullable = false)
-    private User to;
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id", nullable = false)
@@ -58,10 +45,9 @@ public class ChatMessage {
     @Column(length = 6)
     private Date updatedAt;
 
-    public static ChatMessage create(User from, User to, String content) {
+    public static ChatMessage create(User sender, String content) {
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setFrom(from);
-        chatMessage.setTo(to);
+        chatMessage.setSender(sender);
         chatMessage.setContent(content);
         chatMessage.setRead(false);
         return chatMessage;
