@@ -1,14 +1,38 @@
 import React, { useEffect } from 'react';
 import { styled, useTheme } from 'styled-components';
 import { Arrange, ImgBtn } from '../../../components';
-import { instance } from '../../../api/axios/instance';
-import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import {
   LoginFacebook,
   LoginGoogle,
   LoginKakao,
   LoginNaver,
 } from '../../../assets/images';
+import { CloseGray } from '../../../assets/images';
+import { useMainModal } from '../../../recoil/ModalRecoil/useMainModal';
+import axios from 'axios';
+
+const ModalBackground = styled.div`
+  position: absolute;
+  width: 100%;
+  min-width: ${({ theme }) => theme.page_size.minwidth};
+  height: 100vh;
+  background-color: #00000080;
+  z-index: 10;
+`;
+
+const WrapModal = styled.div`
+  position: absolute;
+  box-sizing: border-box;
+  width: 560px;
+  height: 760px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  padding: 30px 20px;
+  background-color: ${({ theme }) => theme.color.black4};
+  border-radius: 8px;
+`;
 
 const Title = styled.div`
   margin: 100px 0 100px 35px;
@@ -43,9 +67,23 @@ export default function LoginModal() {
     { kor: '네이버로 로그인', eng: 'naver', img: LoginNaver },
   ];
 
-  const kakaoSocial = () => {
-    console.log(import.meta.env.VITE_KAKAO_OAUTH_URL);
-    window.location.href = import.meta.env.VITE_KAKAO_OAUTH_URL;
+  const [cookies] = useCookies(['access_token', 'refresh_token']);
+
+  const { handleLoginModal } = useMainModal();
+
+  const kakaoSocial = async () => {
+    console.log(cookies.access_token, cookies.refresh_token);
+    if (
+      cookies.access_token !== undefined &&
+      cookies.refresh_token !== undefined
+    ) {
+      console.log('Can login');
+    } else {
+      // window.Kakao.Auth.authorize({
+      //   redirectUri: 'http://localhost:5173/oauth/kakao/redirect',
+      // });
+      window.location.href = import.meta.env.VITE_KAKAO_OAUTH_URL;
+    }
   };
 
   const SocialLoginList = () => {
@@ -70,13 +108,28 @@ export default function LoginModal() {
 
   return (
     <>
-      <Title>
-        SNS 계정 연동하고
-        <br />
-        3초안에 로그인하세요!
-      </Title>
+      <ModalBackground>
+        <WrapModal>
+          {/* 뒤로가기 버튼, 제목, 닫기 버튼 */}
+          <Arrange width='100%' display='flex' justifycontent='space-between'>
+            <ImgBtn
+              $backgroundimage={CloseGray}
+              width='32px'
+              height='32px'
+              onClick={() => {
+                handleLoginModal(false);
+              }}
+            />
+          </Arrange>
+          <Title>
+            SNS 계정 연동하고
+            <br />
+            3초안에 로그인하세요!
+          </Title>
 
-      <SocialLoginList />
+          <SocialLoginList />
+        </WrapModal>
+      </ModalBackground>
     </>
   );
 }

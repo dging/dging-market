@@ -11,3 +11,4 @@ export { default as SettingPage } from './SettingPage';
 export { default as TalkPage } from './TalkPage';
 
 export { default as KakaoRedirectPage } from './oauth/KakaoRedirectPage';
+export { default as KakaoTokenPage } from './oauth/KakaoTokenPage';

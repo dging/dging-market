@@ -8,6 +8,7 @@ import {
   SmallBtn,
   SpanBold,
 } from '../../components';
+import { addComma } from '../../utils/addComma';
 
 import {
   HeartEmpty,
@@ -94,7 +95,7 @@ export default function GoodsProfile() {
           padding='0 0 30px 0'
           gap='4px'
         >
-          <Arrange height='44px'>200000</Arrange>
+          <Arrange height='44px'>{addComma((200000).toString())}</Arrange>
           <Unit>원</Unit>
         </Price>
         {/* 찜 & 조회수 & 게시일 & 신고하기 버튼 */}

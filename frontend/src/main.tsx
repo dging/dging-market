@@ -7,14 +7,17 @@ import { theme } from './styles/theme.ts';
 import App from './App.jsx';
 import GlobalStyle from './styles/global.ts';
 import { router } from './routes/router.tsx';
+import { CookiesProvider } from 'react-cookie';
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
   <RecoilRoot>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <RouterProvider router={router} />
-      <App />
+      <CookiesProvider>
+        <RouterProvider router={router} />
+        <App />
+      </CookiesProvider>
     </ThemeProvider>
   </RecoilRoot>
   // </StrictMode>

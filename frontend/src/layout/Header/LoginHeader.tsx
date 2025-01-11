@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { styled, useTheme } from 'styled-components';
 import { Arrange, Alert } from '../../components';
-import { AccountSettingModal } from '../Modal';
-import { useMainModal } from '../../recoil/MainModal/useMainModal';
+import { LoginModal } from '../Modal';
+import { useMainModal } from '../../recoil/ModalRecoil/useMainModal';
 import { authInstance } from '../../api/axios/authInstance';
 
 const AuthBtn = styled.button`
@@ -20,12 +20,25 @@ const AuthBtn = styled.button`
 
 export default function LoginHeader() {
   const theme = useTheme();
-  const { showMainModal, setShowMainModal } = useMainModal();
+  const { showLoginModal, setShowLoginModal } = useMainModal();
   const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  const onClickLoginBtn = (status: string) => {
+    switch (status) {
+      case 'login':
+        setShowLoginModal(true);
+        document.body.style.overflowY = 'hidden';
+        break;
+      case 'logout':
+        setShowLoginModal(false);
+        document.body.style.overflowY = 'auto';
+        break;
+    }
+  };
 
   return (
     <>
-      {showMainModal && <AccountSettingModal />}
+      {showLoginModal && <LoginModal />}
       <Arrange
         $bottom={true}
         width='100%'
@@ -41,14 +54,20 @@ export default function LoginHeader() {
           {isLogin ? (
             <>
               <Arrange display='flex' gap='4px'>
-                <AuthBtn onClick={() => setIsLogin(false)}>로그아웃</AuthBtn>
+                <AuthBtn
+                  onClick={() => {
+                    onClickLoginBtn('logout');
+                  }}
+                >
+                  로그아웃
+                </AuthBtn>
                 <Alert />
               </Arrange>
             </>
           ) : (
             <AuthBtn
               onClick={() => {
-                setShowMainModal(true);
+                onClickLoginBtn('login');
               }}
             >
               로그인
