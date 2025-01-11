@@ -16,6 +16,7 @@ import java.util.Date;
 @Getter
 @Setter(value = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "TBL_CHAT_MESSAGE")
 @EntityListeners({AuditingEntityListener.class})
 public class ChatMessage {
 

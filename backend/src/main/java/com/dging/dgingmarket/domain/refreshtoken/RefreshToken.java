@@ -14,7 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @Getter @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "tbl_refresh_token")
+@Table(name = "TBL_REFRESH_TOKEN")
 public class RefreshToken extends BaseTimeEntity {
 
     @Id
