@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { MainGoodsMenu } from '../section';
 import { Arrange, MainCard, UnderlineTitle } from '../components';
-import { getProductsId } from '../api/product/productApi';
+import { getProductsAll } from '../api/product/productApi';
+import { ProductType } from '../types/productType';
 
 const WrapCard = styled(Arrange)`
   width: 100%;
@@ -11,23 +12,15 @@ const WrapCard = styled(Arrange)`
 
 export default function MainPage() {
   const theme = useTheme();
-
-  const data = [
-    { id: '1', title: 'Test - Test', price: '20000', date: '12' },
-    { id: '2', title: 'Test - Test', price: '30000', date: '15' },
-    { id: '3', title: 'Test - Test', price: '40000', date: '19' },
-    { id: '4', title: 'Test - Test', price: '50000', date: '145' },
-    { id: '5', title: 'Test - Test', price: '60000', date: '17' },
-    { id: '6', title: 'Test - Test', price: '70000', date: '18' },
-    { id: '7', title: 'Test - Test', price: '80000', date: '15' },
-  ];
+  const [products, setProducts] = useState<ProductType[]>();
 
   useEffect(() => {
-    // const test = async () => {
-    //   const data = await getProductsId(1);
-    //   console.log(data);
-    // };
-    // test();
+    const GetProductsAll = async () => {
+      const data = await getProductsAll();
+      setProducts(data);
+      console.log(data);
+    };
+    GetProductsAll();
   }, []);
 
   return (
@@ -54,15 +47,17 @@ export default function MainPage() {
             gap='50px'
             justifycontent='space-between'
           >
-            {data.map((val, idx) => (
-              <MainCard
-                key={idx}
-                id={val.id}
-                title={val.title}
-                price={val.price}
-                date={val.date}
-              />
-            ))}
+            {products &&
+              products.map((val, idx) => (
+                <MainCard
+                  key={idx}
+                  goodsId={val.id.toString()}
+                  storeId={val.storeId.toString()}
+                  title={val.title}
+                  price={val.price}
+                  date={val.createdAt}
+                />
+              ))}
           </WrapCard>
         </Arrange>
       </Arrange>

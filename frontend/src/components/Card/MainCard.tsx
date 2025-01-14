@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Arrange } from '../../components';
+import { addComma } from '../../utils/addComma';
+import { calcTime } from '../../utils/calcTime';
 import { Test } from '../../assets/images';
 
 const WrapCard = styled(Arrange)`
@@ -47,26 +49,28 @@ const Date = styled.div`
 `;
 
 export default function MainCard(props: {
-  id?: string;
+  goodsId: string;
+  storeId: string;
   bg?: string;
-  title?: string;
-  price?: string;
-  date?: string;
+  title: string;
+  price: number;
+  date: string;
 }) {
   const navigate = useNavigate();
+
   return (
     <WrapCard
       display='flex'
       flexdirection='column'
-      onClick={() => navigate(`/detail/${props.id}`)}
+      onClick={() => navigate(`/detail/${props.storeId}/${props.goodsId}`)}
     >
       <CardImg $bg={Test} />
-      <Title>Test - Test</Title>
+      <Title>{props.title}</Title>
       <Arrange width='100%' display='flex' justifycontent='space-between'>
         <Price>
-          200,000&nbsp;<Won>원</Won>
+          {addComma(props.price)}&nbsp;<Won>원</Won>
         </Price>
-        <Date>12시간 전</Date>
+        <Date>{calcTime(props.date)}</Date>
       </Arrange>
     </WrapCard>
   );

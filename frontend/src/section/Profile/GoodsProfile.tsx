@@ -20,6 +20,8 @@ import {
   PayImmediately,
   StoreManagement,
 } from '../../assets/images';
+import { GoodsProfileType } from '../../types/productType';
+import { calcTime } from '../../utils/calcTime';
 
 const WrapStoreImage = styled.div<{ $bg?: string }>`
   width: 472px;
@@ -63,9 +65,11 @@ const ProfileBtn = styled.button<{ $bgcolor?: string; width?: string }>`
   cursor: pointer;
 `;
 
-export default function GoodsProfile() {
+export default function GoodsProfile(props: GoodsProfileType): JSX.Element {
   const theme = useTheme();
   const [isOwner, setIsOwner] = useState<boolean>(false);
+
+  console.log(props);
 
   return (
     <Arrange
@@ -86,7 +90,8 @@ export default function GoodsProfile() {
       >
         {/* 제목 & 가격 */}
         <FontBold24 width='100%' height='27px' margin='0 0 20px 0'>
-          Test - Test
+          {props.title || ''}
+          {/* TEST - TEST */}
         </FontBold24>
         <Price
           width='100%'
@@ -95,7 +100,8 @@ export default function GoodsProfile() {
           padding='0 0 30px 0'
           gap='4px'
         >
-          <Arrange height='44px'>{addComma((200000).toString())}</Arrange>
+          <Arrange height='44px'>{addComma(props.price || 0)}</Arrange>
+          {/* <Arrange height='44px'>{addComma(243234)}</Arrange> */}
           <Unit>원</Unit>
         </Price>
         {/* 찜 & 조회수 & 게시일 & 신고하기 버튼 */}
@@ -110,7 +116,8 @@ export default function GoodsProfile() {
               <IncludeImgBtn
                 as='div'
                 $leftbgimg={HeartEmpty}
-                text='16'
+                text={props.favoriteCount.toString() || ''}
+                // text={'12'}
                 gap='4px'
                 $textheight='20px'
                 textstyle={{
@@ -122,7 +129,9 @@ export default function GoodsProfile() {
               <IncludeImgBtn
                 as='div'
                 $leftbgimg={Time}
-                text='186'
+                text={calcTime(props.createdAt)}
+                // text='9일 전'
+
                 gap='4px'
                 $textheight='20px'
                 textstyle={{
@@ -134,7 +143,9 @@ export default function GoodsProfile() {
               <IncludeImgBtn
                 as='div'
                 $leftbgimg={Eye}
-                text='5일 전'
+                text={props.viewCount.toString()}
+                // text='186'
+
                 gap='4px'
                 $textheight='20px'
                 textstyle={{
@@ -171,7 +182,8 @@ export default function GoodsProfile() {
                     ...theme.font.info14_bold,
                   }}
                 >
-                  사용감 적음
+                  {props.quality}
+                  {/* 최상 */}
                 </Arrange>
               </Arrange>
             </li>
@@ -197,7 +209,8 @@ export default function GoodsProfile() {
                     ...theme.font.info14_bold,
                   }}
                 >
-                  서울특별시 강남구 논현1동
+                  {props.region}
+                  {/* 강남 2동 */}
                 </Arrange>
               </Arrange>
             </li>
@@ -210,7 +223,8 @@ export default function GoodsProfile() {
                     ...theme.font.info14_bold,
                   }}
                 >
-                  강남역 2번 출구
+                  {props.location}
+                  {/* 지하철 2번 출구 */}
                 </Arrange>
               </Arrange>
             </li>
@@ -245,7 +259,8 @@ export default function GoodsProfile() {
                   as='div'
                   bgcolor='transparent'
                   $leftbgimg={HeartFill}
-                  text={`찜 ${16}`}
+                  text={`찜 ${props.favoriteCount}`}
+                  // text={`찜 ${15}`}
                   textcolor='white'
                   textstyle={{ color: 'white', ...theme.font.info18 }}
                 />

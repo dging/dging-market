@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { getCookie } from '../../api/auth/cookie';
@@ -14,6 +15,8 @@ export default function KakaoRedirectPage() {
     'access_token',
     'refresh_token',
   ]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code');
@@ -43,22 +46,17 @@ export default function KakaoRedirectPage() {
               path: '/',
               maxAge: 1.5 * 24 * 60 * 60,
             });
-
+            console.log(access_token);
             axios
               .post(
                 `https://api.dev.dgingmarket.com/users/social/KAKAO/token`,
                 {
                   accessToken: access_token,
-                },
-                {
-                  headers: {
-                    'Content-Type':
-                      'application/x-www-form-urlencoded;charset=utf-8',
-                  },
                 }
               )
               .then((res) => {
                 const { accessToken, refreshToken } = res.data;
+
                 setCookie('access_token', accessToken, {
                   path: '/',
                   maxAge: 1.5 * 24 * 60 * 60,
@@ -70,7 +68,10 @@ export default function KakaoRedirectPage() {
 
                 setAccessToken(accessToken);
                 setRefreshToken(refreshToken);
-              });
+
+                navigate('/', { replace: true });
+              })
+              .catch((err) => console.log(err));
 
             // if (
             //   !cookies['kakao_access_token'] ||

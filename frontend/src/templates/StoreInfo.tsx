@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import {
   Arrange,
@@ -7,7 +8,9 @@ import {
   StoreReviewCard,
 } from '../components';
 import { SmallStoreProfile } from '../section';
+import { getStoresOverview } from '../api/store/storeApi';
 import { RightArrowBlack } from '../assets/images';
+import { StoreInfoType } from '../types/productType';
 
 const TitleH3 = styled.div`
   width: 100%;
@@ -32,6 +35,17 @@ const WrapMoreReview = styled.div`
 
 export default function StoreInfo() {
   const theme = useTheme();
+  const { storeId } = useParams();
+  const [storeInfo, setStoreInfo] = useState({} as StoreInfoType);
+
+  useEffect(() => {
+    const getStoreInfo = async () => {
+      const result = await getStoresOverview(storeId as string);
+      setStoreInfo(result);
+    };
+    getStoreInfo();
+  }, []);
+
   return (
     <Arrange
       padding='0 0 0 10px'
@@ -47,7 +61,11 @@ export default function StoreInfo() {
         gap='20px'
         alignitems='end'
       >
-        <SmallStoreProfile />
+        <SmallStoreProfile
+          followersCount={storeInfo.followersCount}
+          name={storeInfo.name}
+          salesCount={storeInfo.salesCount}
+        />
 
         <TitleH3>상점후기</TitleH3>
 

@@ -24,8 +24,13 @@ const Bar = styled.div<{ $status?: boolean }>`
   background-color: ${({ theme }) => theme.color.black5};
 `;
 
-export default function SmallStoreProfile() {
+export default function SmallStoreProfile(props: {
+  followersCount: number;
+  name: string;
+  salesCount: number;
+}) {
   const theme = useTheme();
+
   return (
     <Arrange
       display='flex'
@@ -47,11 +52,11 @@ export default function SmallStoreProfile() {
             margin='0 0 10px 0'
             style={{ color: theme.color.black0, ...theme.font.b16 }}
           >
-            FDOPE
+            {props.name}
           </Arrange>
           <Arrange>
             <span style={{ color: theme.color.black2, ...theme.font.info14 }}>
-              상품 <SpanBold>8</SpanBold>
+              상품 <SpanBold>{props.salesCount}</SpanBold>
             </span>
             &nbsp;&nbsp;
             <span style={{ color: theme.color.black5, ...theme.font.info14 }}>
@@ -59,7 +64,7 @@ export default function SmallStoreProfile() {
             </span>
             &nbsp;&nbsp;
             <span style={{ color: theme.color.black2, ...theme.font.info14 }}>
-              팔로워 <SpanBold>3</SpanBold>
+              팔로워 <SpanBold>{props.followersCount}</SpanBold>
             </span>
           </Arrange>
         </Arrange>

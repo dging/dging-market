@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { styled, useTheme } from 'styled-components';
 import { Arrange, ImgBtn } from '../../../components';
 import { useCookies } from 'react-cookie';
+import { instance } from '../../../api/axios/instance';
 import {
   LoginFacebook,
   LoginGoogle,
@@ -116,6 +117,7 @@ export default function LoginModal() {
               $backgroundimage={CloseGray}
               width='32px'
               height='32px'
+              margin='0 0 0 auto'
               onClick={() => {
                 handleLoginModal(false);
               }}

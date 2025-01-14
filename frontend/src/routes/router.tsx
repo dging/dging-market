@@ -32,14 +32,11 @@ import {
   ServicePage,
   GoodsManagePage,
   GoodsDetailPage,
-  HistoryPage,
   KakaoRedirectPage,
-  KakaoTokenPage,
 } from '../pages';
 
 export const router = createBrowserRouter([
   { path: '/oauth/kakao/redirect', element: <KakaoRedirectPage /> },
-  { path: '/oauth/kakao/token', element: <KakaoTokenPage /> },
   {
     element: <DefaultLayout />,
     errorElement: <div>error</div>,
@@ -65,7 +62,7 @@ export const router = createBrowserRouter([
         element: <ServicePage />,
       },
       {
-        path: '/detail/:id',
+        path: '/detail/:storeId/:goodsId',
         element: <GoodsDetailPage />,
       },
       {
