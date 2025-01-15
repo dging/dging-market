@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import {
+  useRecoilState,
+  useSetRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from 'recoil';
 import {
   SellAddress,
   SellImage,
@@ -15,6 +21,7 @@ import {
   SellState,
 } from './atom';
 import { SellTagCountState } from './selector';
+import { postProductRegister } from '../../api/product/productApi';
 
 export const useSell = () => {
   const [sellAddress, setSellAddress] = useRecoilState(SellAddress);
@@ -27,10 +34,31 @@ export const useSell = () => {
   const [sellName, setSellName] = useRecoilState(SellName);
   const [sellPrice, setSellPrice] = useRecoilState(SellPrice);
   const [sellProposal, setSellProposal] = useRecoilState(SellProposal);
-  const [sellState, setSellState] = useState(SellState);
+  const [sellState, setSellState] = useRecoilState(SellState);
   const [sellTag, setSellTag] = useRecoilState(SellTag);
 
+  const resets = [
+    useResetRecoilState(SellAddress),
+    useResetRecoilState(SellCategory),
+    useResetRecoilState(SellCount),
+    useResetRecoilState(SellDeliveryFee),
+    useResetRecoilState(SellDescription),
+    useResetRecoilState(SellDirect),
+    useResetRecoilState(SellImage),
+    useResetRecoilState(SellName),
+    useResetRecoilState(SellPrice),
+    useResetRecoilState(SellProposal),
+    useResetRecoilState(SellState),
+    useResetRecoilState(SellTag),
+  ];
+
+  const navigate = useNavigate();
+
   const invalidField: string[] = [];
+
+  const resetState = () => {
+    resets.forEach((reset) => reset());
+  };
 
   const addTag = (tagData: string) => {
     console.log('sellTag: ', sellTag, 'tagData', tagData);
@@ -75,37 +103,85 @@ export const useSell = () => {
     if (!sellState) invalidField.push('sellState');
   };
 
-  const onClickSellRegister = () => {
-    console.log(
-      'sellAddress : ',
-      sellAddress,
-      'sellCategory : ',
-      sellCategory,
-      ' sellCount : ',
-      sellCount,
-      ' sellDeliveryFee : ',
-      sellDeliveryFee,
-      ' sellDescription : ',
-      sellDescription,
-      ' sellDirect : ',
-      sellDirect,
-      ' sellImage : ',
-      sellImage,
-      ' sellName : ',
-      sellName,
-      ' sellPrice : ',
-      sellPrice,
-      ' sellProposal : ',
-      sellProposal,
-      ' sellState : ',
-      sellState,
-      ' sellTag : ',
-      sellTag
-    );
+  const onClickSellRegister = async () => {
+    // console.log(
+    //   'sellAddress : ',
+    //   sellAddress,
+    //   typeof sellAddress,
+    //   'sellCategory : ',
+    //   sellCategory,
+    //   typeof sellCategory,
+    //   ' sellCount : ',
+    //   sellCount,
+    //   typeof sellCount,
+    //   ' sellDeliveryFee : ',
+    //   sellDeliveryFee,
+    //   typeof sellDeliveryFee,
+    //   ' sellDescription : ',
+    //   sellDescription,
+    //   typeof sellDescription,
+    //   ' sellDirect : ',
+    //   sellDirect,
+    //   typeof sellDirect,
+    //   ' sellImage : ',
+    //   sellImage,
+    //   typeof sellImage,
+    //   ' sellName : ',
+    //   sellName,
+    //   typeof sellName,
+    //   ' sellPrice : ',
+    //   sellPrice,
+    //   typeof sellPrice,
+    //   ' sellProposal : ',
+    //   sellProposal,
+    //   typeof sellProposal,
+    //   ' sellState : ',
+    //   sellState,
+    //   typeof sellState,
+    //   ' sellTag : ',
+    //   sellTag,
+    //   typeof sellTag
+    // );
+    const data = {
+      imageIds: sellImage,
+      title: sellName,
+      mainCategory: sellCategory[1],
+      middleCategory: sellCategory[2],
+      subCategory: sellCategory[3],
+      quality: sellState,
+      content: sellDescription,
+      tags: sellTag,
+      price: Number(sellPrice),
+      allowsOffers: sellProposal,
+      isShippingFeeIncluded: sellDeliveryFee === '배송비포함',
+      isDirectTradeAvailable: sellDirect === '가능',
+      region: sellAddress.address,
+      location: sellAddress.detailAddress,
+      quantity: Number(sellCount),
+      isTemporarySave: false,
+    };
+
+    console.log(data);
+
     checkSell();
 
     if (invalidField.length === 0) {
       console.log('pass');
+
+      const result = await postProductRegister(data);
+      switch (result) {
+        case 201:
+          alert('상품이 성공적으로 등록되었습니다.');
+          navigate('/');
+          break;
+        case 400:
+          alert('업로드가 되지 않은 파일이 존재합니다.');
+          break;
+        case 404:
+          alert('사용자가 존재하지 않습니다.');
+          navigate('/');
+          break;
+      }
     } else {
       alert('모두 작성해주세요.');
       console.log(invalidField);
@@ -137,6 +213,7 @@ export const useSell = () => {
     setSellState,
     sellTag,
     setSellTag,
+    resetState,
     addTag,
     addImage,
     onClickSellRegister,

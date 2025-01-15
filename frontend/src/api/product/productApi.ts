@@ -1,5 +1,6 @@
 import { authInstance } from '../axios/authInstance';
 import { instance } from '../axios/instance';
+import { ProductSellType } from '../../types/productType';
 
 export const getProductsAll = async () => {
   return await authInstance
@@ -26,5 +27,21 @@ export const getProductsId = async (id: string) => {
     .catch((err) => {
       console.error(err);
       return [];
+    });
+};
+
+export const postProductRegister = async (data: ProductSellType) => {
+  console.log(data);
+  return await authInstance
+    .post(`/products`, data)
+    .then((res) => {
+      console.log(res);
+      const { status } = res;
+      return status;
+    })
+    .catch((err) => {
+      console.error(err);
+      const { status } = err;
+      return status;
     });
 };

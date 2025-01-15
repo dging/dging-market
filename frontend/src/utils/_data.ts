@@ -1,7 +1,7 @@
 // 전체 포함된 카테고리 데이터
 
 export const words = ['전체', '판매중', '예약중', '판매완료'];
-export const items1 = ['전체', 'CD', 'Vinyl', 'Cassette', 'DVD'];
+export const items1 = ['전체', 'CD', '바이닐', '카세트', 'DVD'];
 export const items2 = [
   '전체',
   'POP',
@@ -38,7 +38,7 @@ export const items3 = [
 
 // 전체 없는 카테고리 데이터
 
-export const category1 = ['CD', 'Vinyl', 'Cassette', 'DVD'];
+export const category1 = ['CD', '바이닐', '카세트', 'DVD'];
 export const category2 = [
   'POP',
   'K-POP',

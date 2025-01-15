@@ -27,75 +27,22 @@ export default function GoodsDetailPage() {
   const { goodsId } = useParams();
   const theme = useTheme();
   const [data, setData] = useState<DetailProductType | null>(null);
-  const [goodsProfile, setGoodsProfile] = useState<GoodsProfileType>(
-    {} as GoodsProfileType
-  );
-  const [goodsInfo, setGoodsInfo] = useState<GoodsInfoType>(
-    {} as GoodsInfoType
-  );
 
   const productId = async () => {
     try {
       if (goodsId) {
         await getProductsId(goodsId).then((res) => {
-          console.log(res);
           setData(res);
-          console.log(data);
-          setGoodsProfile(
-            (({
-              createdAt,
-              favoriteCount,
-              images,
-              price,
-              quality,
-              region,
-              location,
-              title,
-              viewCount,
-            }) => ({
-              createdAt,
-              favoriteCount,
-              images,
-              price,
-              quality,
-              region,
-              location,
-              title,
-              viewCount,
-            }))(res)
-          );
-
-          setGoodsInfo(
-            (({
-              content,
-              region,
-              location,
-              mainCategory,
-              middleCategory,
-              subCategory,
-              tags,
-            }) => ({
-              content,
-              region,
-              location,
-              mainCategory,
-              middleCategory,
-              subCategory,
-              tags,
-            }))(res)
-          );
         });
       }
     } catch {
-      return {};
+      return null;
     }
   };
 
   useEffect(() => {
     productId();
   }, []);
-
-  console.log(goodsProfile, goodsInfo);
 
   return (
     <>

@@ -55,6 +55,25 @@ export interface GoodsInfoType {
   tags: { id: number; name: string }[];
 }
 
+export interface ProductSellType {
+  imageIds?: { id: number; url: string }[];
+  title: string;
+  mainCategory: string;
+  middleCategory: string;
+  subCategory: string;
+  quality: string;
+  content: string;
+  tags: string[];
+  price: number;
+  allowsOffers: boolean;
+  isShippingFeeIncluded: boolean;
+  isDirectTradeAvailable: boolean;
+  region: string;
+  location: string;
+  quantity: number;
+  isTemporarySave: boolean;
+}
+
 export interface StoreInfoType {
   followersCount: number;
   name: string;

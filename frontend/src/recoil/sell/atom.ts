@@ -1,17 +1,6 @@
 import { atom } from 'recoil';
 
-interface SellImageType {
-  name: string;
-  message: string;
-}
-
-interface SellCategory {
-  first: string;
-  second: string;
-  third: string;
-}
-
-export const SellImage = atom<string[]>({
+export const SellImage = atom<{ id: number; url: string }[]>({
   key: 'SellImage',
   default: [],
 });
@@ -74,26 +63,3 @@ export const SellCount = atom({
   key: 'SellCount',
   default: '',
 });
-
-// export const SellState = atom({
-//   key: 'SellState',
-//   default: {
-//     image: [],
-//     title: 'test',
-//     category: {
-//       first: '',
-//       second: '',
-//       third: '',
-//     },
-//     state: '',
-//     description: 'description test',
-//     tag: ['tag1'],
-//     price: '',
-//     deliveryfee: '',
-//     direct: {
-//       state: false,
-//       address: '',
-//     },
-//     count: '',
-//   },
-// });

@@ -58,11 +58,14 @@ function GoodsInfo(props: GoodsInfoType) {
               ...theme.font.font14_bold,
             }}
           >
-            {props.region}
-            <br />({props.location})
-            {/* 서울
-            <br />
-            강남 */}
+            {props.region || props.location ? (
+              <>
+                {props.region || '없음'}
+                <br />({props.location || '없음'})
+              </>
+            ) : (
+              <>없음</>
+            )}
           </Arrange>
         </Arrange>
 

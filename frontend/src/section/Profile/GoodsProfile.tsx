@@ -116,7 +116,7 @@ export default function GoodsProfile(props: GoodsProfileType): JSX.Element {
               <IncludeImgBtn
                 as='div'
                 $leftbgimg={HeartEmpty}
-                text={props.favoriteCount.toString() || ''}
+                text={props.favoriteCount.toString() || '0'}
                 // text={'12'}
                 gap='4px'
                 $textheight='20px'
@@ -129,7 +129,7 @@ export default function GoodsProfile(props: GoodsProfileType): JSX.Element {
               <IncludeImgBtn
                 as='div'
                 $leftbgimg={Time}
-                text={calcTime(props.createdAt)}
+                text={calcTime(props.createdAt) || '0분 전'}
                 // text='9일 전'
 
                 gap='4px'
@@ -143,7 +143,7 @@ export default function GoodsProfile(props: GoodsProfileType): JSX.Element {
               <IncludeImgBtn
                 as='div'
                 $leftbgimg={Eye}
-                text={props.viewCount.toString()}
+                text={props.viewCount.toString() || '0'}
                 // text='186'
 
                 gap='4px'
@@ -209,7 +209,7 @@ export default function GoodsProfile(props: GoodsProfileType): JSX.Element {
                     ...theme.font.info14_bold,
                   }}
                 >
-                  {props.region}
+                  {props.region || '없음'}
                   {/* 강남 2동 */}
                 </Arrange>
               </Arrange>
@@ -223,7 +223,7 @@ export default function GoodsProfile(props: GoodsProfileType): JSX.Element {
                     ...theme.font.info14_bold,
                   }}
                 >
-                  {props.location}
+                  {props.location || '없음'}
                   {/* 지하철 2번 출구 */}
                 </Arrange>
               </Arrange>

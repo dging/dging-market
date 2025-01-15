@@ -37,9 +37,8 @@ const WrapInput = styled.div`
 `;
 
 interface FileInfo {
-  name: string;
-  size: number;
-  type: string;
+  id: number;
+  url: string;
 }
 
 export default function AddImage(props: {
