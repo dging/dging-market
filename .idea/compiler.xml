@@ -20,11 +20,6 @@
         <module name="com.dging.dging-market.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="com.example.dging-market" target="1.8" />
-      <module name="com.example.dging-market.main" target="1.8" />
-      <module name="com.example.dging-market.querydsl" target="1.8" />
-      <module name="com.example.dging-market.test" target="1.8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21" />
   </component>
 </project>
