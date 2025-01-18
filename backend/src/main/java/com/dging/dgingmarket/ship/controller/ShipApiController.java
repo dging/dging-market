@@ -27,20 +27,22 @@ public class ShipApiController {
         운송장 등록
      */
     @PostMapping("/register")
-    public ResponseEntity<String> registerShip(@RequestBody ShipRequest shipRequest){
-
+    public ResponseEntity<String> registerShip(@RequestBody ShipRequest shipRequest) {
+        // CarrierType enum에서 carrierName으로 매핑된 값을 찾기
         CarrierType carrier = Arrays.stream(CarrierType.values())
-                .filter(c -> c.getName().equals(shipRequest.getCarrierName()) && c.getCode().equals(shipRequest.getCarrierCode()))
+                .filter(c -> c.getName().equals(shipRequest.getCarrierName()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 운송업체입니다."));
 
+        // Ship 객체 생성
         Ship newShip = Ship.builder()
                 .trackingNumber(shipRequest.getTrackingNumber())
                 .carrier(carrier)
-                .status(ShippingStatus.IN_PROGRESS)
-                .statusCheckDate(LocalDateTime.now())
+                .status(ShippingStatus.IN_PROGRESS) // 초기값은 배송중
+                .statusCheckDate(LocalDateTime.now()) // 현재 시간으로 초기화
                 .build();
 
+        // ShipService를 사용해 저장
         shipService.registerShip(newShip, shipRequest.getBuyerId(), shipRequest.getStoreId(), shipRequest.getProductId());
 
         return ResponseEntity.ok("운송장이 성공적으로 등록되었습니다.");

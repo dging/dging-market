@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class ShipRequest {
     private String trackingNumber;
     private String carrierName;
-    private String carrierCode;
     private Long buyerId;
     private Long storeId;
     private Long productId;
