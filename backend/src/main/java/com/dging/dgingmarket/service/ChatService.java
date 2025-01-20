@@ -1,6 +1,9 @@
 package com.dging.dgingmarket.service;
 
-import com.dging.dgingmarket.domain.chat.*;
+import com.dging.dgingmarket.domain.chat.ChatMessage;
+import com.dging.dgingmarket.domain.chat.ChatMessageRepository;
+import com.dging.dgingmarket.domain.chat.ChatRoom;
+import com.dging.dgingmarket.domain.chat.ChatRoomRepository;
 import com.dging.dgingmarket.domain.chat.exception.ChatMyselfException;
 import com.dging.dgingmarket.domain.chat.exception.ChatRoomNotFoundException;
 import com.dging.dgingmarket.domain.chat.exception.UserOwnChatRoomException;
@@ -9,7 +12,6 @@ import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
-import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.chat.ChatRoomEnterResponse;
 import com.dging.dgingmarket.web.socket.dto.*;
@@ -38,25 +40,32 @@ public class ChatService {
 
     @Transactional
     public void join(RedisChatMessage message) {
+        // 채팅방 가져오기. 없으면 예외 발생.
         ChatRoom foundChatRoom = chatRoomRepository.findById(message.getRoomId()).orElseThrow(ChatRoomNotFoundException::new);
         Long chatRoomId = foundChatRoom.getId();
 
         User sender = EntityUtils.userThrowable();
         Long senderId = sender.getId();
 
-        RedisChatRoomInfo foundChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+        // Redis에서 채팅방 정보 가져오기. 없으면 DB에서 조회 후 갱신.
+        RedisChatRoomInfo foundChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseGet(() -> savedRedisChatRoomInfo(chatRoomId));
 
+        // Redis에 현재 채팅방에 접속 중인 상태 업데이트
         foundChatRoomInfo.addCurrentUser(senderId);
         redisChatRoomInfoRepository.save(foundChatRoomInfo);
 
+        // 현재 채팅방에 접속 중인 사용자 수에 따라 읽음 수 갱신
         long connectedUserCount = foundChatRoomInfo.getUserCount();
         int updateCount = 0;
         if (connectedUserCount == 2) {
+            // 모두 채팅방에 접속해 있다면 읽지 않은 메시지는 모두 읽음 처리
             updateCount = chatMessageRepository.updateAllReadStatus(chatRoomId);
         } else if (connectedUserCount == 1) {
+            // 채팅방에 현재 사용자만 접속해있다면 본인이 읽지 않은 메시지만 읽음 처리
             updateCount = chatMessageRepository.updateReadStatus(senderId, chatRoomId);
         }
 
+        // 갱신된 레코드가 있다면 상대방에게 상태 변경 메시지 발행
         if(updateCount > 0) {
             List<RedisChatMessage> chatMessages = chatMessageRepository.findByChatRoomIdOrderByCreatedAt(chatRoomId)
                     .stream()
@@ -71,10 +80,13 @@ public class ChatService {
         }
     }
 
+    // 웹 소켓 세션 종료 시 호출
     @Transactional
     public void leave(Long chatRoomId, Long userId) {
-        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+        // Redis에서 채팅방 정보 가져오기. 없으면 DB에서 조회 후 갱신.
+        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseGet(() -> savedRedisChatRoomInfo(chatRoomId));
 
+        // Redis에 현재 채팅방에 접속 중이 아닌 상태 업데이트
         chatRoomInfo.removeCurrentUser(userId);
         redisChatRoomInfoRepository.save(chatRoomInfo);
     }
@@ -83,47 +95,53 @@ public class ChatService {
     public void sendMessage(RedisChatMessage message) {
         Long chatRoomId = message.getRoomId();
 
+        // 채팅방 가져오기. 없으면 예외 발생.
         ChatRoom foundChatRoom = chatRoomRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
 
         User sender = EntityUtils.userThrowable();
 
         ChatMessage chatMessage = ChatMessage.create(sender, foundChatRoom, message.getContent());
 
-        RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
+        // Redis에서 채팅방 정보 가져오기. 없으면 DB에서 조회 후 갱신.
+        RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseGet(() -> savedRedisChatRoomInfo(chatRoomId));
 
+        // 현재 채팅방에 접속 중인 사용자 수에 따라 읽음 수 갱신
         long connectedUserCount = foundRedisChatRoomInfo.getUserCount();
         if(connectedUserCount == 2) {
+            // 모두 채팅방에 접속해 있다면 읽지 않은 메시지는 모두 읽음 처리
             chatMessageRepository.updateAllReadStatus(chatRoomId);
+            // 변경된 상태를 바로 사용하기 위해 현재 메시지를 따로 읽음 처리
             chatMessage.read();
         }
 
+        // DB에 메시지 저장
         ChatMessage createdMessage = chatMessageRepository.save(chatMessage);
+        // Redis 저장용 메시지 생성
         RedisChatMessage redisChatMessage = RedisChatMessage.of(createdMessage, message.getType());
 
         int messageCount = chatMessageRepository.countByChatRoomId(chatRoomId);
 
         foundRedisChatRoomInfo.setMessageCount(messageCount);
+
+        // 캐싱
         redisChatRoomInfoRepository.save(foundRedisChatRoomInfo);
         redisChatMessageRepository.save(redisChatMessage);
 
-        // Redis pub/sub으로 메시지 발행
+        // Redis Pub/Sub으로 상대방에게 메시지 발행
         redisTemplate.convertAndSend("chat:message", redisChatMessage);
     }
 
     @Transactional
     public List<RedisChatMessage> chatMessages(Long roomId) {
-        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(roomId).orElseGet(() -> {
-            ChatRoom foundChatRoom = chatRoomRepository.findById(roomId).orElseThrow(ChatRoomNotFoundException::new);
-            Long purchaserId = foundChatRoom.getFrom().getId();
-            Long sellerId = foundChatRoom.getTo().getId();
-            RedisChatRoomInfo redisChatRoomInfoToCreate = RedisChatRoomInfo.create(roomId, purchaserId, sellerId);
-            return redisChatRoomInfoRepository.save(redisChatRoomInfoToCreate);
-        });
+        // Redis에서 채팅방 정보 가져오기. 없으면 DB에서 조회 후 갱신.
+        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(roomId).orElseGet(() -> savedRedisChatRoomInfo(roomId));
 
         User user = EntityUtils.userThrowable();
 
+        // 본인의 채팅방인지 확인
         validateUserOwnChatRoom(chatRoomInfo, user.getId());
 
+        // Redis에서 채팅을 가져온 후 날짜 기준 오름차순 정렬
         List<RedisChatMessage> foundRedisChatMessages = redisChatMessageRepository.findByRoomId(roomId)
                 .stream()
                 .sorted(Comparator.comparing(RedisChatMessage::getTimestamp))
@@ -132,6 +150,7 @@ public class ChatService {
         int redisMessageCount = foundRedisChatMessages.size();
         long messageCount = chatRoomInfo.getMessageCount();
 
+        // Redis에서 만료된 데이터가 있다면 DB에서 캐싱 후 데이터 반환
         if(redisMessageCount < messageCount) {
             List<RedisChatMessage> chatMessages = chatMessageRepository.findByChatRoomIdOrderByCreatedAt(roomId)
                     .stream()
@@ -141,41 +160,57 @@ public class ChatService {
             return chatMessages;
         }
 
+        // 캐싱 데이터 그대로 반환
         return foundRedisChatMessages;
     }
 
     @Transactional
     public ChatRoomEnterResponse enterRoom(Long productId) {
+        // 상품 가져오기. 없으면 예외 발생.
         Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(ProductNotFoundException::new);
 
+        // 구매자(사용자 본인)
         User purchaser = EntityUtils.userThrowable();
-        User foundPurchaser = userRepository.findById(purchaser.getId()).orElseThrow(UserNotFoundException::new);
+
+        // 판매자
         User seller = foundProduct.getStore().getUser();
 
-        validateChatMyself(foundPurchaser.getId(), seller.getId());
+        // 사용자 본인과 채팅을 시도하려는지 확인
+        validateChatMyself(purchaser.getId(), seller.getId());
 
+        // 유니크 키를 가지고 채팅방 가져오기
         Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByFromAndToAndProduct(purchaser, seller, foundProduct);
 
         final ChatRoomEnterResponse response;
 
         if(chatRoomOptional.isEmpty()) {
-            ChatRoom chatRoomToCreate = ChatRoom.create(foundPurchaser, seller, foundProduct);
+            // 채팅방이 없으면 생성 후 응답 DTO 생성
+            ChatRoom chatRoomToCreate = ChatRoom.create(purchaser, seller, foundProduct);
             ChatRoom createdChatRoom = chatRoomRepository.saveAndFlush(chatRoomToCreate);
 
             response = ChatRoomEnterResponse.create(createdChatRoom.getId(), 201);
         } else {
+            // 채팅방이 있으면 그대로 응답 DTO 생성
             ChatRoom foundChatRoom = chatRoomOptional.get();
             response = ChatRoomEnterResponse.create(foundChatRoom.getId(), 200);
         }
 
         // Redis AOF 저장 방식을 통해 동기화 가능
+        // Redis에 채팅방 정보 캐싱
         RedisChatRoomInfo redisChatRoomInfoToCreate = RedisChatRoomInfo.create(response.getId(), purchaser.getId(), seller.getId());
         redisChatRoomInfoRepository.save(redisChatRoomInfoToCreate);
 
         return response;
     }
 
-    // 본인의 채팅방이 아님
+    private RedisChatRoomInfo savedRedisChatRoomInfo(Long roomId) {
+        ChatRoom foundChatRoom = chatRoomRepository.findById(roomId).orElseThrow(ChatRoomNotFoundException::new);
+        Long purchaserId = foundChatRoom.getFrom().getId();
+        Long sellerId = foundChatRoom.getTo().getId();
+        RedisChatRoomInfo redisChatRoomInfoToCreate = RedisChatRoomInfo.create(roomId, purchaserId, sellerId);
+        return redisChatRoomInfoRepository.save(redisChatRoomInfoToCreate);
+    }
+
     private static void validateUserOwnChatRoom(RedisChatRoomInfo redisChatRoomInfo, Long userId) {
         if(!redisChatRoomInfo.hasUser(userId)) {
             throw UserOwnChatRoomException.EXCEPTION;
