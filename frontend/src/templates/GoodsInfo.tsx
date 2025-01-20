@@ -123,7 +123,7 @@ function GoodsInfo(props: GoodsInfoType) {
           >
             {props.tags.map(
               (val: { id: number; name: string }, idx: number) => (
-                <span>#{val.name} </span>
+                <span key={val.id}>#{val.name} </span>
               )
             )}
             {/* {['싸다', '편하다', '가깝다'].map((val: string, idx: number) => (

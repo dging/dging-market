@@ -62,18 +62,38 @@ const WrapSocialLoginBtn = styled.div<{ $social?: string }>`
 
 export default function LoginModal() {
   const social = [
-    { kor: '카카오톡으로 로그인', eng: 'kakao', img: LoginKakao },
-    { kor: '구글로 로그인', eng: 'google', img: LoginGoogle },
-    { kor: '페이스북으로 로그인', eng: 'facebook', img: LoginFacebook },
-    { kor: '네이버로 로그인', eng: 'naver', img: LoginNaver },
+    {
+      kor: '카카오톡으로 로그인',
+      eng: 'kakao',
+      img: LoginKakao,
+      url: import.meta.env.VITE_KAKAO_OAUTH_URL,
+    },
+    {
+      kor: '구글로 로그인',
+      eng: 'google',
+      img: LoginGoogle,
+      url: import.meta.env.VITE_GOOGLE_OAUTH_URL,
+    },
+    {
+      kor: '페이스북으로 로그인',
+      eng: 'facebook',
+      img: LoginFacebook,
+      url: import.meta.env.VITE_FACEBOOK_OAUTH_URL,
+    },
+    {
+      kor: '네이버로 로그인',
+      eng: 'naver',
+      img: LoginNaver,
+      url: import.meta.env.VITE_NAVER_OAUTH_URL,
+    },
   ];
 
   const [cookies] = useCookies(['access_token', 'refresh_token']);
 
   const { handleLoginModal } = useMainModal();
 
-  const kakaoSocial = async () => {
-    console.log(cookies.access_token, cookies.refresh_token);
+  const onHandleSocialLogin = async (url: string) => {
+    console.log(cookies.access_token, cookies.refresh_token, url);
     if (
       cookies.access_token !== undefined &&
       cookies.refresh_token !== undefined
@@ -83,7 +103,7 @@ export default function LoginModal() {
       // window.Kakao.Auth.authorize({
       //   redirectUri: 'http://localhost:5173/oauth/kakao/redirect',
       // });
-      window.location.href = import.meta.env.VITE_KAKAO_OAUTH_URL;
+      window.location.href = url;
     }
   };
 
@@ -96,7 +116,7 @@ export default function LoginModal() {
             key={idx}
             onClick={() => {
               console.log(val.eng.toUpperCase(), val.eng);
-              kakaoSocial();
+              onHandleSocialLogin(val.url);
             }}
           >
             <ImgBtn $backgroundimage={val.img} />

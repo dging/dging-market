@@ -8,12 +8,15 @@ import {
   SmallBtn,
   DeclarationBtn,
 } from '../../components';
+import { calcTime } from '../../utils/calcTime';
 import { Test, UserPlusWhite, Verification } from '../../assets/images';
+import { useMyStore } from '../../recoil/myStoreRecoil/useMyStore';
 
 const WrapStoreProfile = styled(Arrange)`
   position: relative;
   border-radius: 16px;
   overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.color.black5};
 `;
 
 const WrapStoreImage = styled.div<{ $bg?: string; $bgsize?: string }>`
@@ -23,6 +26,7 @@ const WrapStoreImage = styled.div<{ $bg?: string; $bgsize?: string }>`
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+
   filter: blur(20px);
 `;
 
@@ -45,8 +49,13 @@ const StoreImage = styled.div<{ $bg?: string }>`
 `;
 
 const LeftTitle = styled(Arrange)`
-  ${({ theme }) => theme.font.b24}
+  width: 100%;
   margin-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  ${({ theme }) => theme.font.b24}
 `;
 
 const Info = styled(Arrange)`
@@ -71,7 +80,7 @@ const ManageBtn = styled.button<{ $status?: boolean }>`
 `;
 
 const RightTitle = styled.input<{ as?: string }>`
-  width: ${(props) => (props.as === 'div' ? 'fit-content' : '360px')};
+  width: ${(props) => (props.as === 'div' ? 'fit-content' : '480px')};
   height: 28px;
   padding: 0;
   border: none;
@@ -117,15 +126,12 @@ const CountWord = styled(Arrange)`
 
 export default function StoreProfile() {
   const theme = useTheme();
-  const [isOwner, setIsOwner] = useState(false);
-  const [isAuth, setIsAuth] = useState(true);
+  const { getStoresMe } = useMyStore();
+  const [isOwner, setIsOwner] = useState(true);
   const [titleEdit, setTitleEdit] = useState(true);
-  const [titleValue, setTitleValue] = useState('TEST');
   const [introEdit, setIntroEdit] = useState(true);
-  const [introValue, setIntroValue] = useState('안녕하세요.');
-  const ratingChanged = (newRating: number) => {
-    console.log(newRating);
-  };
+  const [titleValue, setTitleValue] = useState(getStoresMe.name);
+  const [introValue, setIntroValue] = useState(getStoresMe.introduction);
 
   const KeyEvent1 = (e: any) => {
     console.log('shiftKey : ', e.shiftKey, 'keyCode : ', e.keyCode);
@@ -149,151 +155,162 @@ export default function StoreProfile() {
   };
 
   return (
-    <Arrange
-      width={theme.page_size.width}
-      display='flex'
-      padding={`30px 0 ${theme.size.xxxxxl} 0`}
-      margin='0 auto'
-    >
-      {/* 왼쪽 이미지 */}
-      <WrapStoreProfile>
-        <WrapStoreImage $bg={Test} />
-        <WrapLeftDetail
-          position='absolute'
-          display='flex'
-          width='280px'
-          height='290px'
-          flexdirection='column'
-        >
-          <StoreImage $bg={Test} />
-          <LeftTitle width='100%' textalign='center'>
-            {titleValue}
-          </LeftTitle>
-          <Arrange width='100%' display='flex' justifycontent='center'>
-            <ReactStars value={5} count={5} size={20} edit={false} />
-          </Arrange>
-          {!isOwner && (
-            <>
-              <Info width='100%' textalign='center'>
-                상품 <SpanBold>27553</SpanBold> &nbsp;| &nbsp;팔로워
-                <SpanBold>23312</SpanBold>
-              </Info>
-            </>
-          )}
-          <Arrange width='100%' textalign='center' margin='16px 0 0 0'>
-            {isOwner ? (
-              <>
-                <ManageBtn $status={isOwner}>내 상품 관리</ManageBtn>
-              </>
-            ) : (
-              <>
-                <ManageBtn $status={isOwner}>
-                  <ImgBtn as='div' $backgroundimage={UserPlusWhite} />
-                  <Arrange padding='4px 0 0 4px'>팔로우</Arrange>
-                </ManageBtn>
-              </>
-            )}
-          </Arrange>
-        </WrapLeftDetail>
-      </WrapStoreProfile>
-      {/* 오른쪽 부분 */}
-      <Arrange width='780px' padding={`${theme.size.l} ${theme.size.xxxxxl}`}>
+    <>
+      {getStoresMe && (
         <Arrange
+          width={theme.page_size.width}
           display='flex'
-          justifycontent='space-between'
-          width='100%'
-          $bottom={true}
-          padding={`0 0 ${theme.size.xl} 0`}
+          padding={`30px 0 ${theme.size.xxxxxl} 0`}
+          margin='0 auto'
         >
-          {titleEdit ? (
-            <>
-              <Arrange display='flex' gap='10px' alignitems='center'>
-                <RightTitle
-                  as='div'
-                  value={titleValue}
-                  readOnly={titleEdit}
-                  onKeyDown={KeyEvent1}
-                >
-                  {titleValue}
-                </RightTitle>
-                {isOwner && (
-                  <SmallBtn onClick={() => setTitleEdit(!titleEdit)}>
-                    상품명 수정
-                  </SmallBtn>
+          {/* 왼쪽 이미지 */}
+          <WrapStoreProfile>
+            <WrapStoreImage $bg={getStoresMe.profileImageUrl} />
+            <WrapLeftDetail
+              position='absolute'
+              display='flex'
+              width='280px'
+              height='290px'
+              flexdirection='column'
+            >
+              <StoreImage $bg={getStoresMe.profileImageUrl} />
+              <LeftTitle width='100%' textalign='center'>
+                {getStoresMe.name}
+              </LeftTitle>
+              <Arrange width='100%' display='flex' justifycontent='center'>
+                <ReactStars value={5} count={5} size={20} edit={false} />
+              </Arrange>
+              {!isOwner && (
+                <>
+                  <Info width='100%' textalign='center'>
+                    상품 <SpanBold>{getStoresMe.salesCount}</SpanBold> &nbsp;|
+                    &nbsp;팔로워&nbsp;
+                    <SpanBold>{getStoresMe.followersTotalCount}</SpanBold>
+                  </Info>
+                </>
+              )}
+              <Arrange width='100%' textalign='center' margin='16px 0 0 0'>
+                {isOwner ? (
+                  <>
+                    <ManageBtn $status={isOwner}>내 상품 관리</ManageBtn>
+                  </>
+                ) : (
+                  <>
+                    <ManageBtn $status={isOwner}>
+                      <ImgBtn as='div' $backgroundimage={UserPlusWhite} />
+                      <Arrange padding='4px 0 0 4px'>팔로우</Arrange>
+                    </ManageBtn>
+                  </>
                 )}
               </Arrange>
-            </>
-          ) : (
-            <>
-              <RightTitle
-                as='input'
-                value={titleValue}
-                readOnly={titleEdit}
-                onKeyDown={KeyEvent1}
-                onChange={(e) => setTitleValue(e.target.value)}
-              />
-              <WrapGray>
-                수정을 완료하시려면 Enter 입력해주세요.
-                <br />
-                이전으로 돌아가시려면 ESC를 입력해주세요.
-              </WrapGray>
-            </>
-          )}
-
-          {isAuth && (
-            <ImgBtn as='div' width='83px' $backgroundimage={Verification} />
-          )}
-        </Arrange>
-        <RightDetail
-          width='100%'
-          padding={`${theme.size.xl} 0`}
-          display='flex'
-          gap='10px'
-        >
-          상점오픈일<WrapBlack>2598 일 전</WrapBlack>
-          <div>|</div>상품판매
-          <WrapBlack>4회</WrapBlack>
-        </RightDetail>
-        <Arrange width='100%' padding={`${theme.size.xl} 0`}>
-          <IntroInput
-            value={introValue}
-            readOnly={introEdit}
-            onChange={(e: any) => setIntroValue(e.target.value)}
-            onKeyDown={KeyEvent2}
-            maxLength={1000}
-          />
-        </Arrange>
-        <Arrange
-          width='100%'
-          display='flex'
-          justifycontent='space-between'
-          alignitems='flex-end'
-        >
-          {isOwner ? (
-            <>
-              {introEdit ? (
+            </WrapLeftDetail>
+          </WrapStoreProfile>
+          {/* 오른쪽 부분 */}
+          <Arrange
+            width='780px'
+            padding={`${theme.size.l} ${theme.size.xxxxxl}`}
+          >
+            <Arrange
+              display='flex'
+              justifycontent='space-between'
+              width='100%'
+              $bottom
+              padding={`0 0 ${theme.size.xl} 0`}
+            >
+              {titleEdit ? (
                 <>
-                  <SmallBtn onClick={() => setIntroEdit(!introEdit)}>
-                    소개글 수정
-                  </SmallBtn>
+                  <Arrange display='flex' gap='10px' alignitems='center'>
+                    <RightTitle
+                      as='div'
+                      value={titleValue}
+                      readOnly={titleEdit}
+                      onKeyDown={KeyEvent1}
+                    >
+                      {titleValue}
+                    </RightTitle>
+                    {isOwner && (
+                      <SmallBtn onClick={() => setTitleEdit(!titleEdit)}>
+                        상점명 수정
+                      </SmallBtn>
+                    )}
+                  </Arrange>
                 </>
               ) : (
                 <>
+                  <RightTitle
+                    as='input'
+                    value={titleValue}
+                    readOnly={titleEdit}
+                    onKeyDown={KeyEvent1}
+                    onChange={(e) => setTitleValue(e.target.value)}
+                  />
                   <WrapGray>
-                    수정을 완료하시려면 Enter, 이전으로 돌아가시려면 Esc를
-                    입력해주세요.
+                    수정을 완료하시려면 Enter 입력해주세요.
                     <br />
-                    줄바꿈은 Shift + Enter ( ⇧ + ⏎ )
+                    이전으로 돌아가시려면 ESC를 입력해주세요.
                   </WrapGray>
-                  <CountWord>{introValue.length} / 1000</CountWord>
                 </>
               )}
-            </>
-          ) : (
-            <DeclarationBtn />
-          )}
+
+              {getStoresMe.isAuthenticated && (
+                <ImgBtn as='div' width='83px' $backgroundimage={Verification} />
+              )}
+            </Arrange>
+            <RightDetail
+              width='100%'
+              padding={`${theme.size.xl} 0`}
+              display='flex'
+              gap='10px'
+            >
+              상점오픈일
+              <WrapBlack>{calcTime(getStoresMe.createdAt)}</WrapBlack>
+              <div>|</div>상품판매
+              <WrapBlack>{getStoresMe.salesCount}회</WrapBlack>
+            </RightDetail>
+            <Arrange width='100%' padding={`${theme.size.xl} 0`}>
+              <IntroInput
+                value={introValue === null ? '' : getStoresMe.introduction}
+                readOnly={introEdit}
+                onChange={(e: any) => setIntroValue(e.target.value)}
+                onKeyDown={KeyEvent2}
+                maxLength={1000}
+              />
+            </Arrange>
+            <Arrange
+              width='100%'
+              display='flex'
+              justifycontent='space-between'
+              alignitems='flex-end'
+            >
+              {isOwner ? (
+                <>
+                  {introEdit ? (
+                    <>
+                      <SmallBtn onClick={() => setIntroEdit(!introEdit)}>
+                        소개글 수정
+                      </SmallBtn>
+                    </>
+                  ) : (
+                    <>
+                      <WrapGray>
+                        수정을 완료하시려면 Enter, 이전으로 돌아가시려면 Esc를
+                        입력해주세요.
+                        <br />
+                        줄바꿈은 Shift + Enter ( ⇧ + ⏎ )
+                      </WrapGray>
+                      <CountWord>
+                        {introValue === null ? '0' : introValue.length} / 1000
+                      </CountWord>
+                    </>
+                  )}
+                </>
+              ) : (
+                <DeclarationBtn />
+              )}
+            </Arrange>
+          </Arrange>
         </Arrange>
-      </Arrange>
-    </Arrange>
+      )}
+    </>
   );
 }

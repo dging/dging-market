@@ -5,6 +5,7 @@ import { Arrange } from '../../components';
 import { addComma } from '../../utils/addComma';
 import { calcTime } from '../../utils/calcTime';
 import { Test } from '../../assets/images';
+import { MainCardType } from '../../types/productType';
 
 const WrapCard = styled(Arrange)`
   cursor: pointer;
@@ -48,14 +49,7 @@ const Date = styled.div`
   color: ${({ theme }) => theme.color.black2};
 `;
 
-export default function MainCard(props: {
-  goodsId: string;
-  storeId: string;
-  bg?: string;
-  title: string;
-  price: number;
-  date: string;
-}) {
+export default function MainCard(props: MainCardType) {
   const navigate = useNavigate();
 
   return (

@@ -1,4 +1,4 @@
-export { default as MystoreGoodsTemplate } from './MystorePage/MystoreFollowerTemplate';
+export { default as MystoreGoodsTemplate } from './MystorePage/MystoreGoodsTemplate';
 export { default as MystoreReviewTemplate } from './MystorePage/MystoreReviewTemplate';
 export { default as MystoreKeepTemplate } from './MystorePage/MystoreKeepTemplate';
 export { default as MystoreFollowingTemplate } from './MystorePage/MystoreFollowingTemplate';

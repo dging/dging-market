@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
-import {
-  Arrange,
-  DeclarationBtn,
-  ImgBtn,
-  IncludeImgBtn,
-  SmallBtn,
-  SpanBold,
-} from '../../components';
+import { Arrange, DeclarationBtn, IncludeImgBtn } from '../../components';
 import { addComma } from '../../utils/addComma';
 
 import {

@@ -24,7 +24,7 @@ export default function NavigateBtn() {
       <IncludeImgBtn
         as='div'
         gap='5px'
-        fontsize='18px'
+        fontSize='18px'
         $rightbgimg={RightArrowBlack}
         $rightimgwidth='18px'
         $rightimgheight='18px'

@@ -79,3 +79,24 @@ export interface StoreInfoType {
   name: string;
   salesCount: number;
 }
+
+export interface MainCardType {
+  goodsId: string;
+  storeId: string;
+  bg?: string;
+  title: string;
+  price: number;
+  date: string;
+}
+
+export interface ProductsFavoriteType {
+  id: number;
+  storeId: number;
+  storeName: string;
+  title: string;
+  runningStatus: string;
+  images: { id: number; url: string }[];
+  price: number;
+  tags: { id: number; name: string }[];
+  createdAt: string;
+}

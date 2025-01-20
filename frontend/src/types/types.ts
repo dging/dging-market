@@ -63,7 +63,7 @@ export interface IncludeImgBtnType {
   $change?: boolean;
   text?: string;
   textcolor?: string;
-  fontsize?: string;
+  fontSize?: string;
   font?: string;
   textstyle?: CSS.Properties;
   bgcolor?: string;

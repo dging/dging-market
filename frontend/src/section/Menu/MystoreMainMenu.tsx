@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
+import { MyStoreMenuType } from '../../types/storeType';
+import { useMyStore } from '../../recoil/myStoreRecoil/useMyStore';
 
 const WrapMenu = styled.div<{ $isOwner?: boolean }>`
   display: grid;
@@ -42,6 +44,7 @@ export default function MystoreMainMenu() {
   const navigate = useNavigate();
   const location = useLocation();
   const address = location.pathname;
+  const { getStoresMe } = useMyStore();
 
   return (
     <WrapMenu $isOwner={isOwner}>
@@ -49,33 +52,33 @@ export default function MystoreMainMenu() {
         $status={address === '/mystore/goods'}
         onClick={() => navigate('/mystore/goods')}
       >
-        상품 9
+        상품 {getStoresMe.salesCount}
       </MenuButton>
       <MenuButton
         $status={address === '/mystore/review'}
         onClick={() => navigate('/mystore/review')}
       >
-        상점후기 3
+        상점후기 {getStoresMe.reviewsTotalCount}
       </MenuButton>
       {isOwner && (
         <MenuButton
           $status={address === '/mystore/keep'}
           onClick={() => navigate('/mystore/keep')}
         >
-          찜 4
+          찜 {getStoresMe.favoriteProductsTotalCount}
         </MenuButton>
       )}
       <MenuButton
         $status={address === '/mystore/following'}
         onClick={() => navigate('/mystore/following')}
       >
-        팔로잉 5
+        팔로잉 {getStoresMe.followingsTotalCount}
       </MenuButton>
       <LastButton
         $status={address === '/mystore/follower'}
         onClick={() => navigate('/mystore/follower')}
       >
-        팔로워 2
+        팔로워 {getStoresMe.followersTotalCount}
       </LastButton>
     </WrapMenu>
   );

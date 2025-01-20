@@ -11,3 +11,6 @@ export { default as SettingPage } from './SettingPage';
 export { default as TalkPage } from './TalkPage';
 
 export { default as KakaoRedirectPage } from './oauth/KakaoRedirectPage';
+export { default as GoogleRedirectPage } from './oauth/GoogleRedirectPage';
+export { default as NaverRedirectPage } from './oauth/NaverRedirectPage';
+export { default as FacebookeRedirectPage } from './oauth/FacebookeRedirectPage';

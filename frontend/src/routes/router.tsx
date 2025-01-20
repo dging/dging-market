@@ -33,10 +33,22 @@ import {
   GoodsManagePage,
   GoodsDetailPage,
   KakaoRedirectPage,
+  NaverRedirectPage,
+  GoogleRedirectPage,
+  FacebookeRedirectPage,
 } from '../pages';
 
 export const router = createBrowserRouter([
-  { path: '/oauth/kakao/redirect', element: <KakaoRedirectPage /> },
+  {
+    errorElement: <div>oauth error</div>,
+    children: [
+      { path: '/oauth/kakao/redirect', element: <KakaoRedirectPage /> },
+      { path: '/oauth/naver/redirect', element: <NaverRedirectPage /> },
+      { path: '/oauth/google/redirect', element: <GoogleRedirectPage /> },
+      { path: '/oauth/facebook/redirect', element: <FacebookeRedirectPage /> },
+    ],
+  },
+
   {
     element: <DefaultLayout />,
     errorElement: <div>error</div>,

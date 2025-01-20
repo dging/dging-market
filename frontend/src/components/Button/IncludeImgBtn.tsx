@@ -38,7 +38,7 @@ const Text = styled.div<IncludeImgBtnType>`
     (props.$change ? props.theme.color.pink100 : props.theme.color.black0) ||
     props.textcolor};
   font-family: ${(props) => (props.$change ? 'NSBold' : 'NSRegular')};
-  font-size: ${(props) => props.fontsize || '16px'};
+  font-size: ${(props) => props.fontSize || '16px'};
   ${(props) => props.font}
 `;
 

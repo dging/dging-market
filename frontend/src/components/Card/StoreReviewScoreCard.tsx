@@ -24,7 +24,7 @@ const ReviewTitle = styled(Arrange)`
   color: ${({ theme }) => theme.color.black2};
 `;
 
-export default function StoreReviewScoreCard() {
+export default function StoreReviewScoreCard(props: { rating: number }) {
   const theme = useTheme();
   const [starScore, setStarScore] = useState(5);
   return (
@@ -37,15 +37,16 @@ export default function StoreReviewScoreCard() {
       <WrapScore display='flex' justifycontent='end'>
         <Arrange>
           <Arrange width='100%' textalign='center'>
-            {starScore}
+            {props.rating}
           </Arrange>
-          <ReactStars value={starScore} size={20} edit={false} />
+          <ReactStars value={props.rating} size={20} edit={false} />
         </Arrange>
       </WrapScore>
       <Bar />
       <WrapScore>
         <Arrange>
           <Arrange width='100%' textalign='center' margin='0 0 3px 0'>
+            {/* 이거 없음 */}
             100%
           </Arrange>
           <ReviewTitle width='100%' textalign='center'>

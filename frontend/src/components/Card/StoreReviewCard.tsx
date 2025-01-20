@@ -4,6 +4,8 @@ import styled, { useTheme } from 'styled-components';
 import ReactStars from 'react-stars';
 import { Arrange, DeclarationBtn, NavigateBtn } from '../../components';
 import { DefaultProfile } from '../../assets/images';
+import { MyStoreReviewsType } from '../../types/storeType';
+import { calcTime } from '../../utils/calcTime';
 
 const Profile = styled.div<{ $bgimg?: any; $location: boolean }>`
   width: ${(props) => (props.$location ? '72px' : '48px')};
@@ -43,7 +45,7 @@ const Date = styled(Arrange)`
   color: ${({ theme }) => theme.color.black2};
 `;
 
-export default function StoreReviewCard(props: { $location?: string }) {
+export default function StoreReviewCard(props: MyStoreReviewsType) {
   const location = useLocation();
   const theme = useTheme();
   const [starScore, setStarScore] = useState(5);
@@ -69,25 +71,22 @@ export default function StoreReviewCard(props: { $location?: string }) {
         <Arrange width='100%' display='flex' flexdirection='column' gap='8px'>
           <Arrange width='100%' display='flex' justifycontent='space-between'>
             {isStoreReview() ? (
-              <TitleH3>상점 1020938호</TitleH3>
+              <TitleH3>{props.storeName}</TitleH3>
             ) : (
-              <TitleH4>상점 1020938호</TitleH4>
+              <TitleH4>{props.storeName}</TitleH4>
             )}
             <Date width='100px' textalign='right'>
-              1년 전
+              {calcTime(props.createdAt)}
             </Date>
           </Arrange>
 
-          <ReactStars value={starScore} size={20} edit={false} />
+          <ReactStars value={props.rating} size={20} edit={false} />
           {isStoreReview() && <NavigateBtn />}
         </Arrange>
         {isStoreReview() ? (
-          <TitleH3>친절하시고 우체국택배까지^^</TitleH3>
+          <TitleH3>{props.content}</TitleH3>
         ) : (
-          <Body16>
-            친절하시고 우체국택배까지^^ 친절하시고 우체국택배까지^^ 친절하시고
-            우체국택배까지^^
-          </Body16>
+          <Body16>{props.content}</Body16>
         )}
         {isStoreReview() && <DeclarationBtn />}
       </Arrange>

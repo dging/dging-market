@@ -11,7 +11,8 @@ export const getProductsAll = async () => {
     })
     .catch((err) => {
       console.error(err);
-      return [];
+      const { status } = err;
+      return status;
     });
 };
 
@@ -26,7 +27,7 @@ export const getProductsId = async (id: string) => {
     })
     .catch((err) => {
       console.error(err);
-      return [];
+      return err.status;
     });
 };
 
@@ -43,5 +44,18 @@ export const postProductRegister = async (data: ProductSellType) => {
       console.error(err);
       const { status } = err;
       return status;
+    });
+};
+
+export const getProductsFavorite = async () => {
+  return await authInstance
+    .get('/products/favorite')
+    .then((res) => {
+      const { content } = res.data;
+      return content;
+    })
+    .catch((err) => {
+      console.error('getProductsFavorite : ', err);
+      return [];
     });
 };

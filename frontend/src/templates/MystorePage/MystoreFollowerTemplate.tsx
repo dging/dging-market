@@ -1,15 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Arrange, FollowerCard } from '../../components';
+import { getStoresFollowers } from '../../api/store/storeApi';
+import { useMyStore } from '../../recoil/myStoreRecoil/useMyStore';
 
 const WrapCard = styled(Arrange)`
   grid-template-columns: repeat(4, 1fr);
 `;
 
 export default function MystoreFollowerTemplate() {
-  const type = ['최신순', '인기순', '저가순', '고가순'];
-  const [status, setStatus] = useState(type[0]);
+  const [followers, setFollowers] = useState([]);
+  const { getStoresMe } = useMyStore();
   const theme = useTheme();
+
+  const getFollowers = async () => {
+    await getStoresFollowers(getStoresMe.id)
+      .then((res) => {
+        setFollowers(res);
+      })
+      .catch((err) => {
+        setFollowers([]);
+        console.error('getFollowers : ', err);
+      });
+  };
+
+  useEffect(() => {
+    getFollowers();
+  }, []);
+
   return (
     <WrapCard
       display='grid'
@@ -18,22 +36,15 @@ export default function MystoreFollowerTemplate() {
       padding='20px 0 100px 0'
       gap='20px'
     >
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
-      <FollowerCard />
+      {followers.length === 0 ? (
+        <>팔로워가 없습니다.</>
+      ) : (
+        <>
+          {followers.map((val, idx) => (
+            <FollowerCard key={idx} />
+          ))}
+        </>
+      )}
     </WrapCard>
   );
 }
