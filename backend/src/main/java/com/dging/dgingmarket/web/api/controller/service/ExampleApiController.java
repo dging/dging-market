@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
+import com.dging.dgingmarket.documentation.ApiErrorCodeClassExample;
 import com.dging.dgingmarket.exception.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

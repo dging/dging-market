@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.domain.store;
 
 import com.dging.dgingmarket.util.param.SearchParam;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.QStoreProductReviewsResponse;
 import com.dging.dgingmarket.web.api.dto.store.StoreProductReviewsResponse;
 import com.querydsl.core.BooleanBuilder;

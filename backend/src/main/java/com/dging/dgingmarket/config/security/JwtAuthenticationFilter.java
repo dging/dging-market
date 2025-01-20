@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.config.security;
 
-import com.dging.dgingmarket.domain.common.exception.AuthenticationEntryPointException;
+import com.dging.dgingmarket.exception.AuthenticationEntryPointException;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.exception.CommonErrorCode;
 import com.dging.dgingmarket.exception.UserErrorCode;
@@ -11,7 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 

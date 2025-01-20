@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.config.security;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,6 +33,12 @@ public class SecurityConfiguration {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
+    @PostConstruct
+    public void init() {
+        // ThreadLocal 대신 글로벌 전략 사용
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -41,22 +49,17 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST,
-                                "/exception/**",
-                                "/users",
                                 "/users/token",
                                 "/users/token/expiration",
                                 "/users/social/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET,
-                                "/exception/**",
                                 "/oauth/**",
                                 "/files/**",
-                                "/addr"
+                                "/html/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/exception/**").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/exception/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/exception/**").permitAll()
-                        .requestMatchers(HttpMethod.HEAD, "/exception/**").permitAll()
+                        .requestMatchers("/exception/**").permitAll()
+                        .requestMatchers("/ws-stomp/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().hasRole("USER")
                 )

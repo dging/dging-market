@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.config.security;
 
-import com.dging.dgingmarket.domain.common.exception.AuthenticationEntryPointException;
+import com.dging.dgingmarket.exception.AuthenticationEntryPointException;
 import com.dging.dgingmarket.service.security.CustomUserDetailsService;
 import com.dging.dgingmarket.web.api.dto.user.TokenResponse;
 import io.jsonwebtoken.*;
@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -94,6 +95,15 @@ public class JwtProvider {
 
     public String resolveToken(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
+        if(StringUtils.hasText(authorization) && authorization.startsWith("Bearer") && authorization.split(" ").length >= 2) {
+            return authorization.split(" ")[1];
+        } else {
+            return null;
+        }
+    }
+
+    public String resolveToken(StompHeaderAccessor accessor) {
+        String authorization = accessor.getFirstNativeHeader("Authorization");
         if(StringUtils.hasText(authorization) && authorization.startsWith("Bearer") && authorization.split(" ").length >= 2) {
             return authorization.split(" ")[1];
         } else {

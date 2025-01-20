@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.api.dto.store;
 
-import com.dging.dgingmarket.enums.PaymentType;
-import com.dging.dgingmarket.enums.RunningStatus;
+import com.dging.dgingmarket.domain.type.PaymentType;
+import com.dging.dgingmarket.domain.type.RunningStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

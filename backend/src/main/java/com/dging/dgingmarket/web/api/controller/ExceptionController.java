@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.api.controller;
 
-import com.dging.dgingmarket.domain.common.exception.AccessDeniedException;
-import com.dging.dgingmarket.domain.common.exception.AuthenticationEntryPointException;
+import com.dging.dgingmarket.exception.AccessDeniedException;
+import com.dging.dgingmarket.exception.AuthenticationEntryPointException;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,7 +2,7 @@ package com.dging.dgingmarket.domain.store;
 
 import com.dging.dgingmarket.domain.product.QProduct;
 import com.dging.dgingmarket.util.param.SearchParam;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.QRecentProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.RecentProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static com.dging.dgingmarket.domain.common.QImage.image;
+import static com.dging.dgingmarket.domain.QImage.image;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
 import static com.dging.dgingmarket.domain.product.QProductImage.productImage;
 import static com.dging.dgingmarket.domain.store.QFollower.follower;

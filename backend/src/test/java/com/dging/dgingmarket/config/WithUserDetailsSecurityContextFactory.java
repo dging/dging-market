@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.config;
 
-import com.dging.dgingmarket.enums.Role;
+import com.dging.dgingmarket.domain.type.Role;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.domain.user.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

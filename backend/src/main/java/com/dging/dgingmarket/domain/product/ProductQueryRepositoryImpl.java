@@ -1,11 +1,11 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.enums.MainCategory;
 import com.dging.dgingmarket.domain.store.Store;
+import com.dging.dgingmarket.domain.type.MainCategory;
 import com.dging.dgingmarket.util.param.SearchParam;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
-import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.ImagesResponse;
+import com.dging.dgingmarket.web.api.dto.TagsResponse;
 import com.dging.dgingmarket.web.api.dto.product.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.group.GroupBy;
@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.dging.dgingmarket.domain.common.QImage.image;
-import static com.dging.dgingmarket.domain.common.QTag.tag;
+import static com.dging.dgingmarket.domain.QImage.image;
+import static com.dging.dgingmarket.domain.QTag.tag;
 import static com.dging.dgingmarket.domain.product.QFavorite.favorite;
 import static com.dging.dgingmarket.domain.product.QProduct.product;
 import static com.dging.dgingmarket.domain.product.QProductImage.productImage;

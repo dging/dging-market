@@ -1,9 +1,9 @@
 package com.dging.dgingmarket.client;
 
-import com.dging.dgingmarket.dto.KakaoProfile;
-import com.dging.dgingmarket.dto.OAuthTokenResponse;
-import com.dging.dgingmarket.dto.SocialProfile;
-import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
+import com.dging.dgingmarket.client.dto.KakaoProfile;
+import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
+import com.dging.dgingmarket.client.dto.SocialProfile;
+import com.dging.dgingmarket.exception.SocialCommunicationException;
 import com.dging.dgingmarket.service.UrlService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;

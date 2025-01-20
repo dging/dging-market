@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.web.controller.social;
 
-import com.dging.dgingmarket.enums.SocialType;
+import com.dging.dgingmarket.domain.type.SocialType;
 import com.dging.dgingmarket.service.social.OAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

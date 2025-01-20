@@ -1,12 +1,14 @@
 package com.dging.dgingmarket.service;
 
-import com.dging.dgingmarket.domain.common.Image;
-import com.dging.dgingmarket.domain.common.ImageRepository;
-import com.dging.dgingmarket.domain.common.Tag;
-import com.dging.dgingmarket.domain.common.TagRepository;
-import com.dging.dgingmarket.enums.RunningStatus;
-import com.dging.dgingmarket.domain.common.exception.SomeFileNotUploadedException;
-import com.dging.dgingmarket.domain.common.exception.SomeFileNotYoursException;
+import com.dging.dgingmarket.domain.Image;
+import com.dging.dgingmarket.domain.ImageRepository;
+import com.dging.dgingmarket.domain.Tag;
+import com.dging.dgingmarket.domain.TagRepository;
+import com.dging.dgingmarket.domain.chat.ChatRoom;
+import com.dging.dgingmarket.domain.chat.ChatRoomRepository;
+import com.dging.dgingmarket.domain.type.RunningStatus;
+import com.dging.dgingmarket.exception.SomeFileNotUploadedException;
+import com.dging.dgingmarket.exception.SomeFileNotYoursException;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
@@ -16,7 +18,7 @@ import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.EntityUtils;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,7 @@ public class ProductService {
     private final TagRepository tagRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
     public void create(ProductCreateRequest request) {
@@ -154,6 +157,18 @@ public class ProductService {
         User user = EntityUtils.userThrowable();
 
         return productRepository.favoriteProducts(pageable, user.getId(), cond);
+    }
+
+    @Transactional
+    public void createPayment(Long productId) {
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(ProductNotFoundException::new);
+
+        User purchaser = EntityUtils.userThrowable();
+        User foundPurchaser = userRepository.findById(purchaser.getId()).orElseThrow(UserNotFoundException::new);
+        User seller = foundProduct.getStore().getUser();
+
+        ChatRoom chatRoomToCreate = ChatRoom.create(foundPurchaser, seller, foundProduct);
+        chatRoomRepository.save(chatRoomToCreate);
     }
 
     private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {

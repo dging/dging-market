@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.domain.common.Tag;
+import com.dging.dgingmarket.domain.Tag;
 import jakarta.persistence.*;
 import lombok.*;
 

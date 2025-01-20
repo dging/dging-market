@@ -1,9 +1,9 @@
 package com.dging.dgingmarket.client;
 
-import com.dging.dgingmarket.dto.NaverProfile;
-import com.dging.dgingmarket.dto.OAuthTokenResponse;
-import com.dging.dgingmarket.dto.SocialProfile;
-import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
+import com.dging.dgingmarket.client.dto.NaverProfile;
+import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
+import com.dging.dgingmarket.client.dto.SocialProfile;
+import com.dging.dgingmarket.exception.SocialCommunicationException;
 import com.dging.dgingmarket.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;

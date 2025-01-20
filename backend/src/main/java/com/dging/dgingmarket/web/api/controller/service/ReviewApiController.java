@@ -1,38 +1,20 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
-import com.dging.dgingmarket.docs.CustomDescriptionOverride;
-import com.dging.dgingmarket.domain.product.Product;
-import com.dging.dgingmarket.exception.ApiErrorCodeExample;
+import com.dging.dgingmarket.documentation.ApiErrorCodeExample;
 import com.dging.dgingmarket.exception.StoreErrorCode;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
-import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
-import com.dging.dgingmarket.web.api.dto.product.*;
-import com.dging.dgingmarket.web.api.dto.store.StoreReviewCreateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_UPLOADED;
-import static com.dging.dgingmarket.exception.CommonErrorCode._SOME_FILE_NOT_YOURS;
-import static com.dging.dgingmarket.exception.ProductErrorCode._PRODUCT_NOT_FOUND;
-import static com.dging.dgingmarket.exception.ProductErrorCode._USER_OWN_PRODUCT;
-import static com.dging.dgingmarket.exception.StoreErrorCode._REVIEW_MYSELF_ERROR;
-import static com.dging.dgingmarket.exception.UserErrorCode._USER_NOT_FOUND;
 
 @Slf4j
 @RequestMapping("/reviews")

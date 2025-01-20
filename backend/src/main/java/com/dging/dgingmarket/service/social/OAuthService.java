@@ -1,11 +1,11 @@
 package com.dging.dgingmarket.service.social;
 
 import com.dging.dgingmarket.client.OAuthClient;
-import com.dging.dgingmarket.dto.OAuthTokenResponse;
-import com.dging.dgingmarket.dto.SocialProfile;
-import com.dging.dgingmarket.enums.SocialType;
-import com.dging.dgingmarket.domain.common.exception.InvalidSocialTypeException;
-import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
+import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
+import com.dging.dgingmarket.client.dto.SocialProfile;
+import com.dging.dgingmarket.domain.type.SocialType;
+import com.dging.dgingmarket.exception.InvalidSocialTypeException;
+import com.dging.dgingmarket.exception.SocialCommunicationException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

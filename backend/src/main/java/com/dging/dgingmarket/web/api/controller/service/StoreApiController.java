@@ -1,17 +1,17 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
-import com.dging.dgingmarket.docs.CustomDescriptionOverride;
+import com.dging.dgingmarket.documentation.CustomDescriptionOverride;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.Review;
-import com.dging.dgingmarket.exception.ApiErrorCodeExample;
+import com.dging.dgingmarket.documentation.ApiErrorCodeExample;
 import com.dging.dgingmarket.exception.StoreErrorCode;
 import com.dging.dgingmarket.exception.UserErrorCode;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.ProductsCondition;
 import com.dging.dgingmarket.web.api.dto.product.StoreProductsResponse;
 import com.dging.dgingmarket.web.api.dto.store.*;

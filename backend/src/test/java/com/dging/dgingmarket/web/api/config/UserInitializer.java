@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.web.api.config;
 
-import com.dging.dgingmarket.enums.Role;
+import com.dging.dgingmarket.domain.type.Role;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,9 @@
 package com.dging.dgingmarket.client;
 
-import com.dging.dgingmarket.dto.FacebookProfile;
-import com.dging.dgingmarket.dto.OAuthTokenResponse;
-import com.dging.dgingmarket.dto.SocialProfile;
-import com.dging.dgingmarket.domain.common.exception.SocialCommunicationException;
+import com.dging.dgingmarket.client.dto.FacebookProfile;
+import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
+import com.dging.dgingmarket.client.dto.SocialProfile;
+import com.dging.dgingmarket.exception.SocialCommunicationException;
 import com.dging.dgingmarket.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;

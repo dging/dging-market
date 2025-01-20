@@ -1,16 +1,14 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
-import com.dging.dgingmarket.docs.CustomDescriptionOverride;
+import com.dging.dgingmarket.documentation.CustomDescriptionOverride;
 import com.dging.dgingmarket.domain.product.Product;
-import com.dging.dgingmarket.exception.ApiErrorCodeExample;
-import com.dging.dgingmarket.exception.StoreErrorCode;
+import com.dging.dgingmarket.documentation.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.*;
-import com.dging.dgingmarket.web.api.dto.store.StoreResponse;
 import com.dging.dgingmarket.web.api.dto.store.StoreReviewCreateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -238,5 +236,18 @@ public class ProductApiController {
         storeService.createProductReview(id, request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("{id}/payments")
+    @Operation(summary = "상품 결제 테스트", description = "테스트입니다.")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
+    ResponseEntity<Void> create(
+            @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
+            @PathVariable Long id
+    ) {
+
+        productService.createPayment(id);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 }

@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.domain.store;
 
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import org.springframework.data.domain.Page;

@@ -1,13 +1,13 @@
 package com.dging.dgingmarket.util;
 
-import com.dging.dgingmarket.enums.MainCategory;
+import com.dging.dgingmarket.domain.type.MainCategory;
 import com.dging.dgingmarket.util.constant.BasePaths;
-import com.dging.dgingmarket.enums.ImageType;
-import com.dging.dgingmarket.enums.ProductQuality;
-import com.dging.dgingmarket.enums.RunningStatus;
-import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
-import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
-import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
+import com.dging.dgingmarket.domain.type.ImageType;
+import com.dging.dgingmarket.domain.type.ProductQuality;
+import com.dging.dgingmarket.domain.type.RunningStatus;
+import com.dging.dgingmarket.web.api.dto.ImageResponse;
+import com.dging.dgingmarket.web.api.dto.ImagesResponse;
+import com.dging.dgingmarket.web.api.dto.TagsResponse;
 import com.dging.dgingmarket.web.api.dto.product.FavoriteProductsResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductResponse;
 import com.dging.dgingmarket.web.api.dto.product.ProductsResponse;

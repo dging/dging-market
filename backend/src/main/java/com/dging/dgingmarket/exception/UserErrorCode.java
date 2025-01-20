@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.exception;
 
+import com.dging.dgingmarket.documentation.ErrorExplanation;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

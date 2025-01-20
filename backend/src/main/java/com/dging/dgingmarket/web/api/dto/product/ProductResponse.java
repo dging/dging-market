@@ -1,10 +1,10 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.enums.MainCategory;
-import com.dging.dgingmarket.enums.ProductQuality;
-import com.dging.dgingmarket.enums.RunningStatus;
-import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
-import com.dging.dgingmarket.web.api.dto.common.TagsResponse;
+import com.dging.dgingmarket.domain.type.MainCategory;
+import com.dging.dgingmarket.domain.type.ProductQuality;
+import com.dging.dgingmarket.domain.type.RunningStatus;
+import com.dging.dgingmarket.web.api.dto.ImagesResponse;
+import com.dging.dgingmarket.web.api.dto.TagsResponse;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;

@@ -8,7 +8,7 @@ import com.dging.dgingmarket.domain.store.exception.*;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.util.EntityUtils;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

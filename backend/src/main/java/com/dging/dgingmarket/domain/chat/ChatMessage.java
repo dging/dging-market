@@ -35,8 +35,8 @@ public class ChatMessage {
     @Column(length = 2000, nullable = false)
     private String content;
 
-    @Column(nullable = false, columnDefinition = "tinyint(1) default 0")
-    private boolean isRead;
+    @Column(name = "is_read", nullable = false, columnDefinition = "tinyint(1) default 0")
+    private boolean read;
 
     @CreatedDate
     @Column(length = 6)
@@ -46,15 +46,16 @@ public class ChatMessage {
     @Column(length = 6)
     private Date updatedAt;
 
-    public static ChatMessage create(User sender, String content) {
+    public static ChatMessage create(User sender, ChatRoom chatRoom, String content) {
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setSender(sender);
+        chatMessage.setChatRoom(chatRoom);
         chatMessage.setContent(content);
         chatMessage.setRead(false);
         return chatMessage;
     }
 
     public void read() {
-        this.isRead = true;
+        this.read = true;
     }
 }

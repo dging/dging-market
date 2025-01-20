@@ -1,8 +1,8 @@
 package com.dging.dgingmarket.web.api.config;
 
-import com.dging.dgingmarket.domain.common.Image;
-import com.dging.dgingmarket.domain.common.Tag;
-import com.dging.dgingmarket.enums.MainCategory;
+import com.dging.dgingmarket.domain.Image;
+import com.dging.dgingmarket.domain.Tag;
+import com.dging.dgingmarket.domain.type.MainCategory;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.user.User;
@@ -10,8 +10,8 @@ import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
 import com.dging.dgingmarket.util.constant.BasePaths;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
-import com.dging.dgingmarket.enums.ImageType;
-import com.dging.dgingmarket.enums.ProductQuality;
+import com.dging.dgingmarket.domain.type.ImageType;
+import com.dging.dgingmarket.domain.type.ProductQuality;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

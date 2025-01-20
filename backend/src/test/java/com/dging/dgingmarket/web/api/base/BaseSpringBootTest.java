@@ -1,10 +1,6 @@
 package com.dging.dgingmarket.web.api.base;
 
 import com.dging.dgingmarket.config.MockS3Configuration;
-import com.dging.dgingmarket.domain.common.ImageRepository;
-import com.dging.dgingmarket.domain.common.TagRepository;
-import com.dging.dgingmarket.domain.product.ProductRepository;
-import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.service.ProductService;
 import com.dging.dgingmarket.service.StoreService;
 import com.dging.dgingmarket.service.cloud.FileUploadService;

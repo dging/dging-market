@@ -1,13 +1,13 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
-import com.dging.dgingmarket.exception.ApiErrorCodeExample;
+import com.dging.dgingmarket.documentation.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.cloud.FileUploadService;
 import com.dging.dgingmarket.util.FileUtils;
 import com.dging.dgingmarket.util.constant.BasePaths;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
-import com.dging.dgingmarket.web.api.dto.common.ImageCreateRequest;
-import com.dging.dgingmarket.web.api.dto.common.ImageResponse;
-import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
+import com.dging.dgingmarket.web.api.dto.ImageCreateRequest;
+import com.dging.dgingmarket.web.api.dto.ImageResponse;
+import com.dging.dgingmarket.web.api.dto.ImagesResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

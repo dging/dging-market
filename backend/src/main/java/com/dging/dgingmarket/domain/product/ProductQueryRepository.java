@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.product.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

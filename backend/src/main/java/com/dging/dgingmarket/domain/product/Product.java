@@ -1,10 +1,10 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.domain.common.Image;
-import com.dging.dgingmarket.domain.common.Tag;
-import com.dging.dgingmarket.enums.MainCategory;
-import com.dging.dgingmarket.enums.ProductQuality;
-import com.dging.dgingmarket.enums.RunningStatus;
+import com.dging.dgingmarket.domain.Image;
+import com.dging.dgingmarket.domain.Tag;
+import com.dging.dgingmarket.domain.type.MainCategory;
+import com.dging.dgingmarket.domain.type.ProductQuality;
+import com.dging.dgingmarket.domain.type.RunningStatus;
 import com.dging.dgingmarket.domain.store.Store;
 import com.dging.dgingmarket.util.converter.MainCategoryAttributeConverter;
 import com.dging.dgingmarket.util.converter.ProductQualityAttributeConverter;

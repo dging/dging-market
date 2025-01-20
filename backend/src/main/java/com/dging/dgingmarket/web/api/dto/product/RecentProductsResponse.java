@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.web.api.dto.common.ImagesResponse;
+import com.dging.dgingmarket.web.api.dto.ImagesResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;

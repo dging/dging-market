@@ -1,10 +1,13 @@
 package com.dging.dgingmarket.config;
 
-import com.dging.dgingmarket.docs.CustomDescriptionOverride;
+import com.dging.dgingmarket.documentation.ApiErrorCodeClassExample;
+import com.dging.dgingmarket.documentation.ApiErrorCodeExample;
+import com.dging.dgingmarket.documentation.CustomDescriptionOverride;
+import com.dging.dgingmarket.documentation.ExampleHolder;
 import com.dging.dgingmarket.exception.*;
 import com.dging.dgingmarket.util.JsonUtils;
 import com.dging.dgingmarket.util.annotation.CustomPageableParameter;
-import com.dging.dgingmarket.web.api.dto.common.ErrorResponse;
+import com.dging.dgingmarket.web.api.dto.ErrorResponse;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;

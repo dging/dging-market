@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.service;
 
 import com.dging.dgingmarket.config.WithCustomMockUser;
-import com.dging.dgingmarket.enums.Role;
+import com.dging.dgingmarket.domain.type.Role;
 import com.dging.dgingmarket.domain.store.Follower;
 import com.dging.dgingmarket.domain.store.FollowerRepository;
 import com.dging.dgingmarket.domain.store.StoreRepository;
@@ -11,7 +11,7 @@ import com.dging.dgingmarket.domain.store.exception.FollowerNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.util.EntityUtils;
-import com.dging.dgingmarket.web.api.dto.common.CommonCondition;
+import com.dging.dgingmarket.web.api.dto.CommonCondition;
 import com.dging.dgingmarket.web.api.dto.store.FollowersResponse;
 import com.dging.dgingmarket.web.api.dto.store.FollowingsResponse;
 import org.junit.jupiter.api.DisplayName;

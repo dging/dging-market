@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.util;
 
-import com.dging.dgingmarket.domain.common.exception.InvalidFileException;
+import com.dging.dgingmarket.exception.InvalidFileException;
 import com.dging.dgingmarket.domain.user.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.multipart.MultipartFile;

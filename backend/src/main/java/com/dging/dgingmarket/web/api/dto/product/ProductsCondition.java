@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.web.api.dto.product;
 
-import com.dging.dgingmarket.enums.MainCategory;
+import com.dging.dgingmarket.domain.type.MainCategory;
 import com.dging.dgingmarket.util.constant.ValidationMessages;
 import com.dging.dgingmarket.util.validation.Enum;
 import io.swagger.v3.oas.annotations.Parameter;

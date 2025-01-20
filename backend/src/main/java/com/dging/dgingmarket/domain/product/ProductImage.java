@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.domain.product;
 
-import com.dging.dgingmarket.domain.common.Image;
+import com.dging.dgingmarket.domain.Image;
 import jakarta.persistence.*;
 import lombok.*;
 

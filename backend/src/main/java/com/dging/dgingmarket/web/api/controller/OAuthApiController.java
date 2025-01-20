@@ -1,7 +1,7 @@
 package com.dging.dgingmarket.web.api.controller;
 
-import com.dging.dgingmarket.dto.OAuthTokenResponse;
-import com.dging.dgingmarket.enums.SocialType;
+import com.dging.dgingmarket.client.dto.OAuthTokenResponse;
+import com.dging.dgingmarket.domain.type.SocialType;
 import com.dging.dgingmarket.service.social.OAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

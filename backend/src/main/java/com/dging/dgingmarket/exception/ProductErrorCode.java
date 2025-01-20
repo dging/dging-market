@@ -1,5 +1,6 @@
 package com.dging.dgingmarket.exception;
 
+import com.dging.dgingmarket.documentation.ErrorExplanation;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
 public enum ProductErrorCode implements BaseErrorCode {
     /**
      * PRODUCT
-     * DGM-2xxx
+     * DGM-3xxx
      */
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-3000", "상품이 존재하지 않습니다."),
     USER_OWN_PRODUCT(HttpStatus.FORBIDDEN.value(), "DGM-3100", "사용자 본인의 상품이 아닙니다."),

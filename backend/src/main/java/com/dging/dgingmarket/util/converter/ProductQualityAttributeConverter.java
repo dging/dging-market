@@ -1,6 +1,6 @@
 package com.dging.dgingmarket.util.converter;
 
-import com.dging.dgingmarket.enums.ProductQuality;
+import com.dging.dgingmarket.domain.type.ProductQuality;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.springframework.util.ObjectUtils;

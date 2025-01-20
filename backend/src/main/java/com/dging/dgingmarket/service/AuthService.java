@@ -1,10 +1,10 @@
 package com.dging.dgingmarket.service;
 
-import com.dging.dgingmarket.dto.SocialProfile;
+import com.dging.dgingmarket.client.dto.SocialProfile;
 import com.dging.dgingmarket.config.security.JwtProvider;
-import com.dging.dgingmarket.enums.Role;
-import com.dging.dgingmarket.enums.SocialType;
-import com.dging.dgingmarket.domain.common.exception.RefreshTokenException;
+import com.dging.dgingmarket.domain.type.Role;
+import com.dging.dgingmarket.domain.type.SocialType;
+import com.dging.dgingmarket.exception.RefreshTokenException;
 import com.dging.dgingmarket.domain.refreshtoken.RefreshToken;
 import com.dging.dgingmarket.domain.refreshtoken.RefreshTokenRepository;
 import com.dging.dgingmarket.domain.user.User;
