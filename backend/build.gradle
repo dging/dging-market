@@ -95,7 +95,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.32'
 
 	// WebSocket 관련 의존성
-	implementation 'org.webjars:sock-client:1.6.1'
 	implementation 'org.webjars:stomp-websocket:2.3.4'
 
 	// 테스트 관련 의존성
