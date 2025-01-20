@@ -4,8 +4,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter(AccessLevel.PROTECTED)
@@ -16,7 +15,7 @@ public class RedisChatRoomInfo {
     private Long id;
     private Set<Long> currentUserIds;
     private Set<Long> userIds;
-    private long userCount;
+    private Map<Long, Date> lastUserConnectedAts;
     @Setter
     private long messageCount;
 
@@ -37,19 +36,38 @@ public class RedisChatRoomInfo {
     }
 
     public void addCurrentUser(Long userId) {
-        if(currentUserIds == null) {
+        if(this.currentUserIds == null) {
             currentUserIds = new HashSet<>();
         }
         this.currentUserIds.add(userId);
-        this.userCount = this.currentUserIds.size();
+        updateConnection(userId);
     }
 
     public void removeCurrentUser(Long userId) {
         this.currentUserIds.remove(userId);
-        this.userCount = this.currentUserIds.size();
+        updateConnection(userId);
+    }
+
+    public int getCurrentUserCount() {
+        return this.currentUserIds.size();
     }
 
     public boolean hasUser(Long userId) {
         return this.userIds != null && this.userIds.contains(userId);
+    }
+
+    public Date getLastUserConnectedAt(Long userId) {
+        if(this.lastUserConnectedAts != null) {
+            return this.lastUserConnectedAts.get(userId);
+        }
+
+        return null;
+    }
+
+    public void updateConnection(Long userId) {
+        if(this.lastUserConnectedAts == null) {
+            this.lastUserConnectedAts = new HashMap<>();
+        }
+        this.lastUserConnectedAts.put(userId, new Date());
     }
 }

@@ -13,6 +13,7 @@ import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.chat.ChatRoomEnterResponse;
+import com.dging.dgingmarket.web.api.dto.chat.ChatRoomResponse;
 import com.dging.dgingmarket.web.api.dto.chat.ChatRoomsResponse;
 import com.dging.dgingmarket.web.socket.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,7 +52,7 @@ public class ChatService {
         redisChatRoomInfoRepository.save(foundChatRoomInfo);
 
         // 현재 채팅방에 접속 중인 사용자 수에 따라 읽음 수 갱신
-        long connectedUserCount = foundChatRoomInfo.getUserCount();
+        long connectedUserCount = foundChatRoomInfo.getCurrentUserCount();
         int updateCount = 0;
         if (connectedUserCount == 2) {
             // 모두 채팅방에 접속해 있다면 읽지 않은 메시지는 모두 읽음 처리
@@ -73,10 +71,17 @@ public class ChatService {
 
             redisChatMessageRepository.saveAll(chatMessages);
 
-            RedisChatReadMessages chatReadMessages = RedisChatReadMessages.of(chatRoomId, chatMessages);
+            RedisChatReadMessages chatReadMessages = RedisChatReadMessages.create(chatRoomId, chatMessages);
 
             redisTemplate.convertAndSend("chat:read", chatReadMessages);
+
         }
+
+        // 상대방에게 접속 상태 변경 메시지 발행
+        Date lastUserConnectedAt = foundChatRoomInfo.getLastUserConnectedAt(senderId);
+        RedisChatAccessMessage chatAccessMessage = RedisChatAccessMessage.create(chatRoomId, senderId, lastUserConnectedAt, true);
+
+        redisTemplate.convertAndSend("chat:access", chatAccessMessage);
     }
 
     // 웹 소켓 세션 종료 시 호출
@@ -88,6 +93,12 @@ public class ChatService {
         // Redis에 현재 채팅방에 접속 중이 아닌 상태 업데이트
         chatRoomInfo.removeCurrentUser(userId);
         redisChatRoomInfoRepository.save(chatRoomInfo);
+
+        Date lastUserConnectedAt = chatRoomInfo.getLastUserConnectedAt(userId);
+        RedisChatAccessMessage chatAccessMessage = RedisChatAccessMessage.create(chatRoomId, userId, lastUserConnectedAt, false);
+
+        // 상대방에게 접속 상태 변경 메시지 발행
+        redisTemplate.convertAndSend("chat:access", chatAccessMessage);
     }
 
     @Transactional
@@ -105,7 +116,7 @@ public class ChatService {
         RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseGet(() -> savedRedisChatRoomInfo(chatRoomId));
 
         // 현재 채팅방에 접속 중인 사용자 수에 따라 읽음 수 갱신
-        long connectedUserCount = foundRedisChatRoomInfo.getUserCount();
+        long connectedUserCount = foundRedisChatRoomInfo.getCurrentUserCount();
         if(connectedUserCount == 2) {
             // 모두 채팅방에 접속해 있다면 읽지 않은 메시지는 모두 읽음 처리
             chatMessageRepository.updateAllReadStatus(chatRoomId);
@@ -202,10 +213,25 @@ public class ChatService {
         return response;
     }
 
-    public List<ChatRoomsResponse> chatRooms() {
+    public List<ChatRoomsResponse> rooms() {
         User user = EntityUtils.userThrowable();
         return chatRoomRepository.findByFromOrTo(user, user)
                 .stream().map(chatRoom -> ChatRoomsResponse.of(user, chatRoom)).toList();
+    }
+
+    @Transactional
+    public ChatRoomResponse room(Long id) {
+        User user = EntityUtils.userThrowable();
+        Long userId = user.getId();
+
+        ChatRoomResponse response = chatRoomRepository.room(id, userId).orElseThrow(ChatRoomNotFoundException::new);
+
+        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(id).orElseGet(() -> savedRedisChatRoomInfo(id));
+        response.setLastRecipientConnectedAt(chatRoomInfo.getLastUserConnectedAt(userId));
+
+        validateUserOwnChatRoom(chatRoomInfo, userId);
+
+        return response;
     }
 
     private RedisChatRoomInfo savedRedisChatRoomInfo(Long roomId) {

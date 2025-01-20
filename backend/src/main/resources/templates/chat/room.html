@@ -233,6 +233,11 @@
         });
       });
 
+      stompClient.subscribe(`/sub/chat-rooms/${roomId}/access`, function(message) {
+        const jsonBody = JSON.parse(message.body);
+        console.log(jsonBody);
+      });
+
       stompClient.subscribe('/user/queue/errors', function(message) {
       });
 
