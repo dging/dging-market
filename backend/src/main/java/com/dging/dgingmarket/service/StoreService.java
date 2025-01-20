@@ -146,4 +146,12 @@ public class StoreService {
 
         return storeRepository.store(id).orElseThrow(StoreNotFoundException::new);
     }
+
+    public StoreResponse myStore() {
+
+        User user = EntityUtils.userThrowable();
+        Long storeId = user.getStore().getId();
+
+        return storeRepository.store(storeId).orElseThrow(StoreNotFoundException::new);
+    }
 }

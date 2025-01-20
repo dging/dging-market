@@ -208,4 +208,15 @@ public class StoreApiController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @GetMapping("/me")
+    @Operation(summary = "내 상점 상세 조회", description = "사용자 본인 상점의 상세를 조회합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({StoreErrorCode._STORE_NOT_FOUND})
+    ResponseEntity<StoreResponse> fetchMyStore() {
+
+        StoreResponse response = storeService.myStore();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
