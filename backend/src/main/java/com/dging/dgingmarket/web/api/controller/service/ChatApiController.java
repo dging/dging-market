@@ -1,7 +1,6 @@
 package com.dging.dgingmarket.web.api.controller.service;
 
 import com.dging.dgingmarket.documentation.ApiErrorCodeExample;
-import com.dging.dgingmarket.exception.ChatErrorCode;
 import com.dging.dgingmarket.service.ChatService;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.chat.ChatRoomEnterResponse;
@@ -39,7 +38,7 @@ public class ChatApiController {
             _PRODUCT_NOT_FOUND,
             _CHAT_MYSELF_ERROR,
     })
-    ResponseEntity<ChatRoomEnterResponse> create(
+    ResponseEntity<ChatRoomEnterResponse> enterRoom(
             @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
             @PathVariable Long id
     ) {

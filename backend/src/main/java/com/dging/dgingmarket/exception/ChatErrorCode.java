@@ -16,10 +16,12 @@ public enum ChatErrorCode implements BaseErrorCode {
      */
     CHAT_ROOM_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "DGM-5000", "채팅방이 존재하지 않습니다."),
     CHAT_MYSELF_ERROR(HttpStatus.FORBIDDEN.value(), "DGM-5001", "사용자 본인과 채팅할 수는 없습니다."),
+    USER_OWN_CHAT_ROOM(HttpStatus.FORBIDDEN.value(), "DGM-5002", "사용자 본인이 속한 채팅방이 아닙니다."),
     ;
 
     public static final String _CHAT_ROOM_NOT_FOUND = "DGM-5000";
     public static final String _CHAT_MYSELF_ERROR = "DGM-5001";
+    public static final String _USER_OWN_CHAT_ROOM = "DGM-5001";
 
     private int status;
     private final String code;

@@ -3,13 +3,13 @@ package com.dging.dgingmarket.service;
 import com.dging.dgingmarket.domain.chat.*;
 import com.dging.dgingmarket.domain.chat.exception.ChatMyselfException;
 import com.dging.dgingmarket.domain.chat.exception.ChatRoomNotFoundException;
+import com.dging.dgingmarket.domain.chat.exception.UserOwnChatRoomException;
 import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
 import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
-import com.dging.dgingmarket.exception.ChatErrorCode;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.chat.ChatRoomEnterResponse;
 import com.dging.dgingmarket.web.socket.dto.*;
@@ -44,9 +44,9 @@ public class ChatService {
         User sender = EntityUtils.userThrowable();
         Long senderId = sender.getId();
 
-        RedisChatRoomInfo foundChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElse(RedisChatRoomInfo.create(chatRoomId));
+        RedisChatRoomInfo foundChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
 
-        foundChatRoomInfo.addUser(senderId);
+        foundChatRoomInfo.addCurrentUser(senderId);
         redisChatRoomInfoRepository.save(foundChatRoomInfo);
 
         long connectedUserCount = foundChatRoomInfo.getUserCount();
@@ -73,9 +73,9 @@ public class ChatService {
 
     @Transactional
     public void leave(Long chatRoomId, Long userId) {
-        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElse(RedisChatRoomInfo.create(chatRoomId));
+        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
 
-        chatRoomInfo.removeUser(userId);
+        chatRoomInfo.removeCurrentUser(userId);
         redisChatRoomInfoRepository.save(chatRoomInfo);
     }
 
@@ -89,7 +89,7 @@ public class ChatService {
 
         ChatMessage chatMessage = ChatMessage.create(sender, foundChatRoom, message.getContent());
 
-        RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElse(RedisChatRoomInfo.create(chatRoomId));
+        RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(chatRoomId).orElseThrow(ChatRoomNotFoundException::new);
 
         long connectedUserCount = foundRedisChatRoomInfo.getUserCount();
         if(connectedUserCount == 2) {
@@ -112,7 +112,12 @@ public class ChatService {
 
     @Transactional
     public List<RedisChatMessage> chatMessages(Long roomId) {
-        RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(roomId).orElse(RedisChatRoomInfo.create(roomId));
+        RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(roomId).orElseThrow(ChatRoomNotFoundException::new);
+
+        User user = EntityUtils.userThrowable();
+
+        validateUserOwnChatRoom(foundRedisChatRoomInfo, user.getId());
+
         List<RedisChatMessage> foundRedisChatMessages = redisChatMessageRepository.findByRoomId(roomId)
                 .stream()
                 .sorted(Comparator.comparing(RedisChatMessage::getTimestamp))
@@ -141,9 +146,7 @@ public class ChatService {
         User foundPurchaser = userRepository.findById(purchaser.getId()).orElseThrow(UserNotFoundException::new);
         User seller = foundProduct.getStore().getUser();
 
-        if(Objects.equals(foundPurchaser.getId(), seller.getId())) {
-            throw ChatMyselfException.EXCEPTION;
-        }
+        validateChatMyself(foundPurchaser.getId(), seller.getId());
 
         Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByFromAndToAndProduct(purchaser, seller, foundProduct);
 
@@ -159,7 +162,24 @@ public class ChatService {
             response = ChatRoomEnterResponse.create(foundChatRoom.getId(), 200);
         }
 
+        RedisChatRoomInfo redisChatRoomInfoToCreate = RedisChatRoomInfo.create(response.getId(), purchaser.getId(), seller.getId());
+        redisChatRoomInfoRepository.save(redisChatRoomInfoToCreate);
+
         return response;
+    }
+
+    // 본인의 채팅방이 아님
+    private static void validateUserOwnChatRoom(RedisChatRoomInfo redisChatRoomInfo, Long userId) {
+        if(!redisChatRoomInfo.hasUser(userId)) {
+            throw UserOwnChatRoomException.EXCEPTION;
+        }
+    }
+
+    // 본인과 채팅할 수 없음
+    private static void validateChatMyself(Long purchaserId, Long sellerId) {
+        if(Objects.equals(purchaserId, sellerId)) {
+            throw ChatMyselfException.EXCEPTION;
+        }
     }
 
     /*private void refreshChatMessages(List<RedisChatMessage> chatMessages) {
