@@ -237,17 +237,4 @@ public class ProductApiController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-    @PostMapping("{id}/payments")
-    @Operation(summary = "상품 결제 테스트", description = "테스트입니다.")
-    @ApiResponses(@ApiResponse(responseCode = "201", description = "성공"))
-    ResponseEntity<Void> create(
-            @Parameter(description = DocumentDescriptions.REQUEST_PRODUCT_ID)
-            @PathVariable Long id
-    ) {
-
-        productService.createPayment(id);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
-    }
 }

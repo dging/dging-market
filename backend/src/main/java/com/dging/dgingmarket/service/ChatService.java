@@ -1,9 +1,17 @@
 package com.dging.dgingmarket.service;
 
 import com.dging.dgingmarket.domain.chat.*;
+import com.dging.dgingmarket.domain.chat.exception.ChatMyselfException;
 import com.dging.dgingmarket.domain.chat.exception.ChatRoomNotFoundException;
+import com.dging.dgingmarket.domain.product.Product;
+import com.dging.dgingmarket.domain.product.ProductRepository;
+import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
+import com.dging.dgingmarket.domain.user.UserRepository;
+import com.dging.dgingmarket.domain.user.exception.UserNotFoundException;
+import com.dging.dgingmarket.exception.ChatErrorCode;
 import com.dging.dgingmarket.util.EntityUtils;
+import com.dging.dgingmarket.web.api.dto.chat.ChatRoomEnterResponse;
 import com.dging.dgingmarket.web.socket.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,12 +20,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ChatService {
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
     private final RedisChatMessageRepository redisChatMessageRepository;
@@ -119,6 +131,35 @@ public class ChatService {
         }
 
         return foundRedisChatMessages;
+    }
+
+    @Transactional
+    public ChatRoomEnterResponse enterRoom(Long productId) {
+        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(ProductNotFoundException::new);
+
+        User purchaser = EntityUtils.userThrowable();
+        User foundPurchaser = userRepository.findById(purchaser.getId()).orElseThrow(UserNotFoundException::new);
+        User seller = foundProduct.getStore().getUser();
+
+        if(Objects.equals(foundPurchaser.getId(), seller.getId())) {
+            throw ChatMyselfException.EXCEPTION;
+        }
+
+        Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByFromAndToAndProduct(purchaser, seller, foundProduct);
+
+        final ChatRoomEnterResponse response;
+
+        if(chatRoomOptional.isEmpty()) {
+            ChatRoom chatRoomToCreate = ChatRoom.create(foundPurchaser, seller, foundProduct);
+            ChatRoom createdChatRoom = chatRoomRepository.saveAndFlush(chatRoomToCreate);
+
+            response = ChatRoomEnterResponse.create(createdChatRoom.getId(), 201);
+        } else {
+            ChatRoom foundChatRoom = chatRoomOptional.get();
+            response = ChatRoomEnterResponse.create(foundChatRoom.getId(), 200);
+        }
+
+        return response;
     }
 
     /*private void refreshChatMessages(List<RedisChatMessage> chatMessages) {

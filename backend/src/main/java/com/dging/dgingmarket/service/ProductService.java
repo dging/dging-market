@@ -159,18 +159,6 @@ public class ProductService {
         return productRepository.favoriteProducts(pageable, user.getId(), cond);
     }
 
-    @Transactional
-    public void createPayment(Long productId) {
-        Product foundProduct = productRepository.findByIdAndDeletedIsFalse(productId).orElseThrow(ProductNotFoundException::new);
-
-        User purchaser = EntityUtils.userThrowable();
-        User foundPurchaser = userRepository.findById(purchaser.getId()).orElseThrow(UserNotFoundException::new);
-        User seller = foundProduct.getStore().getUser();
-
-        ChatRoom chatRoomToCreate = ChatRoom.create(foundPurchaser, seller, foundProduct);
-        chatRoomRepository.save(chatRoomToCreate);
-    }
-
     private Product generateProduct(ProductCreateRequest request, List<Image> imagesToCreate, List<Tag> tagsToCreate) {
 
         User user = EntityUtils.userThrowable();

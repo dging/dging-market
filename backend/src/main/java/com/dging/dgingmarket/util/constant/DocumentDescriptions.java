@@ -4,6 +4,7 @@ public class DocumentDescriptions {
 
     public static final String REQUEST_REVIEW_ID = "후기의 고유 식별자인 id입니다.";
     public static final String REQUEST_PRODUCT_ID = "상품의 고유 식별자인 id입니다.";
+    public static final String REQUEST_CHAT_ROOM_ID = "채팅방의 고유 식별자인 id입니다.";
     public static final String REQUEST_STORE_ID = "상점의 고유 식별자인 id입니다.";
     public static final String REQUEST_ID = "고유 식별자인 id입니다.";
     public static final String REQUEST_IMAGE_IDS = "이미지 id 배열입니다. 사용자 본인이 이미지를 업로드할 때 응답받은 id이어야 합니다.";
@@ -42,13 +43,18 @@ public class DocumentDescriptions {
     public static final String RESPONSE_SUB_CATEGORY = "소분류 카테고리명입니다.";
     public static final String RESPONSE_MIDDLE_CATEGORY = "중분류 카테고리명입니다.";
     public static final String RESPONSE_ID = "고유 식별자인 id입니다.";
-    public static final String RESPONSE_USER_ID = "사용자의 고유 식별자인 userId입니다.";
-    public static final String RESPONSE_STORE_ID = "상점의 고유 식별자인 storeId입니다.";
+    public static final String RESPONSE_TIMESTAMP = "타임스탬프입니다.";
+    public static final String RESPONSE_MESSAGE_CONTENT = "메시지 내용입니다.";
+    public static final String RESPONSE_MESSAGE_READ = "메시지 읽음 여부입니다.";
+    public static final String RESPONSE_CHAT_ROOM_ID = "채팅방의 고유 식별자인 id입니다.";
+    public static final String RESPONSE_MESSAGE_TYPE = "채팅 메시지 타입입니다.";
+    public static final String RESPONSE_USER_ID = "사용자의 고유 식별자인 id입니다.";
+    public static final String RESPONSE_STORE_ID = "상점의 고유 식별자인 id입니다.";
     public static final String RESPONSE_MAIN_CATEGORY = "대분류 카테고리명입니다.";
     public static final String RESPONSE_STORE_NAME = "상점명입니다.";
     public static final String RESPONSE_STORE_INTRODUCTION = "상점 소개글입니다.";
     public static final String RESPONSE_PROFILE_IMAGE_URL = "상점의 프로필 이미지 URL입니다.";
-    public static final String RESPONSE_PRODUCT_ID = "상품의 고유 식별자인 productId입니다.";
+    public static final String RESPONSE_PRODUCT_ID = "상품의 고유 식별자인 id입니다.";
     public static final String RESPONSE_PRODUCT_NAME = "상품명입니다.";
     public static final String RESPONSE_REVIEW_CONTENT = "후기 내용입니다.";
     public static final String RESPONSE_RATING = "펑점입니다. 5점 만점입니다.";
@@ -90,6 +96,7 @@ public class DocumentDescriptions {
     public static final String EXAMPLE_VIEW_COUNT = "141";
     public static final String EXAMPLE_PRODUCT_TITLE = "Frank ocean - Blond";
     public static final String EXAMPLE_MAIN_CATEGORY = "CD";
+    public static final String EXAMPLE_MESSAGE_TYPE = "TALK";
     public static final String EXAMPLE_MIDDLE_CATEGORY = "Rock";
     public static final String EXAMPLE_SUB_CATEGORY = "Punk";
     public static final String EXAMPLE_STORE_INTRODUCTION = "소개입니다.";
@@ -98,6 +105,7 @@ public class DocumentDescriptions {
     public static final String EXAMPLE_PRODUCT_CONTENT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non risus pharetra, egestas orci eget, suscipit nisi. Duis est arcu, tempus non sem eu, vestibulum pharetra odio. Sed eget ligula vehicula, scelerisque lorem ac, ullamcorper nibh. Maecenas maximus consequat metus, sed elementum ante sodales non. Cras dictum lectus massa, sed congue magna ultrices vel. Integer mauris nibh, rhoncus eget sodales a, posuere faucibus tortor. Donec convallis pulvinar lacus nec sodales. In hac habitasse platea dictumst. Etiam arcu purus, molestie eu eros nec, ultricies sagittis nunc. Maecenas volutpat, massa non interdum accumsan, ex magna tincidunt arcu, ut finibus magna lorem eget odio. Sed posuere ornare sapien, in interdum sapien sodales at. Pellentesque nec tempus justo.\n" + "\n" + "Quisque hendrerit risus dolor, in mattis tortor viverra ut. Vestibulum scelerisque porta turpis, vitae aliquet magna congue id. Donec ultricies quam ac magna malesuada, eget semper massa semper. Nunc malesuada vestibulum arcu, nec rutrum arcu consequat ac. Etiam at sapien purus. Quisque bibendum nibh ut mauris ornare lacinia. Donec at tellus velit. In hac habitasse platea dictumst. Sed massa lorem, aliquam non gravida et, pellentesque vitae sapien. Donec non sem id quam accumsan malesuada id eget nisi. Fusce a orci hendrerit, accumsan metus ac, rhoncus leo. Morbi sit amet tortor posuere, ultricies lectus et, varius massa. Praesent auctor diam vestibulum faucibus consectetur. Donec congue eros tincidunt lectus rhoncus pulvinar. Donec id pharetra urna, ac dapibus nisl.";
     public static final String EXAMPLE_PRICE = "50000";
     public static final String EXAMPLE_ALLOWS_OFFERS = "false";
+    public static final String EXAMPLE_MESSAGE_READ = "false";
     public static final String EXAMPLE_PRODUCTS_TOTAL_COUNT = "14";
     public static final String EXAMPLE_REVIEWS_TOTAL_COUNT = "52";
     public static final String EXAMPLE_FAVORITE_PRODUCTS_TOTAL_COUNT = "52";

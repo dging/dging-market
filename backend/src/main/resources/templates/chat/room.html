@@ -199,8 +199,11 @@
   }
 
   function connect() {
-    const socket = new SockJS("/ws-stomp");
-    stompClient = Stomp.over(socket);
+    const sockJs = new SockJS('/ws-stomp', null, {
+      transports: ["websocket"]  // WebSocket만 사용
+    });
+
+    stompClient = Stomp.over(sockJs);
 
     const token = sessionStorage.getItem('accessToken');
     const headers = {

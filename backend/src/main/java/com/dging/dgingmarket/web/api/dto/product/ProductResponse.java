@@ -58,7 +58,7 @@ public class ProductResponse {
     @Schema(description = RESPONSE_LOCATION)
     private String location;
 
-    @Schema(description = RESPONSE_MAIN_CATEGORY)
+    @Schema(description = RESPONSE_MAIN_CATEGORY, example = EXAMPLE_MAIN_CATEGORY)
     private MainCategory mainCategory;
 
     @Schema(description = RESPONSE_MIDDLE_CATEGORY)

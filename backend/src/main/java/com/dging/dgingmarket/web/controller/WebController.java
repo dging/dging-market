@@ -21,7 +21,7 @@ public class WebController {
         return "addr";
     }
 
-    @GetMapping("/chat/rooms/{roomId}")
+    @GetMapping("/chat-rooms/{roomId}")
     public String chatRoom(@PathVariable Long roomId, Model model) {
         model.addAttribute("roomId", roomId);
         return "chat/room";

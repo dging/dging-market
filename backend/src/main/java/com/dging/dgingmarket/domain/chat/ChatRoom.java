@@ -22,7 +22,7 @@ import java.util.Date;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name="chat_room_uk",
-                        columnNames = {"from_user_fk", "to_user_fk"}
+                        columnNames = {"from_user_fk", "to_user_fk", "product_id"}
                 )
         }
 )
@@ -33,14 +33,17 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 구매자
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_user_fk", nullable = false)
     private User from;
 
+    // 판매자
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_user_fk", nullable = false)
     private User to;
 
+    // 판매 상품
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
