@@ -4,6 +4,7 @@ import com.dging.dgingmarket.documentation.ApiErrorCodeExample;
 import com.dging.dgingmarket.service.ChatService;
 import com.dging.dgingmarket.util.constant.DocumentDescriptions;
 import com.dging.dgingmarket.web.api.dto.chat.ChatRoomEnterResponse;
+import com.dging.dgingmarket.web.api.dto.chat.ChatRoomsResponse;
 import com.dging.dgingmarket.web.socket.dto.RedisChatMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -51,8 +52,16 @@ public class ChatApiController {
         }
     }
 
+    @GetMapping("/chat-rooms")
+    @Operation(summary = "채팅방 조회", description = "사용자 본인이 속한 여러 채팅방을 조회합니다.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    public ResponseEntity<List<ChatRoomsResponse>> fetchChatRooms() {
+        List<ChatRoomsResponse> response = chatService.chatRooms();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/chat-rooms/{id}/messages")
-    @Operation(summary = "채팅 조회", description = "여러 채팅을 조회합니다.")
+    @Operation(summary = "채팅 조회", description = "채팅방에 있는 여러 채팅을 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
     @ApiErrorCodeExample({
             _CHAT_ROOM_NOT_FOUND,

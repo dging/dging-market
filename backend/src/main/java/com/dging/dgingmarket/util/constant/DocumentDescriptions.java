@@ -43,6 +43,8 @@ public class DocumentDescriptions {
     public static final String RESPONSE_SUB_CATEGORY = "소분류 카테고리명입니다.";
     public static final String RESPONSE_MIDDLE_CATEGORY = "중분류 카테고리명입니다.";
     public static final String RESPONSE_ID = "고유 식별자인 id입니다.";
+    public static final String RESPONSE_RECIPIENT_ID = "채팅 상대방의 상점 고유 식별자인 id입니다.";
+    public static final String RESPONSE_RECIPIENT_NAME = "채팅 상대방의 상점명입니다.";
     public static final String RESPONSE_TIMESTAMP = "타임스탬프입니다.";
     public static final String RESPONSE_MESSAGE_CONTENT = "메시지 내용입니다.";
     public static final String RESPONSE_MESSAGE_READ = "메시지 읽음 여부입니다.";

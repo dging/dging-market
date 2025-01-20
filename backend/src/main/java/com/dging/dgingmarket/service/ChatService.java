@@ -11,9 +11,9 @@ import com.dging.dgingmarket.domain.product.Product;
 import com.dging.dgingmarket.domain.product.ProductRepository;
 import com.dging.dgingmarket.domain.product.exception.ProductNotFoundException;
 import com.dging.dgingmarket.domain.user.User;
-import com.dging.dgingmarket.domain.user.UserRepository;
 import com.dging.dgingmarket.util.EntityUtils;
 import com.dging.dgingmarket.web.api.dto.chat.ChatRoomEnterResponse;
+import com.dging.dgingmarket.web.api.dto.chat.ChatRoomsResponse;
 import com.dging.dgingmarket.web.socket.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ChatService {
-    private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
@@ -201,6 +200,12 @@ public class ChatService {
         redisChatRoomInfoRepository.save(redisChatRoomInfoToCreate);
 
         return response;
+    }
+
+    public List<ChatRoomsResponse> chatRooms() {
+        User user = EntityUtils.userThrowable();
+        return chatRoomRepository.findByFromOrTo(user, user)
+                .stream().map(chatRoom -> ChatRoomsResponse.of(user, chatRoom)).toList();
     }
 
     private RedisChatRoomInfo savedRedisChatRoomInfo(Long roomId) {
