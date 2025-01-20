@@ -54,6 +54,10 @@ public class ChatApiController {
     @GetMapping("/chat-rooms/{id}/messages")
     @Operation(summary = "채팅 조회", description = "여러 채팅을 조회합니다.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "성공"))
+    @ApiErrorCodeExample({
+            _CHAT_ROOM_NOT_FOUND,
+            _USER_OWN_CHAT_ROOM,
+    })
     public ResponseEntity<List<RedisChatMessage>> fetchChatMessages(
             @Parameter(description = DocumentDescriptions.REQUEST_CHAT_ROOM_ID)
             @PathVariable Long id

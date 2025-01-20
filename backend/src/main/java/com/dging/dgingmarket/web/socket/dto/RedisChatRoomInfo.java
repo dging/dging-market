@@ -50,6 +50,6 @@ public class RedisChatRoomInfo {
     }
 
     public boolean hasUser(Long userId) {
-        return this.userIds.contains(userId);
+        return this.userIds != null && this.userIds.contains(userId);
     }
 }

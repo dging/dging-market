@@ -112,11 +112,17 @@ public class ChatService {
 
     @Transactional
     public List<RedisChatMessage> chatMessages(Long roomId) {
-        RedisChatRoomInfo foundRedisChatRoomInfo = redisChatRoomInfoRepository.findById(roomId).orElseThrow(ChatRoomNotFoundException::new);
+        RedisChatRoomInfo chatRoomInfo = redisChatRoomInfoRepository.findById(roomId).orElseGet(() -> {
+            ChatRoom foundChatRoom = chatRoomRepository.findById(roomId).orElseThrow(ChatRoomNotFoundException::new);
+            Long purchaserId = foundChatRoom.getFrom().getId();
+            Long sellerId = foundChatRoom.getTo().getId();
+            RedisChatRoomInfo redisChatRoomInfoToCreate = RedisChatRoomInfo.create(roomId, purchaserId, sellerId);
+            return redisChatRoomInfoRepository.save(redisChatRoomInfoToCreate);
+        });
 
         User user = EntityUtils.userThrowable();
 
-        validateUserOwnChatRoom(foundRedisChatRoomInfo, user.getId());
+        validateUserOwnChatRoom(chatRoomInfo, user.getId());
 
         List<RedisChatMessage> foundRedisChatMessages = redisChatMessageRepository.findByRoomId(roomId)
                 .stream()
@@ -124,7 +130,7 @@ public class ChatService {
                 .collect(Collectors.toList());
 
         int redisMessageCount = foundRedisChatMessages.size();
-        long messageCount = foundRedisChatRoomInfo.getMessageCount();
+        long messageCount = chatRoomInfo.getMessageCount();
 
         if(redisMessageCount < messageCount) {
             List<RedisChatMessage> chatMessages = chatMessageRepository.findByChatRoomIdOrderByCreatedAt(roomId)
@@ -162,6 +168,7 @@ public class ChatService {
             response = ChatRoomEnterResponse.create(foundChatRoom.getId(), 200);
         }
 
+        // Redis AOF 저장 방식을 통해 동기화 가능
         RedisChatRoomInfo redisChatRoomInfoToCreate = RedisChatRoomInfo.create(response.getId(), purchaser.getId(), seller.getId());
         redisChatRoomInfoRepository.save(redisChatRoomInfoToCreate);
 

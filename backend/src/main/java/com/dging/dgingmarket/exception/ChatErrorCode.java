@@ -21,7 +21,7 @@ public enum ChatErrorCode implements BaseErrorCode {
 
     public static final String _CHAT_ROOM_NOT_FOUND = "DGM-5000";
     public static final String _CHAT_MYSELF_ERROR = "DGM-5001";
-    public static final String _USER_OWN_CHAT_ROOM = "DGM-5001";
+    public static final String _USER_OWN_CHAT_ROOM = "DGM-5002";
 
     private int status;
     private final String code;
