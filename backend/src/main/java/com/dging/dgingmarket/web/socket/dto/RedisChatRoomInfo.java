@@ -16,8 +16,6 @@ public class RedisChatRoomInfo {
     private Set<Long> currentUserIds;
     private Set<Long> userIds;
     private Map<Long, Date> lastUserConnectedAts;
-    @Setter
-    private long messageCount;
 
     public RedisChatRoomInfo(Long id) {
         this.id = id;

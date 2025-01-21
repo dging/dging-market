@@ -129,10 +129,6 @@ public class ChatService {
         // Redis 저장용 메시지 생성
         RedisChatMessage redisChatMessage = RedisChatMessage.of(createdMessage, message.getType());
 
-        int messageCount = chatMessageRepository.countByChatRoomId(chatRoomId);
-
-        foundRedisChatRoomInfo.setMessageCount(messageCount);
-
         // 캐싱
         redisChatRoomInfoRepository.save(foundRedisChatRoomInfo);
         redisChatMessageRepository.save(redisChatMessage);
@@ -158,7 +154,7 @@ public class ChatService {
                 .collect(Collectors.toList());
 
         int redisMessageCount = foundRedisChatMessages.size();
-        long messageCount = chatRoomInfo.getMessageCount();
+        long messageCount = chatMessageRepository.countByChatRoomId(roomId);
 
         // Redis에서 만료된 데이터가 있다면 DB에서 캐싱 후 데이터 반환
         if(redisMessageCount < messageCount) {
