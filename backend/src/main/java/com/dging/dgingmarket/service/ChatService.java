@@ -248,7 +248,6 @@ public class ChatService {
         }
     }
 
-    // 본인과 채팅할 수 없음
     private static void validateChatMyself(Long purchaserId, Long sellerId) {
         if(Objects.equals(purchaserId, sellerId)) {
             throw ChatMyselfException.EXCEPTION;

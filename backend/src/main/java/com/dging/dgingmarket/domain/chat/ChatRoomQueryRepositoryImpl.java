@@ -76,6 +76,8 @@ public class ChatRoomQueryRepositoryImpl extends QuerydslRepositorySupport imple
             Store recipientStore = recipient.getStore();
             response.setRecipientId(recipientStore.getId());
             response.setRecipientName(recipientStore.getName());
+        } else {
+            responseOptional = Optional.empty();
         }
 
         return responseOptional;

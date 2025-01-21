@@ -49,7 +49,11 @@ public class RedisChatRoomInfo {
     }
 
     public int getCurrentUserCount() {
-        return this.currentUserIds.size();
+        if(this.currentUserIds != null) {
+            return this.currentUserIds.size();
+        }
+
+        return 0;
     }
 
     public boolean hasUser(Long userId) {
